@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Tonguebox Cloud</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*{box-sizing:border-box}body{font-family:Arial,sans-serif;margin:0;padding:12px;background:#f5f7f8;color:#10232a}main{max-width:760px;margin:auto}h1{text-align:center;font-size:clamp(2rem,7vw,3rem)}.sub{text-align:center}.card,.panel{background:#fff;border:2px solid #d7e0e3;border-radius:20px;padding:16px;margin:14px 0}.hidden{display:none!important}label{display:block;font-weight:700;margin:10px 0 6px}input,textarea,select{width:100%;font:inherit;font-size:1.15rem;padding:16px;border:3px solid #607d86;border-radius:15px}textarea{min-height:110px}button{font:inherit;font-weight:800;font-size:1.15rem;min-height:76px;border:0;border-radius:16px;padding:14px;background:#087f8c;color:white;cursor:pointer}button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:7px solid #ffd400;outline-offset:4px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.full{width:100%}.secondary{background:#455a64}.danger,.no,.delete{background:#b3261e}.yes{background:#16833b}.acc{width:100%;display:flex;justify-content:space-between;align-items:center;min-height:92px;font-size:1.25rem;margin-top:14px}.phrase{min-height:92px}.status{padding:14px;border-radius:14px;background:#e9f5f6;margin:12px 0;font-weight:700}.row{display:flex;gap:10px;margin-bottom:10px}.row .phrase{flex:1}.delete{min-width:74px}#answers button{min-height:105px}@media(max-width:520px){button{min-height:84px}.acc{min-height:98px}}
+</style></head>
+<body><main>
+<h1>👁️ Tonguebox Cloud</h1><div class="sub">Sprich mit deinen Augen</div><div id="status" class="status">Bereit.</div>
+<section id="authCard" class="card"><h2>Anmelden</h2>
+<label>E-Mail</label><input id="email" type="email" autocomplete="email">
+<label>Passwort</label><input id="password" type="password" autocomplete="current-password">
+<div class="grid" style="margin-top:14px"><button id="loginBtn">Anmelden</button><button id="signupBtn" class="secondary">Registrieren</button></div></section>
+<section id="app" class="hidden">
+<div class="card"><b id="userEmail"></b><button id="logoutBtn" class="danger full" style="margin-top:12px">Abmelden</button></div>
+<button class="acc" aria-expanded="true" aria-controls="quickPanel">⚡ Schnell sprechen <span>▼</span></button>
+<section id="quickPanel" class="panel"><div class="grid"><button class="yes speak">Ja.</button><button class="no speak">Nein.</button><button class="speak">Einen Moment bitte.</button><button class="speak">Bitte wiederholen.</button><button class="speak">Bitte langsamer sprechen.</button><button class="speak">Ich brauche Hilfe.</button></div></section>
+<button class="acc" aria-expanded="false" aria-controls="aiPanel">🧠 KI-Antwortvorschläge <span>▼</span></button>
+<section id="aiPanel" class="panel hidden"><label>Was wurde gefragt?</label><textarea id="question" placeholder="z. B. Möchtest du einen Kaffee?"></textarea><button id="aiBtn" class="full">🧠 4 Antworten erzeugen</button><div id="answers" class="grid" style="margin-top:12px"></div></section>
+<button class="acc" aria-expanded="false" aria-controls="ownPanel">✍️ Eigene Nachricht <span>▼</span></button>
+<section id="ownPanel" class="panel hidden"><textarea id="ownText" placeholder="Nachricht eingeben …"></textarea><button id="speakOwn" class="full">🔊 Vorlesen</button></section>
+<button class="acc" aria-expanded="false" aria-controls="phrasesPanel">☁️ Meine Cloud-Phrasen <span>▼</span></button>
+<section id="phrasesPanel" class="panel hidden"><textarea id="newPhrase" placeholder="Neue persönliche Phrase …"></textarea><button id="savePhrase" class="full">☁️ Phrase speichern</button><div id="phraseList" style="margin-top:14px"></div></section>
+<button class="acc" aria-expanded="false" aria-controls="voicePanel">🗣️ Stimme <span>▼</span></button>
+<section id="voicePanel" class="panel hidden"><select id="voice"></select><button id="voiceTest" class="full" style="margin-top:12px">🔊 Stimme testen</button></section>
+</section></main>
+<script>
+const SUPABASE_URL="https://zuealgaycolrvtvrubiu.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY="sb_publishable_vH99y5AQ3Mcxlxgz4vYyjw_vgqExtIj";
+const AI_ENDPOINT="https://tonguebox-ai.restless-bush-f37f.workers.dev/";
+const client=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+const $=id=>document.getElementById(id);let currentUser=null,voices=[];
+const status=m=>$("status").textContent=m;
+document.querySelectorAll(".acc").forEach(b=>b.onclick=()=>{let id=b.getAttribute("aria-controls"),opening=b.getAttribute("aria-expanded")!=="true";document.querySelectorAll(".acc").forEach(x=>{x.setAttribute("aria-expanded","false");$(x.getAttribute("aria-controls")).classList.add("hidden")});if(opening){b.setAttribute("aria-expanded","true");$(id).classList.remove("hidden");setTimeout(()=>b.scrollIntoView({behavior:"smooth",block:"start"}),80)}});
+function loadVoices(){voices=speechSynthesis.getVoices();let s=$("voice"),saved=localStorage.getItem("tb_voice");s.innerHTML="";voices.forEach((v,i)=>{let o=document.createElement("option");o.value=i;o.textContent=v.name+" – "+v.lang;if(v.name===saved)o.selected=true;s.appendChild(o)})}
+loadVoices();if("speechSynthesis"in window)speechSynthesis.onvoiceschanged=loadVoices;
+$("voice").onchange=()=>{let v=voices[+$("voice").value];if(v)localStorage.setItem("tb_voice",v.name)};
+function speak(t){if(!t||!("speechSynthesis"in window))return;speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(t),saved=localStorage.getItem("tb_voice"),v=voices.find(x=>x.name===saved)||voices.find(x=>x.lang.toLowerCase().startsWith("de"));if(v)u.voice=v;u.lang=v?.lang||"de-AT";speechSynthesis.speak(u)}
+document.addEventListener("click",e=>{if(e.target.classList.contains("speak"))speak(e.target.textContent.trim())});$("speakOwn").onclick=()=>speak($("ownText").value.trim());$("voiceTest").onclick=()=>speak("Hallo, das ist meine ausgewählte Stimme.");
+async function refreshAuth(){let {data:{session}}=await client.auth.getSession();currentUser=session?.user||null;$("authCard").classList.toggle("hidden",!!currentUser);$("app").classList.toggle("hidden",!currentUser);if(currentUser){$("userEmail").textContent="Angemeldet als: "+currentUser.email;status("Cloud verbunden.");await loadPhrases()}else status("Bitte anmelden.")}
+client.auth.onAuthStateChange(()=>setTimeout(refreshAuth,0));
+$("loginBtn").onclick=async()=>{status("Anmeldung läuft …");let {error}=await client.auth.signInWithPassword({email:$("email").value.trim(),password:$("password").value});if(error)status("Anmeldung fehlgeschlagen: "+error.message)};
+$("signupBtn").onclick=async()=>{status("Registrierung läuft …");let {data,error}=await client.auth.signUp({email:$("email").value.trim(),password:$("password").value});if(error)return status("Registrierung fehlgeschlagen: "+error.message);status(data.session?"Registriert und angemeldet.":"Registriert. Bitte E-Mail bestätigen.")};
+$("logoutBtn").onclick=()=>client.auth.signOut();
+async function loadPhrases(){let {data,error}=await client.from("Phrases").select("id,phrase,created_at").eq("user_id",currentUser.id).order("created_at",{ascending:false});if(error)return status("Cloud-Fehler: "+error.message);let box=$("phraseList");box.innerHTML="";if(!data?.length){box.textContent="Noch keine persönlichen Phrasen gespeichert.";return}data.forEach(r=>{let w=document.createElement("div"),b=document.createElement("button"),d=document.createElement("button");w.className="row";b.className="phrase";b.textContent=r.phrase;b.onclick=()=>speak(r.phrase);d.className="delete";d.textContent="🗑️";d.setAttribute("aria-label","Phrase löschen");d.onclick=()=>deletePhrase(r.id);w.append(b,d);box.appendChild(w)})}
+$("savePhrase").onclick=async()=>{let phrase=$("newPhrase").value.trim();if(!currentUser||!phrase)return;let {error}=await client.from("Phrases").insert({user_id:currentUser.id,phrase});if(error)return status("Speichern fehlgeschlagen: "+error.message);$("newPhrase").value="";status("Phrase gespeichert.");await loadPhrases()};
+async function deletePhrase(id){let {error}=await client.from("Phrases").delete().eq("id",id).eq("user_id",currentUser.id);if(error)return status("Löschen fehlgeschlagen: "+error.message);await loadPhrases()}
+function yesno(q){let s=q.trim().toLowerCase();if(/^(wer|was|wann|wo|warum|wieso|wie|welch)/.test(s))return false;return /^(bist|sind|ist|hast|hat|kannst|kann|willst|möchtest|soll|darf|musst|kommst|gehst|brauchst|passt|magst)/.test(s)}
+function fallback(q){let s=q.toLowerCase();if(yesno(q))return["Ja.","Nein.","Vielleicht.","Bitte wiederholen."];if(s.includes("kaffee"))return["Ja, gerne einen Kaffee.","Nein danke.","Mit Milch bitte.","Einen Moment bitte."];if(s.includes("schmerz"))return["Ja, ich habe Schmerzen.","Nein, im Moment nicht.","Bitte fragen Sie genauer.","Ich brauche Hilfe."];return["Ja.","Nein.","Bitte wiederholen.","Einen Moment bitte."]}
+function answers(a){let b=$("answers");b.innerHTML="";a.slice(0,4).forEach(t=>{let x=document.createElement("button");x.textContent=t;x.onclick=()=>speak(t);b.appendChild(x)})}
+$("aiBtn").onclick=async()=>{let q=$("question").value.trim();if(!q)return status("Bitte eine Frage eingeben.");if(yesno(q)){answers(["Ja.","Nein.","Vielleicht.","Bitte wiederholen."]);return status("Ja/Nein-Frage erkannt.")}status("KI erzeugt Antworten …");try{let r=await fetch(AI_ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({question:q})});if(!r.ok)throw Error("HTTP "+r.status);let j=await r.json(),a=Array.isArray(j.replies)?j.replies:Array.isArray(j.answers)?j.answers:[];if(!a.length)throw Error("Keine Antworten");answers(a);status("KI-Antworten bereit.")}catch(e){answers(fallback(q));status("KI nicht erreichbar – lokale Antworten angezeigt.")}};
+refreshAuth();
+</script></body></html>
