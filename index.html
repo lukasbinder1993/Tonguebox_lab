@@ -4,18 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>E-Tongue – Intelligente Phrasenvorschläge</title>
+<title>E-Tongue – KI Phrasenvorschläge</title>
 
 <style>
 :root {
     --bg: #07111f;
     --panel: #103958;
     --panel2: #0d2e49;
-    --accent: #32d4bd;
-    --accent2: #21a9c7;
+    --accent: #35d6bd;
+    --accent2: #22abc8;
     --text: #ffffff;
-    --muted: #d8e4ee;
-    --danger: #ff6b6b;
+    --muted: #d7e4ed;
 }
 
 * {
@@ -27,12 +26,11 @@ body {
     background: var(--bg);
     color: var(--text);
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 20px;
 }
 
 header {
-    padding: 25px;
     text-align: center;
+    padding: 24px;
     border-bottom: 2px solid var(--accent2);
 }
 
@@ -43,162 +41,155 @@ header h1 {
 
 header p {
     color: var(--muted);
-    margin-bottom: 0;
 }
 
-.container {
+main {
     width: min(1400px, 96%);
-    margin: 25px auto;
-}
-
-.status {
-    background: var(--panel2);
-    border: 2px solid var(--accent2);
-    border-radius: 14px;
-    padding: 20px;
-    margin-bottom: 25px;
-    text-align: center;
-}
-
-.status strong {
-    color: var(--accent);
+    margin: auto;
+    padding-bottom: 60px;
 }
 
 h2 {
+    margin-top: 32px;
     color: var(--accent);
-    margin-top: 35px;
 }
 
-/* Blicksteuerungsfreundliche Buttons */
+/* ZEIT */
+
+.zeitbox {
+    margin-top: 25px;
+    padding: 20px;
+    text-align: center;
+    background: var(--panel2);
+    border: 2px solid var(--accent2);
+    border-radius: 16px;
+    font-size: 21px;
+}
+
+.zeitbox strong {
+    color: var(--accent);
+}
+
+/* THEMEN */
+
+.themen {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 15px;
+}
 
 button {
-    font-family: inherit;
     cursor: pointer;
+    font-family: inherit;
     border: 3px solid transparent;
-    transition: 0.15s;
 }
 
 button:hover,
 button:focus {
     border-color: white;
-    transform: scale(1.02);
     outline: none;
-}
-
-.themen {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-    gap: 16px;
+    transform: scale(1.02);
 }
 
 .thema {
-    min-height: 110px;
+    min-height: 105px;
     border-radius: 15px;
     background: var(--panel);
     color: white;
-    font-size: 23px;
+    font-size: 22px;
     font-weight: bold;
 }
 
 .thema.active {
     background: var(--accent);
-    color: #06202a;
+    color: #06212a;
 }
 
-/* KI / Phrasen */
+/* PHRASEN */
 
 .phrasen {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 18px;
+    gap: 16px;
 }
 
 .phrase {
-    min-height: 125px;
-    padding: 22px;
-    border-radius: 16px;
+    min-height: 120px;
+    padding: 20px;
     background: var(--panel);
+    border-radius: 15px;
     color: white;
-    font-size: 24px;
     text-align: left;
+    font-size: 23px;
     line-height: 1.35;
 }
 
 .phrase::before {
-    content: "🔊";
-    margin-right: 12px;
+    content: "🔊 ";
 }
 
-/* Texteingabe */
+/* KI */
 
-.eingabe {
-    display: flex;
-    gap: 15px;
-    flex-wrap: wrap;
+.ki-box {
+    background: var(--panel2);
+    border: 2px solid var(--accent2);
+    padding: 20px;
+    border-radius: 16px;
 }
 
 textarea {
-    flex: 1;
-    min-width: 280px;
-    min-height: 120px;
-    padding: 18px;
-    border-radius: 14px;
+    width: 100%;
+    min-height: 110px;
+    padding: 16px;
+    border-radius: 12px;
     border: 3px solid var(--accent2);
-    background: white;
-    color: #111;
-    font-size: 22px;
+    font-size: 21px;
     resize: vertical;
 }
 
 .action {
-    min-width: 190px;
-    min-height: 90px;
-    border-radius: 14px;
+    margin-top: 15px;
+    min-height: 80px;
+    padding: 15px 25px;
     background: var(--accent);
-    color: #052029;
+    color: #06212a;
     font-size: 21px;
     font-weight: bold;
+    border-radius: 14px;
 }
 
-.secondary {
-    background: var(--accent2);
-    color: white;
+.action:disabled {
+    opacity: .6;
 }
 
-/* Stimme */
+#kiStatus {
+    min-height: 28px;
+}
+
+/* STIMME */
 
 select {
     width: 100%;
     min-height: 65px;
-    font-size: 20px;
     padding: 10px;
+    font-size: 19px;
     border-radius: 10px;
 }
 
-/* Eigene Sätze */
+/* MOBIL */
 
-.saved {
-    margin-top: 15px;
-}
-
-/* Responsive */
-
-@media (max-width: 800px) {
-
-    body {
-        font-size: 18px;
-    }
-
-    header h1 {
-        font-size: 28px;
-    }
+@media(max-width:800px) {
 
     .phrasen {
         grid-template-columns: 1fr;
     }
 
+    header h1 {
+        font-size: 29px;
+    }
+
     .phrase {
-        min-height: 110px;
+        min-height: 105px;
     }
 }
 </style>
@@ -208,155 +199,215 @@ select {
 
 <header>
     <h1>🤖 E-Tongue</h1>
-    <p>Intelligente, tageszeitabhängige Kommunikation</p>
+    <p>KI-gestützte Unterstützte Kommunikation</p>
 </header>
 
-<main class="container">
+<main>
 
-    <!-- ZEIT -->
+<!-- ZEIT -->
 
-    <div class="status">
-        <div id="datum"></div>
-        <div id="uhrzeit"></div>
+<div class="zeitbox">
 
-        <p>
-            Aktuelle Tageszeit:
-            <strong id="tageszeit"></strong>
-        </p>
-    </div>
+    <div id="datum"></div>
 
+    <div id="uhrzeit"></div>
 
-    <!-- AUTOMATISCHE VORSCHLÄGE -->
+    <p>
+        Tageszeit:
+        <strong id="tageszeit"></strong>
+    </p>
 
-    <h2>✨ Vorschläge für jetzt</h2>
-
-    <div id="autoPhrasen" class="phrasen"></div>
+</div>
 
 
-    <!-- THEMEN -->
+<!-- AUTOMATISCHE VORSCHLÄGE -->
 
-    <h2>💬 Thema auswählen</h2>
+<h2>✨ Vorschläge für jetzt</h2>
 
-    <div class="themen">
-
-        <button class="thema" onclick="waehleThema('Allgemein', this)">
-            💬 Allgemein
-        </button>
-
-        <button class="thema" onclick="waehleThema('Kaffee', this)">
-            ☕ Kaffee
-        </button>
-
-        <button class="thema" onclick="waehleThema('Trinken', this)">
-            🥤 Trinken
-        </button>
-
-        <button class="thema" onclick="waehleThema('Essen', this)">
-            🍽️ Essen
-        </button>
-
-        <button class="thema" onclick="waehleThema('Schmerzen', this)">
-            🩺 Schmerzen
-        </button>
-
-        <button class="thema" onclick="waehleThema('Befinden', this)">
-            ❤️ Befinden
-        </button>
-
-        <button class="thema" onclick="waehleThema('Unterhaltung', this)">
-            🗣️ Unterhaltung
-        </button>
-
-        <button class="thema" onclick="waehleThema('Hilfe', this)">
-            🆘 Hilfe
-        </button>
-
-        <button class="thema" onclick="waehleThema('Pflege', this)">
-            🛏️ Pflege
-        </button>
-
-        <button class="thema" onclick="waehleThema('Fragen', this)">
-            ❓ Fragen
-        </button>
-
-    </div>
+<div id="autoPhrasen" class="phrasen"></div>
 
 
-    <h2 id="themaTitel">💡 Allgemeine Vorschläge</h2>
+<!-- THEMEN -->
 
-    <div id="themenPhrasen" class="phrasen"></div>
+<h2>💬 Thema auswählen</h2>
+
+<div class="themen">
+
+<button class="thema"
+onclick="waehleThema('Allgemein',this)">
+💬 Allgemein
+</button>
+
+<button class="thema"
+onclick="waehleThema('Kaffee',this)">
+☕ Kaffee
+</button>
+
+<button class="thema"
+onclick="waehleThema('Trinken',this)">
+🥤 Trinken
+</button>
+
+<button class="thema"
+onclick="waehleThema('Essen',this)">
+🍽️ Essen
+</button>
+
+<button class="thema"
+onclick="waehleThema('Schmerzen',this)">
+🩺 Schmerzen
+</button>
+
+<button class="thema"
+onclick="waehleThema('Befinden',this)">
+❤️ Befinden
+</button>
+
+<button class="thema"
+onclick="waehleThema('Unterhaltung',this)">
+🗣️ Unterhaltung
+</button>
+
+<button class="thema"
+onclick="waehleThema('Hilfe',this)">
+🆘 Hilfe
+</button>
+
+<button class="thema"
+onclick="waehleThema('Pflege',this)">
+🛏️ Pflege
+</button>
+
+<button class="thema"
+onclick="waehleThema('Fragen',this)">
+❓ Fragen
+</button>
+
+</div>
 
 
-    <!-- FREIER TEXT -->
+<!-- LOKALE VORSCHLÄGE -->
 
-    <h2>✍️ Eigener Text</h2>
+<h2 id="themaTitel">💡 Allgemeine Vorschläge</h2>
 
-    <div class="eingabe">
-
-        <textarea
-            id="text"
-            placeholder="Was möchtest du sagen?"
-        ></textarea>
-
-        <button class="action" onclick="sprecheTextfeld()">
-            🔊 Vorlesen
-        </button>
-
-        <button class="action secondary" onclick="speichern()">
-            ⭐ Satz speichern
-        </button>
-
-    </div>
+<div id="themenPhrasen" class="phrasen"></div>
 
 
-    <!-- GESPEICHERTE SÄTZE -->
+<!-- KI -->
 
-    <h2>⭐ Meine Sätze</h2>
+<h2>🤖 KI-Phrasenvorschläge</h2>
 
-    <div id="gespeichert" class="phrasen saved"></div>
+<div class="ki-box">
+
+<p>
+Die KI berücksichtigt automatisch
+<strong>Tageszeit, Wochentag und ausgewähltes Thema</strong>.
+</p>
+
+<textarea
+id="kiKontext"
+placeholder="Optional: Was möchtest du ungefähr sagen?">
+</textarea>
+
+<button
+id="kiButton"
+class="action"
+onclick="holeKIPhrasen()">
+🤖 KI-Vorschläge erstellen
+</button>
+
+<p id="kiStatus"></p>
+
+</div>
+
+<br>
+
+<div id="kiPhrasen" class="phrasen"></div>
 
 
-    <!-- STIMME -->
+<!-- EIGENER TEXT -->
 
-    <h2>🗣️ Stimme</h2>
+<h2>✍️ Eigener Text</h2>
 
-    <select id="stimmen"></select>
+<textarea
+id="eigenerText"
+placeholder="Schreibe hier deinen Satz ...">
+</textarea>
+
+<button class="action"
+onclick="sprecheEigenenText()">
+🔊 Vorlesen
+</button>
+
+<button class="action"
+onclick="speichereSatz()">
+⭐ Speichern
+</button>
+
+
+<!-- GESPEICHERTE SÄTZE -->
+
+<h2>⭐ Meine Sätze</h2>
+
+<div id="meineSaetze" class="phrasen"></div>
+
+
+<!-- STIMME -->
+
+<h2>🗣️ Stimme auswählen</h2>
+
+<select id="stimmen"></select>
 
 </main>
 
 
 <script>
 
-/* =========================================================
-   E-TONGUE
-   Tageszeitabhängige Phrasenvorschläge
-========================================================= */
+/* ======================================================
+   E-TONGUE KONFIGURATION
+====================================================== */
+
+/*
+WICHTIG:
+
+Hier später deine Backend-Adresse eintragen.
+
+NICHT den OpenAI API-Key eintragen!
+
+Beispiel:
+
+https://api.e-tongue.com/api/phrasen
+*/
+
+const KI_API_URL =
+    "DEINE_BACKEND_URL/api/phrasen";
+
 
 let aktuellesThema = "Allgemein";
 let stimmen = [];
 
 
-/* =========================================================
-   ZEIT
-========================================================= */
+/* ======================================================
+   TAGESZEIT
+====================================================== */
 
 function getTageszeit() {
 
-    const stunde = new Date().getHours();
+    const h = new Date().getHours();
 
-    if (stunde >= 5 && stunde < 9)
+    if(h >= 5 && h < 9)
         return "Morgen";
 
-    if (stunde >= 9 && stunde < 12)
+    if(h >= 9 && h < 12)
         return "Vormittag";
 
-    if (stunde >= 12 && stunde < 14)
+    if(h >= 12 && h < 14)
         return "Mittag";
 
-    if (stunde >= 14 && stunde < 18)
+    if(h >= 14 && h < 18)
         return "Nachmittag";
 
-    if (stunde >= 18 && stunde < 22)
+    if(h >= 18 && h < 22)
         return "Abend";
 
     return "Nacht";
@@ -368,240 +419,136 @@ function aktualisiereZeit() {
     const jetzt = new Date();
 
     document.getElementById("datum").textContent =
-        jetzt.toLocaleDateString("de-AT", {
-            weekday: "long",
-            day: "2-digit",
-            month: "long",
-            year: "numeric"
-        });
+        jetzt.toLocaleDateString(
+            "de-AT",
+            {
+                weekday:"long",
+                day:"2-digit",
+                month:"long",
+                year:"numeric"
+            }
+        );
 
     document.getElementById("uhrzeit").textContent =
-        jetzt.toLocaleTimeString("de-AT", {
-            hour: "2-digit",
-            minute: "2-digit"
-        });
+        jetzt.toLocaleTimeString(
+            "de-AT",
+            {
+                hour:"2-digit",
+                minute:"2-digit"
+            }
+        );
 
     document.getElementById("tageszeit").textContent =
         getTageszeit();
 }
 
 
-/* =========================================================
-   PHRASEN-DATENBANK
-========================================================= */
+/* ======================================================
+   TAGESZEITABHÄNGIGE PHRASEN
+====================================================== */
 
-const phrasen = {
+const zeitPhrasen = {
 
-Morgen: {
-
-Allgemein: [
+Morgen:[
 "Guten Morgen!",
 "Wie hast du geschlafen?",
-"Mir geht es heute gut.",
-"Ich brauche noch etwas Zeit.",
+"Ich möchte frühstücken.",
+"Ich hätte gerne einen Kaffee.",
 "Was machen wir heute?",
 "Ich freue mich auf den Tag."
 ],
 
-Kaffee: [
+Vormittag:[
+"Wie geht es dir?",
+"Was machen wir als Nächstes?",
+"Ich brauche eine kurze Pause.",
 "Ich hätte gerne einen Kaffee.",
-"Bitte mach mir einen Kaffee.",
-"Ich möchte meinen Kaffee jetzt trinken.",
-"Der Kaffee ist genau richtig.",
-"Bitte noch etwas Kaffee.",
-"Ich möchte keinen Kaffee."
+"Was gibt es heute zu essen?",
+"Ich möchte etwas erzählen."
 ],
 
-Trinken: [
+Mittag:[
+"Ich habe Hunger.",
+"Was gibt es zum Mittagessen?",
 "Ich hätte gerne etwas zu trinken.",
-"Bitte gib mir Wasser.",
+"Wie war dein Vormittag?",
+"Das schmeckt gut.",
+"Was machen wir nach dem Essen?"
+],
+
+Nachmittag:[
+"Wie war dein Tag bisher?",
+"Ich hätte gerne einen Kaffee.",
+"Was machen wir heute noch?",
+"Ich brauche eine Pause.",
+"Erzähl mir etwas.",
+"Ich möchte etwas trinken."
+],
+
+Abend:[
+"Guten Abend!",
+"Wie war dein Tag?",
+"Was gibt es zum Abendessen?",
+"Ich möchte mich entspannen.",
+"Was machen wir morgen?",
+"Ich bin müde."
+],
+
+Nacht:[
+"Ich bin müde.",
+"Ich möchte schlafen.",
+"Bitte mach das Licht aus.",
+"Bitte bleib noch kurz hier.",
+"Ich brauche noch etwas.",
+"Gute Nacht!"
+]
+
+};
+
+
+/* ======================================================
+   THEMENPHRASEN
+====================================================== */
+
+const themenPhrasen = {
+
+Allgemein:[
+"Ja.",
+"Nein.",
+"Bitte.",
+"Danke.",
+"Moment bitte.",
+"Ich möchte etwas sagen."
+],
+
+Kaffee:[
+"Ich hätte gerne einen Kaffee.",
+"Bitte mach mir einen Kaffee.",
+"Möchtest du auch einen Kaffee?",
+"Der Kaffee schmeckt gut.",
+"Bitte noch einen Kaffee.",
+"Ich möchte keinen Kaffee mehr."
+],
+
+Trinken:[
 "Ich habe Durst.",
+"Ich möchte Wasser.",
+"Bitte gib mir etwas zu trinken.",
 "Bitte noch einen Schluck.",
 "Das reicht, danke.",
 "Ich möchte später etwas trinken."
 ],
 
-Essen: [
-"Ich möchte frühstücken.",
-"Was gibt es zum Frühstück?",
+Essen:[
 "Ich habe Hunger.",
+"Was gibt es zu essen?",
+"Ich möchte etwas essen.",
 "Das schmeckt gut.",
 "Bitte noch etwas.",
 "Ich bin satt."
 ],
 
-Unterhaltung: [
-"Guten Morgen, wie geht es dir?",
-"Was gibt es Neues?",
-"Wie wird dein Tag?",
-"Was machen wir heute?",
-"Erzähl mir etwas.",
-"Schön, dich zu sehen."
-]
-
-},
-
-
-Vormittag: {
-
-Allgemein: [
-"Wie geht es dir?",
-"Was machen wir als Nächstes?",
-"Ich brauche eine kurze Pause.",
-"Ich möchte etwas sagen.",
-"Kannst du mir kurz helfen?",
-"Alles in Ordnung."
-],
-
-Kaffee: [
-"Ich hätte gerne einen Kaffee.",
-"Zeit für eine Kaffeepause.",
-"Bitte einen Kaffee.",
-"Möchtest du auch einen Kaffee?",
-"Der Kaffee schmeckt gut.",
-"Ich möchte noch einen Kaffee."
-],
-
-Essen: [
-"Ich bekomme langsam Hunger.",
-"Was gibt es heute zu essen?",
-"Wann gibt es Mittagessen?",
-"Ich möchte eine Kleinigkeit essen.",
-"Das klingt gut.",
-"Ich möchte später essen."
-]
-
-},
-
-
-Mittag: {
-
-Allgemein: [
-"Wie war dein Vormittag?",
-"Was machen wir nach dem Essen?",
-"Ich brauche eine Pause.",
-"Mir geht es gut.",
-"Ich möchte etwas erzählen.",
-"Wie geht es weiter?"
-],
-
-Essen: [
-"Ich habe Hunger.",
-"Was gibt es zum Mittagessen?",
-"Das sieht gut aus.",
-"Bitte noch etwas.",
-"Das schmeckt sehr gut.",
-"Ich bin satt."
-],
-
-Trinken: [
-"Ich hätte gerne etwas zu trinken.",
-"Bitte Wasser.",
-"Ich habe Durst.",
-"Bitte noch einen Schluck.",
-"Das reicht.",
-"Danke."
-]
-
-},
-
-
-Nachmittag: {
-
-Allgemein: [
-"Wie war dein Tag bisher?",
-"Was machen wir heute noch?",
-"Ich hätte gerne eine Pause.",
-"Ich möchte etwas trinken.",
-"Erzähl mir etwas.",
-"Mir geht es gut."
-],
-
-Kaffee: [
-"Ich hätte gerne einen Kaffee.",
-"Zeit für einen Nachmittagskaffee.",
-"Möchtest du mit mir Kaffee trinken?",
-"Bitte mach mir einen Kaffee.",
-"Der Kaffee schmeckt gut.",
-"Ich möchte keinen Kaffee mehr."
-],
-
-Unterhaltung: [
-"Wie war dein Tag bisher?",
-"Was hast du heute gemacht?",
-"Was gibt es Neues?",
-"Erzähl mir mehr.",
-"Das ist interessant.",
-"Was machen wir später?"
-]
-
-},
-
-
-Abend: {
-
-Allgemein: [
-"Guten Abend!",
-"Wie war dein Tag?",
-"Ich möchte mich entspannen.",
-"Was machen wir heute Abend?",
-"Ich bin müde.",
-"Der Tag war schön."
-],
-
-Essen: [
-"Was gibt es zum Abendessen?",
-"Ich habe Hunger.",
-"Das schmeckt gut.",
-"Bitte noch etwas.",
-"Ich möchte nichts mehr.",
-"Ich bin satt."
-],
-
-Unterhaltung: [
-"Wie war dein Tag?",
-"Was war heute besonders?",
-"Erzähl mir von deinem Tag.",
-"Was machen wir morgen?",
-"Das war ein schöner Tag.",
-"Gute Nacht später."
-]
-
-},
-
-
-Nacht: {
-
-Allgemein: [
-"Ich bin müde.",
-"Ich möchte schlafen.",
-"Bitte mach das Licht aus.",
-"Ich brauche noch etwas.",
-"Bitte bleib noch kurz hier.",
-"Gute Nacht!"
-],
-
-Hilfe: [
-"Ich brauche Hilfe.",
-"Bitte komm zu mir.",
-"Ich kann nicht schlafen.",
-"Bitte ändere meine Position.",
-"Ich brauche etwas zu trinken.",
-"Bitte mach das Licht an."
-]
-
-}
-
-};
-
-
-/* =========================================================
-   STANDARD-PHRASEN
-========================================================= */
-
-const standardPhrasen = {
-
-Schmerzen: [
+Schmerzen:[
 "Ich habe Schmerzen.",
 "Die Schmerzen sind stärker geworden.",
 "Bitte ändere meine Position.",
@@ -610,70 +557,16 @@ Schmerzen: [
 "Ich möchte zeigen, wo es weh tut."
 ],
 
-Befinden: [
+Befinden:[
 "Mir geht es gut.",
-"Mir geht es heute nicht so gut.",
+"Mir geht es nicht so gut.",
 "Ich bin müde.",
 "Ich fühle mich wohl.",
 "Ich brauche eine Pause.",
 "Ich möchte etwas erzählen."
 ],
 
-Hilfe: [
-"Ich brauche Hilfe.",
-"Bitte komm zu mir.",
-"Bitte warte kurz.",
-"Kannst du mir helfen?",
-"Bitte ändere meine Position.",
-"Danke für deine Hilfe."
-],
-
-Pflege: [
-"Bitte ändere meine Position.",
-"Ich möchte anders sitzen.",
-"Bitte richte mich etwas auf.",
-"Ich brauche eine Pause.",
-"Bitte warte kurz.",
-"Das passt so, danke."
-],
-
-Fragen: [
-"Wie geht es dir?",
-"Was machen wir jetzt?",
-"Wann geht es weiter?",
-"Kannst du mir das erklären?",
-"Was meinst du damit?",
-"Kannst du das wiederholen?"
-],
-
-Trinken: [
-"Ich habe Durst.",
-"Ich möchte Wasser.",
-"Bitte gib mir etwas zu trinken.",
-"Bitte noch einen Schluck.",
-"Das reicht, danke.",
-"Ich möchte später trinken."
-],
-
-Essen: [
-"Ich habe Hunger.",
-"Ich möchte etwas essen.",
-"Was gibt es zu essen?",
-"Das schmeckt gut.",
-"Bitte noch etwas.",
-"Ich bin satt."
-],
-
-Kaffee: [
-"Ich hätte gerne einen Kaffee.",
-"Bitte mach mir einen Kaffee.",
-"Der Kaffee schmeckt gut.",
-"Bitte noch einen Kaffee.",
-"Möchtest du auch einen Kaffee?",
-"Ich möchte keinen Kaffee."
-],
-
-Unterhaltung: [
+Unterhaltung:[
 "Wie geht es dir?",
 "Was gibt es Neues?",
 "Erzähl mir mehr.",
@@ -682,97 +575,46 @@ Unterhaltung: [
 "Ich möchte dir etwas erzählen."
 ],
 
-Allgemein: [
-"Ja.",
-"Nein.",
-"Bitte.",
-"Danke.",
-"Moment bitte.",
-"Ich möchte etwas sagen."
+Hilfe:[
+"Ich brauche Hilfe.",
+"Bitte komm zu mir.",
+"Kannst du mir helfen?",
+"Bitte warte kurz.",
+"Bitte ändere meine Position.",
+"Danke für deine Hilfe."
+],
+
+Pflege:[
+"Bitte ändere meine Position.",
+"Ich möchte anders sitzen.",
+"Bitte richte mich etwas auf.",
+"Ich brauche eine Pause.",
+"Das passt so.",
+"Danke."
+],
+
+Fragen:[
+"Wie geht es dir?",
+"Was machen wir jetzt?",
+"Wann geht es weiter?",
+"Kannst du mir das erklären?",
+"Was meinst du damit?",
+"Kannst du das wiederholen?"
 ]
 
 };
 
 
-/* =========================================================
-   PASSENDE PHRASEN HOLEN
-========================================================= */
+/* ======================================================
+   PHRASEN RENDERN
+====================================================== */
 
-function holePhrasen(thema) {
+function renderPhrasen(id,liste) {
 
-    const tageszeit = getTageszeit();
+    const box =
+        document.getElementById(id);
 
-    if (
-        phrasen[tageszeit] &&
-        phrasen[tageszeit][thema]
-    ) {
-        return phrasen[tageszeit][thema];
-    }
-
-    if (standardPhrasen[thema]) {
-        return standardPhrasen[thema];
-    }
-
-    return standardPhrasen.Allgemein;
-}
-
-
-/* =========================================================
-   AUTOMATISCHE STARTVORSCHLÄGE
-========================================================= */
-
-function zeigeAutoPhrasen() {
-
-    const tageszeit = getTageszeit();
-
-    let liste =
-        phrasen[tageszeit]?.Allgemein ||
-        standardPhrasen.Allgemein;
-
-    renderPhrasen(
-        "autoPhrasen",
-        liste
-    );
-}
-
-
-/* =========================================================
-   THEMA AUSWÄHLEN
-========================================================= */
-
-function waehleThema(thema, button) {
-
-    aktuellesThema = thema;
-
-    document
-        .querySelectorAll(".thema")
-        .forEach(btn => btn.classList.remove("active"));
-
-    if (button)
-        button.classList.add("active");
-
-    document.getElementById("themaTitel").textContent =
-        "💡 " + thema + " – passende Vorschläge";
-
-    const liste = holePhrasen(thema);
-
-    renderPhrasen(
-        "themenPhrasen",
-        liste
-    );
-}
-
-
-/* =========================================================
-   PHRASEN ANZEIGEN
-========================================================= */
-
-function renderPhrasen(elementId, liste) {
-
-    const container =
-        document.getElementById(elementId);
-
-    container.innerHTML = "";
+    box.innerHTML = "";
 
     liste.forEach(text => {
 
@@ -783,29 +625,62 @@ function renderPhrasen(elementId, liste) {
 
         button.textContent = text;
 
-        button.onclick = () => sprechen(text);
+        button.onclick = () =>
+            sprechen(text);
 
-        container.appendChild(button);
+        box.appendChild(button);
 
     });
 }
 
 
-/* =========================================================
-   TEXT TO SPEECH
-========================================================= */
+/* ======================================================
+   THEMA
+====================================================== */
 
-function ladenStimmen() {
+function waehleThema(thema,button) {
+
+    aktuellesThema = thema;
+
+    document
+    .querySelectorAll(".thema")
+    .forEach(b =>
+        b.classList.remove("active")
+    );
+
+    if(button)
+        button.classList.add("active");
+
+
+    document.getElementById(
+        "themaTitel"
+    ).textContent =
+        "💡 " + thema;
+
+
+    renderPhrasen(
+        "themenPhrasen",
+        themenPhrasen[thema]
+    );
+}
+
+
+/* ======================================================
+   TEXT TO SPEECH
+====================================================== */
+
+function ladeStimmen() {
 
     stimmen =
-        window.speechSynthesis.getVoices();
+        speechSynthesis.getVoices();
 
     const select =
         document.getElementById("stimmen");
 
     select.innerHTML = "";
 
-    stimmen.forEach((stimme, index) => {
+
+    stimmen.forEach((voice,index) => {
 
         const option =
             document.createElement("option");
@@ -813,10 +688,17 @@ function ladenStimmen() {
         option.value = index;
 
         option.textContent =
-            stimme.name + " – " + stimme.lang;
+            voice.name +
+            " – " +
+            voice.lang;
 
-        if (stimme.lang.startsWith("de"))
+
+        if(
+            voice.lang.startsWith("de")
+        ) {
             option.selected = true;
+        }
+
 
         select.appendChild(option);
 
@@ -826,93 +708,289 @@ function ladenStimmen() {
 
 function sprechen(text) {
 
-    if (!text)
+    if(!text)
         return;
 
-    window.speechSynthesis.cancel();
+    speechSynthesis.cancel();
 
-    const utterance =
+    const u =
         new SpeechSynthesisUtterance(text);
 
+
     const index =
-        document.getElementById("stimmen").value;
+        document.getElementById(
+            "stimmen"
+        ).value;
 
-    if (stimmen[index])
-        utterance.voice = stimmen[index];
 
-    utterance.lang = "de-DE";
+    if(stimmen[index])
+        u.voice = stimmen[index];
 
-    utterance.rate = 1;
 
-    window.speechSynthesis.speak(utterance);
+    u.lang = "de-DE";
+    u.rate = 1;
+
+    speechSynthesis.speak(u);
 }
 
 
-function sprecheTextfeld() {
+function sprecheEigenenText() {
 
-    const text =
-        document.getElementById("text").value.trim();
-
-    sprechen(text);
+    sprechen(
+        document.getElementById(
+            "eigenerText"
+        ).value.trim()
+    );
 }
 
 
-/* =========================================================
-   EIGENE SÄTZE SPEICHERN
-========================================================= */
+/* ======================================================
+   KI
+====================================================== */
 
-function speichern() {
+async function holeKIPhrasen() {
+
+    const status =
+        document.getElementById(
+            "kiStatus"
+        );
+
+    const button =
+        document.getElementById(
+            "kiButton"
+        );
+
+    const jetzt =
+        new Date();
+
+
+    const daten = {
+
+        thema:
+            aktuellesThema,
+
+        kontext:
+            document.getElementById(
+                "kiKontext"
+            ).value.trim(),
+
+        tageszeit:
+            getTageszeit(),
+
+        wochentag:
+            jetzt.toLocaleDateString(
+                "de-AT",
+                {
+                    weekday:"long"
+                }
+            ),
+
+        datum:
+            jetzt.toLocaleDateString(
+                "de-AT"
+            ),
+
+        uhrzeit:
+            jetzt.toLocaleTimeString(
+                "de-AT",
+                {
+                    hour:"2-digit",
+                    minute:"2-digit"
+                }
+            )
+
+    };
+
+
+    button.disabled = true;
+
+    button.textContent =
+        "⏳ KI denkt ...";
+
+    status.textContent =
+        "Passende Kommunikationssätze werden erstellt ...";
+
+
+    try {
+
+        if(
+            KI_API_URL.includes(
+                "DEINE_BACKEND_URL"
+            )
+        ) {
+
+            throw new Error(
+                "Backend noch nicht eingerichtet."
+            );
+
+        }
+
+
+        const response =
+            await fetch(
+                KI_API_URL,
+                {
+                    method:"POST",
+
+                    headers:{
+                        "Content-Type":
+                        "application/json"
+                    },
+
+                    body:
+                        JSON.stringify(daten)
+                }
+            );
+
+
+        if(!response.ok) {
+
+            throw new Error(
+                "Serverfehler " +
+                response.status
+            );
+        }
+
+
+        const ergebnis =
+            await response.json();
+
+
+        if(
+            !Array.isArray(
+                ergebnis.phrasen
+            )
+        ) {
+
+            throw new Error(
+                "Ungültige Antwort"
+            );
+        }
+
+
+        renderPhrasen(
+            "kiPhrasen",
+            ergebnis.phrasen
+        );
+
+
+        status.textContent =
+            "✓ KI-Vorschläge sind bereit.";
+
+    }
+
+    catch(error) {
+
+        console.error(error);
+
+        /*
+        FALLBACK:
+
+        Wenn KI oder Internet nicht verfügbar
+        ist, bleiben lokale Vorschläge nutzbar.
+        */
+
+        const fallback =
+            themenPhrasen[
+                aktuellesThema
+            ] ||
+            zeitPhrasen[
+                getTageszeit()
+            ];
+
+
+        renderPhrasen(
+            "kiPhrasen",
+            fallback
+        );
+
+
+        status.textContent =
+            "⚠️ KI momentan nicht erreichbar – lokale Vorschläge werden angezeigt.";
+
+    }
+
+    finally {
+
+        button.disabled = false;
+
+        button.textContent =
+            "🤖 Neue KI-Vorschläge";
+
+    }
+}
+
+
+/* ======================================================
+   SÄTZE SPEICHERN
+====================================================== */
+
+function speichereSatz() {
 
     const feld =
-        document.getElementById("text");
+        document.getElementById(
+            "eigenerText"
+        );
 
     const text =
         feld.value.trim();
 
-    if (!text)
+    if(!text)
         return;
 
-    let gespeichert =
+
+    let liste =
         JSON.parse(
-            localStorage.getItem("etongue_saetze") || "[]"
+            localStorage.getItem(
+                "etongue_saetze"
+            ) || "[]"
         );
 
-    if (!gespeichert.includes(text)) {
-        gespeichert.push(text);
-    }
+
+    if(!liste.includes(text))
+        liste.push(text);
+
 
     localStorage.setItem(
         "etongue_saetze",
-        JSON.stringify(gespeichert)
+        JSON.stringify(liste)
     );
+
 
     feld.value = "";
 
-    ladeGespeicherte();
+    ladeSaetze();
 }
 
 
-function ladeGespeicherte() {
+function ladeSaetze() {
 
-    const gespeichert =
+    const liste =
         JSON.parse(
-            localStorage.getItem("etongue_saetze") || "[]"
+            localStorage.getItem(
+                "etongue_saetze"
+            ) || "[]"
         );
 
-    const container =
-        document.getElementById("gespeichert");
 
-    container.innerHTML = "";
+    const box =
+        document.getElementById(
+            "meineSaetze"
+        );
 
-    if (gespeichert.length === 0) {
+    box.innerHTML = "";
 
-        container.innerHTML =
+
+    if(liste.length === 0) {
+
+        box.innerHTML =
             "<p>Noch keine eigenen Sätze gespeichert.</p>";
 
         return;
     }
 
-    gespeichert.forEach(text => {
+
+    liste.forEach(text => {
 
         const button =
             document.createElement("button");
@@ -924,30 +1002,44 @@ function ladeGespeicherte() {
         button.onclick =
             () => sprechen(text);
 
-        container.appendChild(button);
+        box.appendChild(button);
 
     });
 }
 
 
-/* =========================================================
+/* ======================================================
    START
-========================================================= */
+====================================================== */
 
 function start() {
 
     aktualisiereZeit();
 
-    zeigeAutoPhrasen();
+    renderPhrasen(
+        "autoPhrasen",
+        zeitPhrasen[
+            getTageszeit()
+        ]
+    );
+
+
+    const ersterButton =
+        document.querySelector(
+            ".thema"
+        );
+
 
     waehleThema(
         "Allgemein",
-        document.querySelector(".thema")
+        ersterButton
     );
 
-    ladeGespeicherte();
 
-    ladenStimmen();
+    ladeSaetze();
+
+    ladeStimmen();
+
 
     setInterval(
         aktualisiereZeit,
@@ -956,8 +1048,9 @@ function start() {
 }
 
 
-window.speechSynthesis.onvoiceschanged =
-    ladenStimmen;
+speechSynthesis.onvoiceschanged =
+    ladeStimmen;
+
 
 window.addEventListener(
     "load",
