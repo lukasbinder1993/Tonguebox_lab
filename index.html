@@ -1,859 +1,967 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <title>Tonguebox Cloud</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<title>E-Tongue – Intelligente Phrasenvorschläge</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<style>
+:root {
+    --bg: #07111f;
+    --panel: #103958;
+    --panel2: #0d2e49;
+    --accent: #32d4bd;
+    --accent2: #21a9c7;
+    --text: #ffffff;
+    --muted: #d8e4ee;
+    --danger: #ff6b6b;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+}
+
+header {
+    padding: 25px;
+    text-align: center;
+    border-bottom: 2px solid var(--accent2);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 38px;
+}
+
+header p {
+    color: var(--muted);
+    margin-bottom: 0;
+}
+
+.container {
+    width: min(1400px, 96%);
+    margin: 25px auto;
+}
+
+.status {
+    background: var(--panel2);
+    border: 2px solid var(--accent2);
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.status strong {
+    color: var(--accent);
+}
+
+h2 {
+    color: var(--accent);
+    margin-top: 35px;
+}
+
+/* Blicksteuerungsfreundliche Buttons */
+
+button {
+    font-family: inherit;
+    cursor: pointer;
+    border: 3px solid transparent;
+    transition: 0.15s;
+}
+
+button:hover,
+button:focus {
+    border-color: white;
+    transform: scale(1.02);
+    outline: none;
+}
+
+.themen {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 16px;
+}
+
+.thema {
+    min-height: 110px;
+    border-radius: 15px;
+    background: var(--panel);
+    color: white;
+    font-size: 23px;
+    font-weight: bold;
+}
+
+.thema.active {
+    background: var(--accent);
+    color: #06202a;
+}
+
+/* KI / Phrasen */
+
+.phrasen {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+}
+
+.phrase {
+    min-height: 125px;
+    padding: 22px;
+    border-radius: 16px;
+    background: var(--panel);
+    color: white;
+    font-size: 24px;
+    text-align: left;
+    line-height: 1.35;
+}
+
+.phrase::before {
+    content: "🔊";
+    margin-right: 12px;
+}
+
+/* Texteingabe */
+
+.eingabe {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+textarea {
+    flex: 1;
+    min-width: 280px;
+    min-height: 120px;
+    padding: 18px;
+    border-radius: 14px;
+    border: 3px solid var(--accent2);
+    background: white;
+    color: #111;
+    font-size: 22px;
+    resize: vertical;
+}
+
+.action {
+    min-width: 190px;
+    min-height: 90px;
+    border-radius: 14px;
+    background: var(--accent);
+    color: #052029;
+    font-size: 21px;
+    font-weight: bold;
+}
+
+.secondary {
+    background: var(--accent2);
+    color: white;
+}
+
+/* Stimme */
+
+select {
+    width: 100%;
+    min-height: 65px;
+    font-size: 20px;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+/* Eigene Sätze */
+
+.saved {
+    margin-top: 15px;
+}
+
+/* Responsive */
+
+@media (max-width: 800px) {
 
     body {
-      margin: 0;
-      padding: 16px;
-      font-family: Arial, Helvetica, sans-serif;
-      background: #f4f8f9;
-      color: #10232a;
+        font-size: 18px;
     }
 
-    main {
-      max-width: 760px;
-      margin: auto;
+    header h1 {
+        font-size: 28px;
     }
 
-    h1 {
-      text-align: center;
-      font-size: 38px;
-      margin-bottom: 5px;
+    .phrasen {
+        grid-template-columns: 1fr;
     }
 
-    .subtitle {
-      text-align: center;
-      font-size: 22px;
-      margin-bottom: 25px;
-    }
-
-    .status {
-      background: white;
-      border: 3px solid #087f8c;
-      border-radius: 18px;
-      padding: 16px;
-      margin-bottom: 18px;
-      font-size: 20px;
-      font-weight: bold;
-      text-align: center;
-    }
-
-    .accordion {
-      margin-bottom: 16px;
-    }
-
-    .accordion-button {
-      width: 100%;
-      min-height: 90px;
-      border: none;
-      border-radius: 18px;
-      background: #087f8c;
-      color: white;
-      font-size: 25px;
-      font-weight: bold;
-      padding: 18px;
-      cursor: pointer;
-      text-align: left;
-    }
-
-    .accordion-content {
-      display: none;
-      background: white;
-      border-radius: 0 0 18px 18px;
-      padding: 18px;
-    }
-
-    .accordion-content.open {
-      display: block;
-    }
-
-    input,
-    textarea {
-      width: 100%;
-      min-height: 70px;
-      padding: 15px;
-      margin: 8px 0;
-      border: 3px solid #087f8c;
-      border-radius: 15px;
-      font-size: 21px;
-    }
-
-    button.action,
     .phrase {
-      width: 100%;
-      min-height: 85px;
-      margin: 7px 0;
-      padding: 15px;
-      border: none;
-      border-radius: 16px;
-      font-size: 22px;
-      font-weight: bold;
-      cursor: pointer;
+        min-height: 110px;
     }
-
-    .primary {
-      background: #087f8c;
-      color: white;
-    }
-
-    .yes {
-      background: #16863b;
-      color: white;
-    }
-
-    .no {
-      background: #c62828;
-      color: white;
-    }
-
-    .secondary {
-      background: #e5edef;
-      color: #10232a;
-    }
-
-    .danger {
-      background: #b3261e;
-      color: white;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-
-    .phrase-row {
-      margin-bottom: 14px;
-      padding: 10px;
-      background: #f3f7f8;
-      border-radius: 16px;
-    }
-
-    button:focus,
-    input:focus,
-    textarea:focus {
-      outline: 7px solid #ffd600;
-      outline-offset: 4px;
-    }
-
-    #app {
-      display: none;
-    }
-
-    #userEmail {
-      font-size: 17px;
-      text-align: center;
-      margin-bottom: 12px;
-    }
-
-    @media(max-width: 600px) {
-      body {
-        padding: 10px;
-      }
-
-      h1 {
-        font-size: 32px;
-      }
-
-      .accordion-button {
-        min-height: 100px;
-        font-size: 23px;
-      }
-
-      button.action,
-      .phrase {
-        min-height: 100px;
-        font-size: 21px;
-      }
-    }
-  </style>
+}
+</style>
 </head>
 
 <body>
 
-<main>
+<header>
+    <h1>🤖 E-Tongue</h1>
+    <p>Intelligente, tageszeitabhängige Kommunikation</p>
+</header>
 
-  <h1>👁️ Tonguebox</h1>
-  <div class="subtitle">Sprich mit deinen Augen</div>
+<main class="container">
 
-  <!-- LOGIN -->
-  <section id="loginArea">
-
-    <div class="status">
-      🔐 Persönliches Tonguebox-Konto
-    </div>
-
-    <input
-      id="email"
-      type="email"
-      placeholder="E-Mail-Adresse"
-      autocomplete="email"
-    >
-
-    <input
-      id="password"
-      type="password"
-      placeholder="Passwort"
-      autocomplete="current-password"
-    >
-
-    <button class="action primary" onclick="login()">
-      🔓 Anmelden
-    </button>
-
-    <button class="action secondary" onclick="register()">
-      👤 Neues Konto erstellen
-    </button>
-
-    <div id="loginMessage"></div>
-
-  </section>
-
-
-  <!-- APP -->
-  <section id="app">
+    <!-- ZEIT -->
 
     <div class="status">
-      ☁️ Tonguebox Cloud aktiv
-    </div>
+        <div id="datum"></div>
+        <div id="uhrzeit"></div>
 
-    <div id="userEmail"></div>
-
-
-    <!-- JA / NEIN -->
-    <div class="accordion">
-
-      <button class="accordion-button" onclick="toggleAccordion(this)">
-        ✅ Ja / Nein
-      </button>
-
-      <div class="accordion-content">
-
-        <div class="grid">
-
-          <button class="action yes" onclick="speak('Ja.')">
-            JA
-          </button>
-
-          <button class="action no" onclick="speak('Nein.')">
-            NEIN
-          </button>
-
-          <button class="action secondary" onclick="speak('Vielleicht.')">
-            Vielleicht
-          </button>
-
-          <button class="action secondary"
-                  onclick="speak('Bitte wiederholen.')">
-            Wiederholen
-          </button>
-
-        </div>
-
-      </div>
+        <p>
+            Aktuelle Tageszeit:
+            <strong id="tageszeit"></strong>
+        </p>
     </div>
 
 
-    <!-- TEXT SPRECHEN -->
-    <div class="accordion">
+    <!-- AUTOMATISCHE VORSCHLÄGE -->
 
-      <button class="accordion-button" onclick="toggleAccordion(this)">
-        🔊 Text sprechen
-      </button>
+    <h2>✨ Vorschläge für jetzt</h2>
 
-      <div class="accordion-content">
+    <div id="autoPhrasen" class="phrasen"></div>
+
+
+    <!-- THEMEN -->
+
+    <h2>💬 Thema auswählen</h2>
+
+    <div class="themen">
+
+        <button class="thema" onclick="waehleThema('Allgemein', this)">
+            💬 Allgemein
+        </button>
+
+        <button class="thema" onclick="waehleThema('Kaffee', this)">
+            ☕ Kaffee
+        </button>
+
+        <button class="thema" onclick="waehleThema('Trinken', this)">
+            🥤 Trinken
+        </button>
+
+        <button class="thema" onclick="waehleThema('Essen', this)">
+            🍽️ Essen
+        </button>
+
+        <button class="thema" onclick="waehleThema('Schmerzen', this)">
+            🩺 Schmerzen
+        </button>
+
+        <button class="thema" onclick="waehleThema('Befinden', this)">
+            ❤️ Befinden
+        </button>
+
+        <button class="thema" onclick="waehleThema('Unterhaltung', this)">
+            🗣️ Unterhaltung
+        </button>
+
+        <button class="thema" onclick="waehleThema('Hilfe', this)">
+            🆘 Hilfe
+        </button>
+
+        <button class="thema" onclick="waehleThema('Pflege', this)">
+            🛏️ Pflege
+        </button>
+
+        <button class="thema" onclick="waehleThema('Fragen', this)">
+            ❓ Fragen
+        </button>
+
+    </div>
+
+
+    <h2 id="themaTitel">💡 Allgemeine Vorschläge</h2>
+
+    <div id="themenPhrasen" class="phrasen"></div>
+
+
+    <!-- FREIER TEXT -->
+
+    <h2>✍️ Eigener Text</h2>
+
+    <div class="eingabe">
 
         <textarea
-          id="speechText"
-          rows="4"
-          placeholder="Was möchtest du sagen?"
+            id="text"
+            placeholder="Was möchtest du sagen?"
         ></textarea>
 
-        <button class="action primary" onclick="speakOwnText()">
-          🔊 Vorlesen
+        <button class="action" onclick="sprecheTextfeld()">
+            🔊 Vorlesen
         </button>
 
-      </div>
+        <button class="action secondary" onclick="speichern()">
+            ⭐ Satz speichern
+        </button>
+
     </div>
 
 
-    <!-- PERSÖNLICHE PHRASE -->
-    <div class="accordion">
+    <!-- GESPEICHERTE SÄTZE -->
 
-      <button class="accordion-button" onclick="toggleAccordion(this)">
-        ➕ Eigene Phrase speichern
-      </button>
+    <h2>⭐ Meine Sätze</h2>
 
-      <div class="accordion-content">
-
-        <textarea
-          id="newPhrase"
-          placeholder="Neue persönliche Phrase"
-        ></textarea>
-
-        <button class="action primary" onclick="savePhrase()">
-          ☁️ In meiner Cloud speichern
-        </button>
-
-        <div id="saveMessage"></div>
-
-      </div>
-    </div>
+    <div id="gespeichert" class="phrasen saved"></div>
 
 
-    <!-- MEINE PHRASES -->
-    <div class="accordion">
+    <!-- STIMME -->
 
-      <button class="accordion-button" onclick="openPhrases(this)">
-        💬 Meine Phrasen
-      </button>
+    <h2>🗣️ Stimme</h2>
 
-      <div class="accordion-content">
-
-        <div id="phrases">
-          Lade Phrasen …
-        </div>
-
-      </div>
-    </div>
-
-
-    <!-- SOFORT KOMMUNIKATION -->
-    <div class="accordion">
-
-      <button class="accordion-button" onclick="toggleAccordion(this)">
-        ⚡ Schnelle Kommunikation
-      </button>
-
-      <div class="accordion-content">
-
-        <button class="phrase primary"
-                onclick="speak('Einen Moment bitte.')">
-          ⏳ Einen Moment bitte
-        </button>
-
-        <button class="phrase primary"
-                onclick="speak('Bitte sprechen Sie langsamer.')">
-          🐢 Bitte langsamer
-        </button>
-
-        <button class="phrase primary"
-                onclick="speak('Bitte wiederholen Sie das.')">
-          🔁 Bitte wiederholen
-        </button>
-
-        <button class="phrase primary"
-                onclick="speak('Ich brauche bitte Hilfe.')">
-          🙏 Ich brauche Hilfe
-        </button>
-
-        <button class="phrase primary"
-                onclick="speak('Bitte stellen Sie mir eine Ja-oder-Nein-Frage.')">
-          ❓ Ja/Nein-Frage stellen
-        </button>
-
-        <button class="phrase primary"
-                onclick="speak('Ich kommuniziere über eine Augensteuerung.')">
-          👁️ Ich kommuniziere mit Augensteuerung
-        </button>
-
-      </div>
-    </div>
-
-
-    <!-- KONTO -->
-    <div class="accordion">
-
-      <button class="accordion-button" onclick="toggleAccordion(this)">
-        👤 Mein Konto
-      </button>
-
-      <div class="accordion-content">
-
-        <button class="action danger" onclick="logout()">
-          🚪 Abmelden
-        </button>
-
-      </div>
-    </div>
-
-  </section>
+    <select id="stimmen"></select>
 
 </main>
 
 
 <script>
 
-const SUPABASE_URL =
-  "https://zuealgaycolrvtvrubiu.supabase.co";
+/* =========================================================
+   E-TONGUE
+   Tageszeitabhängige Phrasenvorschläge
+========================================================= */
 
-const SUPABASE_KEY =
-  "DEINE_SUPABASE_ANON_KEY";
-
-const supabaseClient =
-  supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-  );
+let aktuellesThema = "Allgemein";
+let stimmen = [];
 
 
-/* -------------------------
-   LOGIN
-------------------------- */
+/* =========================================================
+   ZEIT
+========================================================= */
 
-async function login() {
+function getTageszeit() {
 
-  const email =
-    document.getElementById("email").value.trim();
+    const stunde = new Date().getHours();
 
-  const password =
-    document.getElementById("password").value;
+    if (stunde >= 5 && stunde < 9)
+        return "Morgen";
 
-  const message =
-    document.getElementById("loginMessage");
+    if (stunde >= 9 && stunde < 12)
+        return "Vormittag";
 
-  message.textContent = "Anmeldung läuft …";
+    if (stunde >= 12 && stunde < 14)
+        return "Mittag";
 
-  const { data, error } =
-    await supabaseClient.auth.signInWithPassword({
-      email,
-      password
-    });
+    if (stunde >= 14 && stunde < 18)
+        return "Nachmittag";
 
-  if (error) {
+    if (stunde >= 18 && stunde < 22)
+        return "Abend";
 
-    message.textContent =
-      "❌ " + error.message;
-
-    return;
-  }
-
-  message.textContent = "";
-
-  showApp(data.user);
+    return "Nacht";
 }
 
 
-/* -------------------------
-   REGISTRIERUNG
-------------------------- */
+function aktualisiereZeit() {
 
-async function register() {
+    const jetzt = new Date();
 
-  const email =
-    document.getElementById("email").value.trim();
+    document.getElementById("datum").textContent =
+        jetzt.toLocaleDateString("de-AT", {
+            weekday: "long",
+            day: "2-digit",
+            month: "long",
+            year: "numeric"
+        });
 
-  const password =
-    document.getElementById("password").value;
+    document.getElementById("uhrzeit").textContent =
+        jetzt.toLocaleTimeString("de-AT", {
+            hour: "2-digit",
+            minute: "2-digit"
+        });
 
-  const message =
-    document.getElementById("loginMessage");
-
-  if (!email || !password) {
-
-    message.textContent =
-      "Bitte E-Mail und Passwort eingeben.";
-
-    return;
-  }
-
-  const { data, error } =
-    await supabaseClient.auth.signUp({
-      email,
-      password
-    });
-
-  if (error) {
-
-    message.textContent =
-      "❌ " + error.message;
-
-    return;
-  }
-
-  if (data.session) {
-
-    showApp(data.user);
-
-  } else {
-
-    message.textContent =
-      "✅ Konto erstellt. Bitte bestätige gegebenenfalls deine E-Mail.";
-
-  }
+    document.getElementById("tageszeit").textContent =
+        getTageszeit();
 }
 
 
-/* -------------------------
-   ABMELDEN
-------------------------- */
+/* =========================================================
+   PHRASEN-DATENBANK
+========================================================= */
 
-async function logout() {
+const phrasen = {
 
-  await supabaseClient.auth.signOut();
+Morgen: {
 
-  document.getElementById("app").style.display =
-    "none";
+Allgemein: [
+"Guten Morgen!",
+"Wie hast du geschlafen?",
+"Mir geht es heute gut.",
+"Ich brauche noch etwas Zeit.",
+"Was machen wir heute?",
+"Ich freue mich auf den Tag."
+],
 
-  document.getElementById("loginArea").style.display =
-    "block";
+Kaffee: [
+"Ich hätte gerne einen Kaffee.",
+"Bitte mach mir einen Kaffee.",
+"Ich möchte meinen Kaffee jetzt trinken.",
+"Der Kaffee ist genau richtig.",
+"Bitte noch etwas Kaffee.",
+"Ich möchte keinen Kaffee."
+],
+
+Trinken: [
+"Ich hätte gerne etwas zu trinken.",
+"Bitte gib mir Wasser.",
+"Ich habe Durst.",
+"Bitte noch einen Schluck.",
+"Das reicht, danke.",
+"Ich möchte später etwas trinken."
+],
+
+Essen: [
+"Ich möchte frühstücken.",
+"Was gibt es zum Frühstück?",
+"Ich habe Hunger.",
+"Das schmeckt gut.",
+"Bitte noch etwas.",
+"Ich bin satt."
+],
+
+Unterhaltung: [
+"Guten Morgen, wie geht es dir?",
+"Was gibt es Neues?",
+"Wie wird dein Tag?",
+"Was machen wir heute?",
+"Erzähl mir etwas.",
+"Schön, dich zu sehen."
+]
+
+},
+
+
+Vormittag: {
+
+Allgemein: [
+"Wie geht es dir?",
+"Was machen wir als Nächstes?",
+"Ich brauche eine kurze Pause.",
+"Ich möchte etwas sagen.",
+"Kannst du mir kurz helfen?",
+"Alles in Ordnung."
+],
+
+Kaffee: [
+"Ich hätte gerne einen Kaffee.",
+"Zeit für eine Kaffeepause.",
+"Bitte einen Kaffee.",
+"Möchtest du auch einen Kaffee?",
+"Der Kaffee schmeckt gut.",
+"Ich möchte noch einen Kaffee."
+],
+
+Essen: [
+"Ich bekomme langsam Hunger.",
+"Was gibt es heute zu essen?",
+"Wann gibt es Mittagessen?",
+"Ich möchte eine Kleinigkeit essen.",
+"Das klingt gut.",
+"Ich möchte später essen."
+]
+
+},
+
+
+Mittag: {
+
+Allgemein: [
+"Wie war dein Vormittag?",
+"Was machen wir nach dem Essen?",
+"Ich brauche eine Pause.",
+"Mir geht es gut.",
+"Ich möchte etwas erzählen.",
+"Wie geht es weiter?"
+],
+
+Essen: [
+"Ich habe Hunger.",
+"Was gibt es zum Mittagessen?",
+"Das sieht gut aus.",
+"Bitte noch etwas.",
+"Das schmeckt sehr gut.",
+"Ich bin satt."
+],
+
+Trinken: [
+"Ich hätte gerne etwas zu trinken.",
+"Bitte Wasser.",
+"Ich habe Durst.",
+"Bitte noch einen Schluck.",
+"Das reicht.",
+"Danke."
+]
+
+},
+
+
+Nachmittag: {
+
+Allgemein: [
+"Wie war dein Tag bisher?",
+"Was machen wir heute noch?",
+"Ich hätte gerne eine Pause.",
+"Ich möchte etwas trinken.",
+"Erzähl mir etwas.",
+"Mir geht es gut."
+],
+
+Kaffee: [
+"Ich hätte gerne einen Kaffee.",
+"Zeit für einen Nachmittagskaffee.",
+"Möchtest du mit mir Kaffee trinken?",
+"Bitte mach mir einen Kaffee.",
+"Der Kaffee schmeckt gut.",
+"Ich möchte keinen Kaffee mehr."
+],
+
+Unterhaltung: [
+"Wie war dein Tag bisher?",
+"Was hast du heute gemacht?",
+"Was gibt es Neues?",
+"Erzähl mir mehr.",
+"Das ist interessant.",
+"Was machen wir später?"
+]
+
+},
+
+
+Abend: {
+
+Allgemein: [
+"Guten Abend!",
+"Wie war dein Tag?",
+"Ich möchte mich entspannen.",
+"Was machen wir heute Abend?",
+"Ich bin müde.",
+"Der Tag war schön."
+],
+
+Essen: [
+"Was gibt es zum Abendessen?",
+"Ich habe Hunger.",
+"Das schmeckt gut.",
+"Bitte noch etwas.",
+"Ich möchte nichts mehr.",
+"Ich bin satt."
+],
+
+Unterhaltung: [
+"Wie war dein Tag?",
+"Was war heute besonders?",
+"Erzähl mir von deinem Tag.",
+"Was machen wir morgen?",
+"Das war ein schöner Tag.",
+"Gute Nacht später."
+]
+
+},
+
+
+Nacht: {
+
+Allgemein: [
+"Ich bin müde.",
+"Ich möchte schlafen.",
+"Bitte mach das Licht aus.",
+"Ich brauche noch etwas.",
+"Bitte bleib noch kurz hier.",
+"Gute Nacht!"
+],
+
+Hilfe: [
+"Ich brauche Hilfe.",
+"Bitte komm zu mir.",
+"Ich kann nicht schlafen.",
+"Bitte ändere meine Position.",
+"Ich brauche etwas zu trinken.",
+"Bitte mach das Licht an."
+]
 
 }
 
+};
+
+
+/* =========================================================
+   STANDARD-PHRASEN
+========================================================= */
+
+const standardPhrasen = {
+
+Schmerzen: [
+"Ich habe Schmerzen.",
+"Die Schmerzen sind stärker geworden.",
+"Bitte ändere meine Position.",
+"Ich brauche Hilfe.",
+"Bitte warte einen Moment.",
+"Ich möchte zeigen, wo es weh tut."
+],
+
+Befinden: [
+"Mir geht es gut.",
+"Mir geht es heute nicht so gut.",
+"Ich bin müde.",
+"Ich fühle mich wohl.",
+"Ich brauche eine Pause.",
+"Ich möchte etwas erzählen."
+],
+
+Hilfe: [
+"Ich brauche Hilfe.",
+"Bitte komm zu mir.",
+"Bitte warte kurz.",
+"Kannst du mir helfen?",
+"Bitte ändere meine Position.",
+"Danke für deine Hilfe."
+],
+
+Pflege: [
+"Bitte ändere meine Position.",
+"Ich möchte anders sitzen.",
+"Bitte richte mich etwas auf.",
+"Ich brauche eine Pause.",
+"Bitte warte kurz.",
+"Das passt so, danke."
+],
+
+Fragen: [
+"Wie geht es dir?",
+"Was machen wir jetzt?",
+"Wann geht es weiter?",
+"Kannst du mir das erklären?",
+"Was meinst du damit?",
+"Kannst du das wiederholen?"
+],
+
+Trinken: [
+"Ich habe Durst.",
+"Ich möchte Wasser.",
+"Bitte gib mir etwas zu trinken.",
+"Bitte noch einen Schluck.",
+"Das reicht, danke.",
+"Ich möchte später trinken."
+],
+
+Essen: [
+"Ich habe Hunger.",
+"Ich möchte etwas essen.",
+"Was gibt es zu essen?",
+"Das schmeckt gut.",
+"Bitte noch etwas.",
+"Ich bin satt."
+],
+
+Kaffee: [
+"Ich hätte gerne einen Kaffee.",
+"Bitte mach mir einen Kaffee.",
+"Der Kaffee schmeckt gut.",
+"Bitte noch einen Kaffee.",
+"Möchtest du auch einen Kaffee?",
+"Ich möchte keinen Kaffee."
+],
+
+Unterhaltung: [
+"Wie geht es dir?",
+"Was gibt es Neues?",
+"Erzähl mir mehr.",
+"Das ist interessant.",
+"Was meinst du dazu?",
+"Ich möchte dir etwas erzählen."
+],
+
+Allgemein: [
+"Ja.",
+"Nein.",
+"Bitte.",
+"Danke.",
+"Moment bitte.",
+"Ich möchte etwas sagen."
+]
+
+};
+
 
-/* -------------------------
-   APP ANZEIGEN
-------------------------- */
+/* =========================================================
+   PASSENDE PHRASEN HOLEN
+========================================================= */
 
-function showApp(user) {
+function holePhrasen(thema) {
 
-  document.getElementById("loginArea").style.display =
-    "none";
+    const tageszeit = getTageszeit();
 
-  document.getElementById("app").style.display =
-    "block";
-
-  document.getElementById("userEmail").textContent =
-    "👤 " + user.email;
-
-}
-
-
-/* -------------------------
-   SESSION PRÜFEN
-------------------------- */
-
-async function checkSession() {
-
-  const { data } =
-    await supabaseClient.auth.getSession();
-
-  if (data.session) {
-
-    showApp(data.session.user);
-
-  }
-
-}
-
-checkSession();
-
-
-/* -------------------------
-   PHRASE SPEICHERN
-------------------------- */
-
-async function savePhrase() {
-
-  const input =
-    document.getElementById("newPhrase");
-
-  const message =
-    document.getElementById("saveMessage");
-
-  const phrase =
-    input.value.trim();
-
-  if (!phrase) {
-
-    message.textContent =
-      "Bitte zuerst einen Satz eingeben.";
-
-    return;
-  }
-
-  const { data: userData } =
-    await supabaseClient.auth.getUser();
-
-  const user =
-    userData.user;
-
-  if (!user) {
-
-    message.textContent =
-      "Bitte zuerst anmelden.";
-
-    return;
-  }
-
-  message.textContent =
-    "☁️ Wird gespeichert …";
-
-  const { error } =
-    await supabaseClient
-      .from("Phrases")
-      .insert({
-        user_id: user.id,
-        phrase: phrase
-      });
-
-  if (error) {
-
-    message.textContent =
-      "❌ " + error.message;
-
-    return;
-  }
-
-  input.value = "";
-
-  message.textContent =
-    "✅ Phrase gespeichert.";
-
-  await loadPhrases();
-
-}
-
-
-/* -------------------------
-   PHRASES LADEN
-------------------------- */
-
-async function loadPhrases() {
-
-  const container =
-    document.getElementById("phrases");
-
-  container.innerHTML =
-    "☁️ Phrasen werden geladen …";
-
-  const { data: userData } =
-    await supabaseClient.auth.getUser();
-
-  const user =
-    userData.user;
-
-  if (!user) {
-
-    container.innerHTML =
-      "Bitte anmelden.";
-
-    return;
-  }
-
-  const { data, error } =
-    await supabaseClient
-      .from("Phrases")
-      .select("id, phrase, created_at")
-      .eq("user_id", user.id)
-      .order("created_at", {
-        ascending: false
-      });
-
-  if (error) {
-
-    container.textContent =
-      "❌ " + error.message;
-
-    return;
-  }
-
-  container.innerHTML = "";
-
-  if (!data || data.length === 0) {
-
-    container.textContent =
-      "Noch keine eigenen Phrasen gespeichert.";
-
-    return;
-  }
-
-  data.forEach(item => {
-
-    const row =
-      document.createElement("div");
-
-    row.className =
-      "phrase-row";
-
-
-    const speakButton =
-      document.createElement("button");
-
-    speakButton.className =
-      "phrase primary";
-
-    speakButton.textContent =
-      "🔊 " + item.phrase;
-
-    speakButton.onclick =
-      () => speak(item.phrase);
-
-
-    const deleteButton =
-      document.createElement("button");
-
-    deleteButton.className =
-      "action danger";
-
-    deleteButton.textContent =
-      "🗑️ Löschen";
-
-    deleteButton.onclick =
-      () => deletePhrase(item.id);
-
-
-    row.appendChild(speakButton);
-    row.appendChild(deleteButton);
-
-    container.appendChild(row);
-
-  });
-
-}
-
-
-/* -------------------------
-   PHRASE LÖSCHEN
-------------------------- */
-
-async function deletePhrase(id) {
-
-  const { data: userData } =
-    await supabaseClient.auth.getUser();
-
-  const user =
-    userData.user;
-
-  if (!user) return;
-
-  const { error } =
-    await supabaseClient
-      .from("Phrases")
-      .delete()
-      .eq("id", id)
-      .eq("user_id", user.id);
-
-  if (error) {
-
-    alert(error.message);
-
-    return;
-  }
-
-  await loadPhrases();
-
-}
-
-
-/* -------------------------
-   SPRACHAUSGABE
-------------------------- */
-
-function speak(text) {
-
-  if (!text) return;
-
-  window.speechSynthesis.cancel();
-
-  const utterance =
-    new SpeechSynthesisUtterance(text);
-
-  utterance.lang =
-    "de-AT";
-
-  utterance.rate =
-    0.95;
-
-  window.speechSynthesis.speak(
-    utterance
-  );
-
-}
-
-
-function speakOwnText() {
-
-  const text =
-    document.getElementById("speechText")
-      .value
-      .trim();
-
-  speak(text);
-
-}
-
-
-/* -------------------------
-   AKKORDEON
-------------------------- */
-
-function toggleAccordion(button) {
-
-  const content =
-    button.nextElementSibling;
-
-  const wasOpen =
-    content.classList.contains("open");
-
-
-  document
-    .querySelectorAll(".accordion-content")
-    .forEach(panel => {
-
-      panel.classList.remove("open");
-
-    });
-
-
-  if (!wasOpen) {
-
-    content.classList.add("open");
-
-    setTimeout(() => {
-
-      button.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-      });
-
-    }, 100);
-
-  }
-
-}
-
-
-async function openPhrases(button) {
-
-  toggleAccordion(button);
-
-  const content =
-    button.nextElementSibling;
-
-  if (content.classList.contains("open")) {
-
-    await loadPhrases();
-
-  }
-
-}
-
-
-/* -------------------------
-   AUTH ÄNDERUNGEN
-------------------------- */
-
-supabaseClient.auth.onAuthStateChange(
-  (event, session) => {
-
-    if (session?.user) {
-
-      showApp(session.user);
-
+    if (
+        phrasen[tageszeit] &&
+        phrasen[tageszeit][thema]
+    ) {
+        return phrasen[tageszeit][thema];
     }
 
-  }
+    if (standardPhrasen[thema]) {
+        return standardPhrasen[thema];
+    }
+
+    return standardPhrasen.Allgemein;
+}
+
+
+/* =========================================================
+   AUTOMATISCHE STARTVORSCHLÄGE
+========================================================= */
+
+function zeigeAutoPhrasen() {
+
+    const tageszeit = getTageszeit();
+
+    let liste =
+        phrasen[tageszeit]?.Allgemein ||
+        standardPhrasen.Allgemein;
+
+    renderPhrasen(
+        "autoPhrasen",
+        liste
+    );
+}
+
+
+/* =========================================================
+   THEMA AUSWÄHLEN
+========================================================= */
+
+function waehleThema(thema, button) {
+
+    aktuellesThema = thema;
+
+    document
+        .querySelectorAll(".thema")
+        .forEach(btn => btn.classList.remove("active"));
+
+    if (button)
+        button.classList.add("active");
+
+    document.getElementById("themaTitel").textContent =
+        "💡 " + thema + " – passende Vorschläge";
+
+    const liste = holePhrasen(thema);
+
+    renderPhrasen(
+        "themenPhrasen",
+        liste
+    );
+}
+
+
+/* =========================================================
+   PHRASEN ANZEIGEN
+========================================================= */
+
+function renderPhrasen(elementId, liste) {
+
+    const container =
+        document.getElementById(elementId);
+
+    container.innerHTML = "";
+
+    liste.forEach(text => {
+
+        const button =
+            document.createElement("button");
+
+        button.className = "phrase";
+
+        button.textContent = text;
+
+        button.onclick = () => sprechen(text);
+
+        container.appendChild(button);
+
+    });
+}
+
+
+/* =========================================================
+   TEXT TO SPEECH
+========================================================= */
+
+function ladenStimmen() {
+
+    stimmen =
+        window.speechSynthesis.getVoices();
+
+    const select =
+        document.getElementById("stimmen");
+
+    select.innerHTML = "";
+
+    stimmen.forEach((stimme, index) => {
+
+        const option =
+            document.createElement("option");
+
+        option.value = index;
+
+        option.textContent =
+            stimme.name + " – " + stimme.lang;
+
+        if (stimme.lang.startsWith("de"))
+            option.selected = true;
+
+        select.appendChild(option);
+
+    });
+}
+
+
+function sprechen(text) {
+
+    if (!text)
+        return;
+
+    window.speechSynthesis.cancel();
+
+    const utterance =
+        new SpeechSynthesisUtterance(text);
+
+    const index =
+        document.getElementById("stimmen").value;
+
+    if (stimmen[index])
+        utterance.voice = stimmen[index];
+
+    utterance.lang = "de-DE";
+
+    utterance.rate = 1;
+
+    window.speechSynthesis.speak(utterance);
+}
+
+
+function sprecheTextfeld() {
+
+    const text =
+        document.getElementById("text").value.trim();
+
+    sprechen(text);
+}
+
+
+/* =========================================================
+   EIGENE SÄTZE SPEICHERN
+========================================================= */
+
+function speichern() {
+
+    const feld =
+        document.getElementById("text");
+
+    const text =
+        feld.value.trim();
+
+    if (!text)
+        return;
+
+    let gespeichert =
+        JSON.parse(
+            localStorage.getItem("etongue_saetze") || "[]"
+        );
+
+    if (!gespeichert.includes(text)) {
+        gespeichert.push(text);
+    }
+
+    localStorage.setItem(
+        "etongue_saetze",
+        JSON.stringify(gespeichert)
+    );
+
+    feld.value = "";
+
+    ladeGespeicherte();
+}
+
+
+function ladeGespeicherte() {
+
+    const gespeichert =
+        JSON.parse(
+            localStorage.getItem("etongue_saetze") || "[]"
+        );
+
+    const container =
+        document.getElementById("gespeichert");
+
+    container.innerHTML = "";
+
+    if (gespeichert.length === 0) {
+
+        container.innerHTML =
+            "<p>Noch keine eigenen Sätze gespeichert.</p>";
+
+        return;
+    }
+
+    gespeichert.forEach(text => {
+
+        const button =
+            document.createElement("button");
+
+        button.className = "phrase";
+
+        button.textContent = text;
+
+        button.onclick =
+            () => sprechen(text);
+
+        container.appendChild(button);
+
+    });
+}
+
+
+/* =========================================================
+   START
+========================================================= */
+
+function start() {
+
+    aktualisiereZeit();
+
+    zeigeAutoPhrasen();
+
+    waehleThema(
+        "Allgemein",
+        document.querySelector(".thema")
+    );
+
+    ladeGespeicherte();
+
+    ladenStimmen();
+
+    setInterval(
+        aktualisiereZeit,
+        30000
+    );
+}
+
+
+window.speechSynthesis.onvoiceschanged =
+    ladenStimmen;
+
+window.addEventListener(
+    "load",
+    start
 );
 
 </script>
