@@ -8,7 +8,7 @@ content="width=device-width, initial-scale=1, viewport-fit=cover">
 
 <meta name="theme-color" content="#07111f">
 
-<title>E-Tongue – sprich mit deinen Augen</title>
+<title>Tonguebox – sprich mit deinen Augen</title>
 
 <style>
 
@@ -23,7 +23,7 @@ content="width=device-width, initial-scale=1, viewport-fit=cover">
   --red:#aa3d49;
   --orange:#b97813;
   --purple:#6d55c7;
-  --text:#fff;
+  --text:#ffffff;
   --muted:#c9d8e3;
   --yellow:#ffd166;
 }
@@ -61,7 +61,7 @@ button:focus-visible,
 input:focus-visible,
 textarea:focus-visible,
 select:focus-visible{
-  outline:5px solid #fff;
+  outline:5px solid #ffffff;
   outline-offset:3px;
 }
 
@@ -74,12 +74,13 @@ header{
 
 header h1{
   margin:0;
-  font-size:34px;
+  font-size:36px;
 }
 
 header p{
   margin:7px 0 0;
   color:var(--muted);
+  font-size:20px;
 }
 
 main{
@@ -106,6 +107,10 @@ main{
   color:var(--accent);
   font-size:29px;
   font-weight:bold;
+}
+
+#daypart{
+  color:var(--muted);
 }
 
 
@@ -138,15 +143,15 @@ main{
   border-color:white;
 }
 
-.yes{
+.quick-yes{
   background:var(--green);
 }
 
-.no{
+.quick-no{
   background:var(--red);
 }
 
-.normal{
+.quick-normal{
   background:var(--panel2);
 }
 
@@ -171,7 +176,6 @@ main{
   display:flex;
   align-items:center;
   justify-content:space-between;
-
   gap:15px;
 
   border:0;
@@ -371,7 +375,7 @@ input[type="range"]{
 
 
 /* =====================================================
-   TELEFON SCHNELLMODUS
+   TELEFON-SCHNELLMODUS
 ===================================================== */
 
 .phone-mode{
@@ -382,7 +386,7 @@ input[type="range"]{
 
   z-index:999999;
 
-  background:#07111f;
+  background:var(--bg);
 
   overflow-y:auto;
 
@@ -406,7 +410,7 @@ input[type="range"]{
 }
 
 .phone-title{
-  font-size:25px;
+  font-size:26px;
   font-weight:bold;
 }
 
@@ -430,7 +434,7 @@ input[type="range"]{
 
 
 /* =====================================================
-   TELEFON HAUPTTASTEN
+   TELEFON HAUPTANTWORTEN
 ===================================================== */
 
 .phone-main-grid{
@@ -475,7 +479,7 @@ input[type="range"]{
 
 
 /* =====================================================
-   TELEFON ZWEITE REIHE
+   TELEFON WEITERE ANTWORTEN
 ===================================================== */
 
 .phone-secondary{
@@ -613,13 +617,13 @@ input[type="range"]{
 
 
 /* =====================================================
-   MOBILE
+   MOBILE / IPHONE
 ===================================================== */
 
 @media(max-width:700px){
 
   header h1{
-    font-size:28px;
+    font-size:30px;
   }
 
   .phrases{
@@ -657,9 +661,13 @@ input[type="range"]{
 <body>
 
 
+<!-- =====================================================
+     KOPF
+===================================================== -->
+
 <header>
 
-<h1>👁️ E-Tongue</h1>
+<h1>👁️ Tonguebox</h1>
 
 <p>Sprich mit deinen Augen</p>
 
@@ -696,28 +704,28 @@ input[type="range"]{
 <div class="quick-grid">
 
 <button
-class="quick yes"
+class="quick quick-yes"
 onclick="speak('Ja.')">
 JA
 </button>
 
 
 <button
-class="quick no"
+class="quick quick-no"
 onclick="speak('Nein.')">
 NEIN
 </button>
 
 
 <button
-class="quick normal"
+class="quick quick-normal"
 onclick="speak('Einen Moment bitte.')">
 ⏳ MOMENT
 </button>
 
 
 <button
-class="quick normal"
+class="quick quick-normal"
 onclick="speak('Danke.')">
 🙏 DANKE
 </button>
@@ -737,9 +745,7 @@ onclick="toggleSection(this)">
 
 <span>💬 Sprechen</span>
 
-<span class="arrow">
-▲
-</span>
+<span class="arrow">▲</span>
 
 </button>
 
@@ -785,7 +791,8 @@ onclick="clearMainText()">
 
 <div
 id="aiStatus"
-class="status">
+class="status"
+aria-live="polite">
 </div>
 
 
@@ -811,9 +818,7 @@ onclick="toggleSection(this)">
 
 <span>✨ Vorschläge für jetzt</span>
 
-<span class="arrow">
-▼
-</span>
+<span class="arrow">▼</span>
 
 </button>
 
@@ -831,7 +836,7 @@ class="phrases">
 
 
 <!-- =====================================================
-     THEMEN
+     THEMEN & PHRASEN
 ===================================================== -->
 
 <section class="section">
@@ -842,9 +847,7 @@ onclick="toggleSection(this)">
 
 <span>💡 Themen & Phrasen</span>
 
-<span class="arrow">
-▼
-</span>
+<span class="arrow">▼</span>
 
 </button>
 
@@ -953,9 +956,7 @@ onclick="toggleSection(this)">
 
 <span>📞 Telefonieren</span>
 
-<span class="arrow">
-▼
-</span>
+<span class="arrow">▼</span>
 
 </button>
 
@@ -963,13 +964,13 @@ onclick="toggleSection(this)">
 <div class="section-content">
 
 <h2>
-📱 Telefonassistent
+📱 Tonguebox Telefonassistent
 </h2>
 
 
 <p>
 Für ein laufendes Telefonat kannst du den
-vereinfachten Schnellmodus verwenden.
+blicksteuerungsfreundlichen Schnellmodus verwenden.
 </p>
 
 
@@ -1056,9 +1057,7 @@ onclick="toggleSection(this)">
 
 <span>⭐ Meine Sätze</span>
 
-<span class="arrow">
-▼
-</span>
+<span class="arrow">▼</span>
 
 </button>
 
@@ -1087,9 +1086,7 @@ onclick="toggleSection(this)">
 
 <span>🕘 Verlauf</span>
 
-<span class="arrow">
-▼
-</span>
+<span class="arrow">▼</span>
 
 </button>
 
@@ -1118,7 +1115,7 @@ onclick="clearHistory()">
 
 
 <!-- =====================================================
-     STIMME
+     STIMME & LAUTSTÄRKE
 ===================================================== -->
 
 <section class="section">
@@ -1129,14 +1126,13 @@ onclick="toggleSection(this)">
 
 <span>🗣️ Stimme & Lautstärke</span>
 
-<span class="arrow">
-▼
-</span>
+<span class="arrow">▼</span>
 
 </button>
 
 
 <div class="section-content">
+
 
 <label for="voiceSearch">
 🔎 Stimme suchen
@@ -1146,7 +1142,7 @@ onclick="toggleSection(this)">
 <input
 id="voiceSearch"
 type="text"
-placeholder="z. B. Deutsch"
+placeholder="z. B. Deutsch oder German"
 oninput="filterVoices()">
 
 
@@ -1154,7 +1150,7 @@ oninput="filterVoices()">
 
 
 <label for="voices">
-Stimme
+Stimme auswählen
 </label>
 
 
@@ -1166,6 +1162,7 @@ Stimme
 <label for="volume">
 🔊 Lautstärke
 </label>
+
 
 <input
 id="volume"
@@ -1184,6 +1181,7 @@ value="1">
 ⏩ Sprechgeschwindigkeit
 </label>
 
+
 <input
 id="rate"
 type="range"
@@ -1197,7 +1195,7 @@ value="1">
 
 <button
 class="action"
-onclick="speak('Hallo. So klingt meine Stimme.')">
+onclick="speak('Hallo. So klingt meine ausgewählte Stimme.')">
 🔊 STIMME TESTEN
 </button>
 
@@ -1218,7 +1216,7 @@ id="phoneMode"
 class="phone-mode"
 role="dialog"
 aria-modal="true"
-aria-label="Telefon-Schnellmodus">
+aria-label="Tonguebox Telefon-Schnellmodus">
 
 
 <div class="phone-header">
@@ -1226,7 +1224,7 @@ aria-label="Telefon-Schnellmodus">
 <div>
 
 <div class="phone-title">
-📞 Telefon
+📞 Tonguebox Telefon
 </div>
 
 <div class="phone-subtitle">
@@ -1245,7 +1243,9 @@ onclick="closePhoneMode()">
 </div>
 
 
-<!-- GROSSE SCHNELLANTWORTEN -->
+<!-- =====================================================
+     GROSSE TELEFONANTWORTEN
+===================================================== -->
 
 <div class="phone-main-grid">
 
@@ -1292,7 +1292,9 @@ WIEDERHOLEN
 </div>
 
 
-<!-- WEITERE SCHNELLANTWORTEN -->
+<!-- =====================================================
+     WEITERE TELEFONANTWORTEN
+===================================================== -->
 
 <div class="phone-secondary">
 
@@ -1323,7 +1325,9 @@ onclick="phoneSpeak('Das passt für mich leider nicht.')">
 </div>
 
 
-<!-- EIGENE ANTWORT -->
+<!-- =====================================================
+     EIGENE TELEFONANTWORT
+===================================================== -->
 
 <div class="phone-input">
 
@@ -1337,6 +1341,7 @@ z. B. Termin Freitag geht nicht"></textarea>
 
 
 <div class="phone-actions">
+
 
 <button
 class="phone-speak"
@@ -1357,15 +1362,24 @@ onclick="generatePhoneAI()">
 
 <div
 id="phoneAIStatus"
-class="status">
+class="status"
+aria-live="polite">
 </div>
 
+
+<!-- =====================================================
+     KI TELEFONANTWORTEN
+===================================================== -->
 
 <div
 id="phoneAIResults"
 class="phone-ai-results">
 </div>
 
+
+<!-- =====================================================
+     TELEFONVERLAUF
+===================================================== -->
 
 <h2 class="phone-history-title">
 🕘 Letzte Antworten
@@ -1391,15 +1405,15 @@ onclick="closePhoneMode()">
 <script>
 
 /* =====================================================
-   KI KONFIGURATION
+   TONGUEBOX KONFIGURATION
 ===================================================== */
 
 /*
-Hier später deine sichere Backend-Adresse
-eintragen.
+Für die echte KI später deine sichere Backend-Adresse
+hier eintragen.
 
 WICHTIG:
-Keinen OpenAI API-Key direkt in diese Datei schreiben.
+Niemals einen geheimen API-Key direkt hier eintragen.
 */
 
 const AI_URL =
@@ -1415,7 +1429,7 @@ let filteredVoices = [];
 
 
 /* =====================================================
-   BEREICHE ÖFFNEN
+   BEREICH ÖFFNEN / SCHLIESSEN
 ===================================================== */
 
 function toggleSection(button){
@@ -1423,12 +1437,13 @@ function toggleSection(button){
   const section =
   button.closest(".section");
 
+
   const isOpen =
   section.classList.contains("open");
 
 
   /*
-  Zuerst alle Bereiche schließen.
+  Alle Bereiche schließen.
   */
 
   document
@@ -1437,38 +1452,46 @@ function toggleSection(button){
 
     item.classList.remove("open");
 
+
     const arrow =
     item.querySelector(".arrow");
 
+
     if(arrow){
+
       arrow.textContent="▼";
+
     }
 
   });
 
 
   /*
-  Ausgewählten Bereich öffnen.
+  Gewählten Bereich öffnen.
   */
 
   if(!isOpen){
 
     section.classList.add("open");
 
+
     const arrow =
     button.querySelector(".arrow");
 
+
     if(arrow){
+
       arrow.textContent="▲";
+
     }
 
 
     /*
-    Kurz warten, bis der Browser die
-    neue Höhe berechnet hat.
+    Nach dem Öffnen kurz warten,
+    damit der Browser die neue Höhe kennt.
 
     Danach wird der Bereich zentral
-    positioniert.
+    am Bildschirm positioniert.
     */
 
     setTimeout(()=>{
@@ -1483,7 +1506,7 @@ function toggleSection(button){
 
 
 /* =====================================================
-   BEREICH ZENTRAL AM BILDSCHIRM POSITIONIEREN
+   GEÖFFNETEN BEREICH ZENTRAL POSITIONIEREN
 ===================================================== */
 
 function centerSection(section){
@@ -1496,10 +1519,11 @@ function centerSection(section){
 
 
   /*
-  Wenn der komplette Bereich auf den
-  Bildschirm passt, wird sein Mittelpunkt
-  exakt auf den Mittelpunkt des sichtbaren
-  Bildschirms gesetzt.
+  KLEINER BEREICH:
+
+  Wenn der komplette Bereich auf den Bildschirm
+  passt, wird sein Mittelpunkt auf den Mittelpunkt
+  des sichtbaren Bildschirms gesetzt.
   */
 
   if(
@@ -1525,12 +1549,12 @@ function centerSection(section){
 
 
   /*
-  Ist der Bereich größer als der Bildschirm,
-  wird stattdessen sein Anfang gut sichtbar
-  positioniert.
+  GROSSER BEREICH:
 
-  Dadurch landet man beispielsweise bei
-  "Themen & Phrasen" nicht mitten im Inhalt.
+  Wenn der Bereich höher als der Bildschirm ist,
+  wird der Anfang des Bereichs sichtbar platziert.
+
+  So landest du nicht mitten im Inhalt.
   */
 
   else{
@@ -1544,7 +1568,7 @@ function centerSection(section){
 
 
   /*
-  Nicht oberhalb der Seite scrollen.
+  Nicht oberhalb des Seitenanfangs scrollen.
   */
 
   target =
@@ -1555,7 +1579,7 @@ function centerSection(section){
 
 
   /*
-  Nicht über das Seitenende hinaus scrollen.
+  Nicht hinter das Seitenende scrollen.
   */
 
   const maxScroll =
@@ -1570,6 +1594,10 @@ function centerSection(section){
   );
 
 
+  /*
+  Sanft zur neuen Position scrollen.
+  */
+
   window.scrollTo({
 
     top:target,
@@ -1582,7 +1610,7 @@ function centerSection(section){
 
 
 /* =====================================================
-   ZEIT
+   TAGESZEIT
 ===================================================== */
 
 function getDaypart(){
@@ -1620,6 +1648,10 @@ function getDaypart(){
 
 }
 
+
+/* =====================================================
+   UHR
+===================================================== */
 
 function updateClock(){
 
@@ -1666,7 +1698,7 @@ function updateClock(){
 
 
 /* =====================================================
-   TAGESPHRASEN
+   TAGESABHÄNGIGE PHRASEN
 ===================================================== */
 
 const timeSentences={
@@ -1729,7 +1761,7 @@ Nacht:[
 
 
 /* =====================================================
-   THEMEN
+   THEMEN UND PHRASEN
 ===================================================== */
 
 const categories={
@@ -1828,7 +1860,7 @@ Telefon:[
 
 
 /* =====================================================
-   PHRASEN DARSTELLEN
+   PHRASEN ANZEIGEN
 ===================================================== */
 
 function renderPhrases(id,list){
@@ -1925,19 +1957,25 @@ function selectCategory(category,button){
 
 
 /* =====================================================
-   STIMMEN
+   STIMMEN LADEN
 ===================================================== */
 
 function loadVoices(){
 
   voices =
-  window.speechSynthesis.getVoices();
+  window
+  .speechSynthesis
+  .getVoices();
 
 
   filterVoices();
 
 }
 
+
+/* =====================================================
+   STIMMEN FILTERN
+===================================================== */
 
 function filterVoices(){
 
@@ -1996,7 +2034,9 @@ function filterVoices(){
 
 
   const select =
-  document.getElementById("voices");
+  document.getElementById(
+    "voices"
+  );
 
 
   select.innerHTML="";
@@ -2006,7 +2046,9 @@ function filterVoices(){
     (voice,index)=>{
 
       const option =
-      document.createElement("option");
+      document.createElement(
+        "option"
+      );
 
 
       option.value =
@@ -2040,7 +2082,7 @@ function restoreVoice(){
 
   const saved =
   localStorage.getItem(
-    "etongue_voice"
+    "tonguebox_voice"
   );
 
 
@@ -2069,6 +2111,11 @@ function restoreVoice(){
 
   }
 
+
+  /*
+  Wenn keine Stimme gespeichert ist,
+  wird möglichst eine deutsche Stimme gewählt.
+  */
 
   const german =
   filteredVoices.findIndex(
@@ -2112,7 +2159,7 @@ function getSelectedVoice(){
 
 
 /* =====================================================
-   SPRECHEN
+   SPRACHAUSGABE
 ===================================================== */
 
 function speak(text){
@@ -2183,7 +2230,7 @@ function speak(text){
 
 
 /* =====================================================
-   HAUPTTEXT
+   HAUPTTEXT SPRECHEN
 ===================================================== */
 
 function speakMainText(){
@@ -2200,6 +2247,10 @@ function speakMainText(){
 }
 
 
+/* =====================================================
+   HAUPTTEXT LÖSCHEN
+===================================================== */
+
 function clearMainText(){
 
   document
@@ -2210,7 +2261,7 @@ function clearMainText(){
 
 
 /* =====================================================
-   KI
+   KI ANFRAGE
 ===================================================== */
 
 async function requestAI(
@@ -2323,7 +2374,7 @@ async function requestAI(
 
 
 /* =====================================================
-   NORMALE KI
+   NORMALE KI-VORSCHLÄGE
 ===================================================== */
 
 async function generateAI(){
@@ -2381,7 +2432,7 @@ async function generateAI(){
 
 
 /* =====================================================
-   FAVORITEN
+   SATZ SPEICHERN
 ===================================================== */
 
 function saveSentence(){
@@ -2401,10 +2452,14 @@ function saveSentence(){
   let list =
   JSON.parse(
     localStorage.getItem(
-      "etongue_favorites"
+      "tonguebox_favorites"
     ) || "[]"
   );
 
+
+  /*
+  Duplikate entfernen.
+  */
 
   list =
   list.filter(
@@ -2416,7 +2471,7 @@ function saveSentence(){
 
 
   localStorage.setItem(
-    "etongue_favorites",
+    "tonguebox_favorites",
     JSON.stringify(list)
   );
 
@@ -2426,20 +2481,216 @@ function saveSentence(){
 }
 
 
+/* =====================================================
+   EIGENE SÄTZE LADEN
+===================================================== */
+
 function loadFavorites(){
 
   const list =
   JSON.parse(
     localStorage.getItem(
-      "etongue_favorites"
+      "tonguebox_favorites"
     ) || "[]"
   );
 
 
-  renderPhrases(
-    "favorites",
-    list
+  const container =
+  document.getElementById(
+    "favorites"
   );
+
+
+  container.innerHTML="";
+
+
+  if(list.length===0){
+
+    container.innerHTML =
+    "<p>Noch keine eigenen Sätze gespeichert.</p>";
+
+    return;
+
+  }
+
+
+  list.forEach(
+    (text,index)=>{
+
+      const wrapper =
+      document.createElement("div");
+
+
+      const speakButton =
+      document.createElement("button");
+
+
+      speakButton.className =
+      "phrase";
+
+
+      speakButton.textContent =
+      "🔊 " + text;
+
+
+      speakButton.addEventListener(
+        "click",
+        ()=>speak(text)
+      );
+
+
+      const controls =
+      document.createElement("div");
+
+
+      controls.className =
+      "actions";
+
+
+      const edit =
+      document.createElement("button");
+
+
+      edit.className =
+      "action blue";
+
+
+      edit.textContent =
+      "✏️ BEARBEITEN";
+
+
+      edit.addEventListener(
+        "click",
+        ()=>editFavorite(index)
+      );
+
+
+      const remove =
+      document.createElement("button");
+
+
+      remove.className =
+      "action red";
+
+
+      remove.textContent =
+      "🗑️ LÖSCHEN";
+
+
+      remove.addEventListener(
+        "click",
+        ()=>deleteFavorite(index)
+      );
+
+
+      controls.appendChild(edit);
+
+      controls.appendChild(remove);
+
+
+      wrapper.appendChild(
+        speakButton
+      );
+
+
+      wrapper.appendChild(
+        controls
+      );
+
+
+      container.appendChild(
+        wrapper
+      );
+
+    }
+  );
+
+}
+
+
+/* =====================================================
+   EIGENEN SATZ BEARBEITEN
+===================================================== */
+
+function editFavorite(index){
+
+  let list =
+  JSON.parse(
+    localStorage.getItem(
+      "tonguebox_favorites"
+    ) || "[]"
+  );
+
+
+  const oldText =
+  list[index];
+
+
+  const newText =
+  prompt(
+    "Satz bearbeiten:",
+    oldText
+  );
+
+
+  if(
+    newText===null ||
+    !newText.trim()
+  ){
+    return;
+  }
+
+
+  list[index] =
+  newText.trim();
+
+
+  /*
+  Eventuelle Duplikate entfernen.
+  */
+
+  list =
+  [...new Set(list)];
+
+
+  localStorage.setItem(
+    "tonguebox_favorites",
+    JSON.stringify(list)
+  );
+
+
+  loadFavorites();
+
+}
+
+
+/* =====================================================
+   EIGENEN SATZ LÖSCHEN
+===================================================== */
+
+function deleteFavorite(index){
+
+  let list =
+  JSON.parse(
+    localStorage.getItem(
+      "tonguebox_favorites"
+    ) || "[]"
+  );
+
+
+  list.splice(
+    index,
+    1
+  );
+
+
+  localStorage.setItem(
+    "tonguebox_favorites",
+    JSON.stringify(list)
+  );
+
+
+  loadFavorites();
 
 }
 
@@ -2453,10 +2704,14 @@ function addHistory(text){
   let list =
   JSON.parse(
     localStorage.getItem(
-      "etongue_history"
+      "tonguebox_history"
     ) || "[]"
   );
 
+
+  /*
+  Gleichen Satz aus dem alten Verlauf entfernen.
+  */
 
   list =
   list.filter(
@@ -2464,8 +2719,16 @@ function addHistory(text){
   );
 
 
+  /*
+  Neuesten Satz nach vorne.
+  */
+
   list.unshift(text);
 
+
+  /*
+  Maximal 20 Sätze.
+  */
 
   list =
   list.slice(
@@ -2475,7 +2738,7 @@ function addHistory(text){
 
 
   localStorage.setItem(
-    "etongue_history",
+    "tonguebox_history",
     JSON.stringify(list)
   );
 
@@ -2485,12 +2748,16 @@ function addHistory(text){
 }
 
 
+/* =====================================================
+   VERLAUF LADEN
+===================================================== */
+
 function loadHistory(){
 
   const list =
   JSON.parse(
     localStorage.getItem(
-      "etongue_history"
+      "tonguebox_history"
     ) || "[]"
   );
 
@@ -2503,10 +2770,14 @@ function loadHistory(){
 }
 
 
+/* =====================================================
+   VERLAUF LÖSCHEN
+===================================================== */
+
 function clearHistory(){
 
   localStorage.removeItem(
-    "etongue_history"
+    "tonguebox_history"
   );
 
 
@@ -2516,7 +2787,7 @@ function clearHistory(){
 
 
 /* =====================================================
-   TELEFONANRUF
+   ANRUF STARTEN
 ===================================================== */
 
 function startCall(){
@@ -2599,7 +2870,7 @@ function closePhoneMode(){
 
 
 /* =====================================================
-   TELEFON SPRECHEN
+   TELEFONANTWORT SPRECHEN
 ===================================================== */
 
 function phoneSpeak(text){
@@ -2612,7 +2883,7 @@ function phoneSpeak(text){
 
 
 /* =====================================================
-   TELEFON FREIER TEXT
+   EIGENEN TELEFONTEXT SPRECHEN
 ===================================================== */
 
 function speakPhoneText(){
@@ -2692,6 +2963,14 @@ async function generatePhoneAI(){
     );
 
 
+    /*
+    Im Telefonmodus maximal vier
+    Antworten anzeigen.
+
+    Das hält die Auswahl für die
+    Blickerfassung übersichtlich.
+    */
+
     renderPhoneAI(
       answers.slice(0,4)
     );
@@ -2702,6 +2981,10 @@ async function generatePhoneAI(){
 
   }
   catch(error){
+
+    /*
+    Funktioniert auch ohne KI.
+    */
 
     const fallback=[
 
@@ -2739,7 +3022,7 @@ async function generatePhoneAI(){
 
 
 /* =====================================================
-   TELEFON KI ANZEIGEN
+   KI-TELEFONANTWORTEN ANZEIGEN
 ===================================================== */
 
 function renderPhoneAI(list){
@@ -2787,7 +3070,7 @@ function renderPhoneAI(list){
 
 
 /* =====================================================
-   TELEFONVERLAUF
+   TELEFONVERLAUF SPEICHERN
 ===================================================== */
 
 function addPhoneHistory(text){
@@ -2795,10 +3078,14 @@ function addPhoneHistory(text){
   let list =
   JSON.parse(
     localStorage.getItem(
-      "etongue_phone_history"
+      "tonguebox_phone_history"
     ) || "[]"
   );
 
+
+  /*
+  Duplikate entfernen.
+  */
 
   list =
   list.filter(
@@ -2809,6 +3096,10 @@ function addPhoneHistory(text){
   list.unshift(text);
 
 
+  /*
+  Nur die letzten sechs Antworten.
+  */
+
   list =
   list.slice(
     0,
@@ -2817,7 +3108,7 @@ function addPhoneHistory(text){
 
 
   localStorage.setItem(
-    "etongue_phone_history",
+    "tonguebox_phone_history",
     JSON.stringify(list)
   );
 
@@ -2827,12 +3118,16 @@ function addPhoneHistory(text){
 }
 
 
+/* =====================================================
+   TELEFONVERLAUF LADEN
+===================================================== */
+
 function loadPhoneHistory(){
 
   const list =
   JSON.parse(
     localStorage.getItem(
-      "etongue_phone_history"
+      "tonguebox_phone_history"
     ) || "[]"
   );
 
@@ -2888,7 +3183,7 @@ function loadPhoneHistory(){
 
 
 /* =====================================================
-   EINSTELLUNGEN SPEICHERN
+   STIMME SPEICHERN
 ===================================================== */
 
 document
@@ -2904,7 +3199,7 @@ document
     if(voice){
 
       localStorage.setItem(
-        "etongue_voice",
+        "tonguebox_voice",
         voice.name
       );
 
@@ -2914,6 +3209,10 @@ document
 );
 
 
+/* =====================================================
+   LAUTSTÄRKE SPEICHERN
+===================================================== */
+
 document
 .getElementById("volume")
 .addEventListener(
@@ -2921,13 +3220,17 @@ document
   function(){
 
     localStorage.setItem(
-      "etongue_volume",
+      "tonguebox_volume",
       this.value
     );
 
   }
 );
 
+
+/* =====================================================
+   SPRECHGESCHWINDIGKEIT SPEICHERN
+===================================================== */
 
 document
 .getElementById("rate")
@@ -2936,7 +3239,7 @@ document
   function(){
 
     localStorage.setItem(
-      "etongue_rate",
+      "tonguebox_rate",
       this.value
     );
 
@@ -2952,13 +3255,13 @@ function loadSettings(){
 
   const volume =
   localStorage.getItem(
-    "etongue_volume"
+    "tonguebox_volume"
   );
 
 
   const rate =
   localStorage.getItem(
-    "etongue_rate"
+    "tonguebox_rate"
   );
 
 
@@ -2983,10 +3286,10 @@ function loadSettings(){
 
 
 /* =====================================================
-   START
+   TONGUEBOX STARTEN
 ===================================================== */
 
-function start(){
+function startTonguebox(){
 
   updateClock();
 
@@ -3001,6 +3304,10 @@ function start(){
   loadPhoneHistory();
 
 
+  /*
+  Tagesabhängige Sätze anzeigen.
+  */
+
   renderPhrases(
     "timePhrases",
     timeSentences[
@@ -3008,6 +3315,10 @@ function start(){
     ]
   );
 
+
+  /*
+  Allgemein als erstes Thema.
+  */
 
   selectCategory(
     "Allgemein",
@@ -3017,11 +3328,19 @@ function start(){
   );
 
 
+  /*
+  Uhr aktualisieren.
+  */
+
   setInterval(
     updateClock,
     30000
   );
 
+
+  /*
+  Tagesphrasen regelmäßig aktualisieren.
+  */
 
   setInterval(
     ()=>{
@@ -3041,7 +3360,7 @@ function start(){
 
 
 /* =====================================================
-   STIMMEN KÖNNEN VERZÖGERT GELADEN WERDEN
+   STIMMEN WERDEN AUF MANCHEN GERÄTEN VERZÖGERT GELADEN
 ===================================================== */
 
 window
@@ -3050,9 +3369,13 @@ window
 loadVoices;
 
 
+/* =====================================================
+   START
+===================================================== */
+
 window.addEventListener(
   "load",
-  start
+  startTonguebox
 );
 
 </script>
