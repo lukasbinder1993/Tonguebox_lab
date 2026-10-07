@@ -2,195 +2,239 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#07111f">
 
-<title>E-Tongue – KI Phrasenvorschläge</title>
+<title>E-Tongue V2</title>
 
 <style>
-:root {
-    --bg: #07111f;
-    --panel: #103958;
-    --panel2: #0d2e49;
-    --accent: #35d6bd;
-    --accent2: #22abc8;
-    --text: #ffffff;
-    --muted: #d7e4ed;
+:root{
+  --bg:#07111f;
+  --panel:#0e2c45;
+  --panel2:#123b5b;
+  --accent:#35d6bd;
+  --blue:#22abc8;
+  --text:#fff;
+  --muted:#cbd9e5;
+  --green:#31d17c;
+  --red:#ff6868;
+  --yellow:#ffd166;
 }
 
-* {
-    box-sizing: border-box;
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  font-size:19px;
 }
 
-body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--text);
-    font-family: Arial, Helvetica, sans-serif;
+header{
+  text-align:center;
+  padding:20px;
+  border-bottom:2px solid var(--blue);
 }
 
-header {
-    text-align: center;
-    padding: 24px;
-    border-bottom: 2px solid var(--accent2);
+header h1{
+  margin:0;
+  font-size:34px;
 }
 
-header h1 {
-    margin: 0;
-    font-size: 38px;
+header p{
+  margin:7px 0 0;
+  color:var(--muted);
 }
 
-header p {
-    color: var(--muted);
+main{
+  width:min(1400px,96%);
+  margin:auto;
+  padding-bottom:80px;
 }
 
-main {
-    width: min(1400px, 96%);
-    margin: auto;
-    padding-bottom: 60px;
+h2{
+  color:var(--accent);
+  margin-top:32px;
 }
 
-h2 {
-    margin-top: 32px;
-    color: var(--accent);
+button,a{
+  font-family:inherit;
 }
 
-/* ZEIT */
-
-.zeitbox {
-    margin-top: 25px;
-    padding: 20px;
-    text-align: center;
-    background: var(--panel2);
-    border: 2px solid var(--accent2);
-    border-radius: 16px;
-    font-size: 21px;
+button{
+  cursor:pointer;
+  border:3px solid transparent;
 }
 
-.zeitbox strong {
-    color: var(--accent);
+button:focus,
+button:hover{
+  outline:none;
+  border-color:white;
 }
 
-/* THEMEN */
-
-.themen {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-    gap: 15px;
+.panel{
+  background:var(--panel);
+  padding:18px;
+  border-radius:18px;
+  margin-top:20px;
 }
 
-button {
-    cursor: pointer;
-    font-family: inherit;
-    border: 3px solid transparent;
+.time{
+  text-align:center;
+  border:2px solid var(--blue);
 }
 
-button:hover,
-button:focus {
-    border-color: white;
-    outline: none;
-    transform: scale(1.02);
+.big-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+  gap:14px;
 }
 
-.thema {
-    min-height: 105px;
-    border-radius: 15px;
-    background: var(--panel);
-    color: white;
-    font-size: 22px;
-    font-weight: bold;
+.quick{
+  min-height:100px;
+  border-radius:16px;
+  font-size:24px;
+  font-weight:bold;
+  background:var(--panel2);
+  color:white;
 }
 
-.thema.active {
-    background: var(--accent);
-    color: #06212a;
+.yes{background:#167c55}
+.no{background:#a43c46}
+
+textarea,input,select{
+  width:100%;
+  padding:16px;
+  font-size:21px;
+  border-radius:14px;
+  border:3px solid var(--blue);
 }
 
-/* PHRASEN */
-
-.phrasen {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
+textarea{
+  min-height:115px;
+  resize:vertical;
 }
 
-.phrase {
-    min-height: 120px;
-    padding: 20px;
-    background: var(--panel);
-    border-radius: 15px;
-    color: white;
-    text-align: left;
-    font-size: 23px;
-    line-height: 1.35;
+.actions{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:14px;
+  margin-top:14px;
 }
 
-.phrase::before {
-    content: "🔊 ";
+.action{
+  min-height:85px;
+  padding:14px;
+  border-radius:15px;
+  background:var(--accent);
+  color:#05232b;
+  font-size:21px;
+  font-weight:bold;
 }
 
-/* KI */
-
-.ki-box {
-    background: var(--panel2);
-    border: 2px solid var(--accent2);
-    padding: 20px;
-    border-radius: 16px;
+.blue{
+  background:var(--blue);
+  color:white;
 }
 
-textarea {
-    width: 100%;
-    min-height: 110px;
-    padding: 16px;
-    border-radius: 12px;
-    border: 3px solid var(--accent2);
-    font-size: 21px;
-    resize: vertical;
+.phone{
+  background:var(--green);
+  color:#032416;
 }
 
-.action {
-    margin-top: 15px;
-    min-height: 80px;
-    padding: 15px 25px;
-    background: var(--accent);
-    color: #06212a;
-    font-size: 21px;
-    font-weight: bold;
-    border-radius: 14px;
+.danger{
+  background:var(--red);
+  color:white;
 }
 
-.action:disabled {
-    opacity: .6;
+.phrases{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:15px;
 }
 
-#kiStatus {
-    min-height: 28px;
+.phrase{
+  min-height:115px;
+  padding:20px;
+  border-radius:16px;
+  background:var(--panel2);
+  color:white;
+  font-size:22px;
+  text-align:left;
+  line-height:1.35;
 }
 
-/* STIMME */
-
-select {
-    width: 100%;
-    min-height: 65px;
-    padding: 10px;
-    font-size: 19px;
-    border-radius: 10px;
+.phrase:before{
+  content:"🔊 ";
 }
 
-/* MOBIL */
+.categories{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(175px,1fr));
+  gap:14px;
+}
 
-@media(max-width:800px) {
+.category{
+  min-height:100px;
+  border-radius:15px;
+  background:var(--panel2);
+  color:white;
+  font-size:21px;
+  font-weight:bold;
+}
 
-    .phrasen {
-        grid-template-columns: 1fr;
-    }
+.category.active{
+  background:var(--accent);
+  color:#06232a;
+}
 
-    header h1 {
-        font-size: 29px;
-    }
+.phone-screen{
+  border:3px solid var(--green);
+}
 
-    .phrase {
-        min-height: 105px;
-    }
+.phone-title{
+  font-size:26px;
+  font-weight:bold;
+  color:var(--green);
+}
+
+.call-link{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-decoration:none;
+  min-height:90px;
+  border-radius:16px;
+  background:var(--green);
+  color:#052519;
+  font-size:24px;
+  font-weight:bold;
+  margin-top:14px;
+}
+
+.status{
+  min-height:30px;
+  color:var(--yellow);
+  margin-top:12px;
+}
+
+.range-row{
+  margin:18px 0;
+}
+
+small{
+  color:var(--muted);
+}
+
+.hidden{
+  display:none;
+}
+
+@media(max-width:760px){
+  .phrases{grid-template-columns:1fr}
+  header h1{font-size:28px}
+  .quick,.category{min-height:92px}
 }
 </style>
 </head>
@@ -198,256 +242,382 @@ select {
 <body>
 
 <header>
-    <h1>🤖 E-Tongue</h1>
-    <p>KI-gestützte Unterstützte Kommunikation</p>
+  <h1>👁️ E-Tongue V2</h1>
+  <p>Kommunikation · KI · Telefon</p>
 </header>
 
 <main>
 
-<!-- ZEIT -->
+<div class="panel time">
+  <div id="date"></div>
+  <strong id="time"></strong>
+  <div id="daypart"></div>
+</div>
 
-<div class="zeitbox">
+<h2>⚡ Schnellkommunikation</h2>
 
-    <div id="datum"></div>
+<div class="big-grid">
+  <button class="quick yes" onclick="speak('Ja.')">JA</button>
+  <button class="quick no" onclick="speak('Nein.')">NEIN</button>
+  <button class="quick" onclick="speak('Danke.')">DANKE</button>
+  <button class="quick" onclick="speak('Bitte.')">BITTE</button>
+  <button class="quick" onclick="speak('Moment bitte.')">MOMENT</button>
+  <button class="quick" onclick="speak('Ich möchte etwas sagen.')">💬 ICH MÖCHTE SPRECHEN</button>
+</div>
 
-    <div id="uhrzeit"></div>
+<h2>✍️ Sprechen</h2>
 
-    <p>
-        Tageszeit:
-        <strong id="tageszeit"></strong>
-    </p>
+<div class="panel">
+
+<textarea id="text"
+placeholder="Was möchtest du sagen?"></textarea>
+
+<div class="actions">
+  <button class="action" onclick="speakText()">🔊 Sprechen</button>
+  <button class="action blue" onclick="generateAI()">🤖 KI-Vorschläge</button>
+  <button class="action blue" onclick="saveSentence()">⭐ Speichern</button>
+</div>
+
+<div id="aiStatus" class="status"></div>
+
+</div>
+
+<div id="aiPhrases" class="phrases"></div>
+
+
+<!-- TELEFON -->
+
+<h2>📞 Telefon</h2>
+
+<div class="panel phone-screen">
+
+<div class="phone-title">
+📱 E-Tongue Telefonassistent
+</div>
+
+<p>
+Telefonnummer eingeben und den Anruf starten.
+Während des Telefonats kannst du Antworten auswählen
+oder von der KI formulieren lassen.
+</p>
+
+<input
+id="phoneNumber"
+type="tel"
+inputmode="tel"
+placeholder="+43 ...">
+
+<a
+id="callButton"
+class="call-link"
+href="#"
+onclick="return startCall()">
+📞 ANRUF STARTEN
+</a>
+
+<div class="actions">
+
+<button
+class="action"
+onclick="speak('Hallo. Ich kommuniziere über eine Sprachausgabe. Einen Moment bitte.')">
+👋 Gespräch beginnen
+</button>
+
+<button
+class="action blue"
+onclick="openPhoneAI()">
+🤖 KI-Antwort
+</button>
+
+</div>
 
 </div>
 
 
-<!-- AUTOMATISCHE VORSCHLÄGE -->
+<!-- TELEFON KI -->
 
-<h2>✨ Vorschläge für jetzt</h2>
+<div id="phoneAI" class="panel hidden">
 
-<div id="autoPhrasen" class="phrasen"></div>
+<h2>🤖 Telefon-Antwort</h2>
+
+<p>
+Schreibe kurz, was du antworten möchtest.
+Ein Stichwort reicht.
+</p>
+
+<textarea
+id="phoneContext"
+placeholder="z. B. Termin nächste Woche bestätigen">
+</textarea>
+
+<div class="actions">
+
+<button
+class="action"
+onclick="generatePhoneAI()">
+✨ Antwort formulieren
+</button>
+
+<button
+class="action blue"
+onclick="closePhoneAI()">
+✕ Schließen
+</button>
+
+</div>
+
+<div id="phoneStatus" class="status"></div>
+
+<br>
+
+<div id="phonePhrases" class="phrases"></div>
+
+</div>
+
+
+<!-- TELEFON SCHNELLANTWORTEN -->
+
+<h2>☎️ Schnellantworten beim Telefonieren</h2>
+
+<div class="phrases">
+
+<button class="phrase"
+onclick="speak('Hallo. Ich kommuniziere über eine Sprachausgabe.')">
+Hallo. Ich kommuniziere über eine Sprachausgabe.
+</button>
+
+<button class="phrase"
+onclick="speak('Einen Moment bitte. Ich schreibe meine Antwort.')">
+Einen Moment bitte. Ich schreibe meine Antwort.
+</button>
+
+<button class="phrase"
+onclick="speak('Ja, das passt für mich.')">
+Ja, das passt für mich.
+</button>
+
+<button class="phrase"
+onclick="speak('Nein, das passt für mich leider nicht.')">
+Nein, das passt für mich leider nicht.
+</button>
+
+<button class="phrase"
+onclick="speak('Könnten Sie das bitte wiederholen?')">
+Könnten Sie das bitte wiederholen?
+</button>
+
+<button class="phrase"
+onclick="speak('Könnten Sie bitte etwas langsamer sprechen?')">
+Könnten Sie bitte etwas langsamer sprechen?
+</button>
+
+<button class="phrase"
+onclick="speak('Ich habe Sie verstanden.')">
+Ich habe Sie verstanden.
+</button>
+
+<button class="phrase"
+onclick="speak('Vielen Dank für Ihren Anruf. Auf Wiederhören.')">
+Vielen Dank für Ihren Anruf. Auf Wiederhören.
+</button>
+
+</div>
+
+
+<!-- TAGESPHRASEN -->
+
+<h2>🕐 Vorschläge für jetzt</h2>
+
+<div id="timePhrases" class="phrases"></div>
 
 
 <!-- THEMEN -->
 
-<h2>💬 Thema auswählen</h2>
+<h2>💬 Themen</h2>
 
-<div class="themen">
+<div class="categories">
 
-<button class="thema"
-onclick="waehleThema('Allgemein',this)">
+<button class="category"
+onclick="selectCategory('Allgemein',this)">
 💬 Allgemein
 </button>
 
-<button class="thema"
-onclick="waehleThema('Kaffee',this)">
+<button class="category"
+onclick="selectCategory('Kaffee',this)">
 ☕ Kaffee
 </button>
 
-<button class="thema"
-onclick="waehleThema('Trinken',this)">
+<button class="category"
+onclick="selectCategory('Trinken',this)">
 🥤 Trinken
 </button>
 
-<button class="thema"
-onclick="waehleThema('Essen',this)">
+<button class="category"
+onclick="selectCategory('Essen',this)">
 🍽️ Essen
 </button>
 
-<button class="thema"
-onclick="waehleThema('Schmerzen',this)">
+<button class="category"
+onclick="selectCategory('Schmerzen',this)">
 🩺 Schmerzen
 </button>
 
-<button class="thema"
-onclick="waehleThema('Befinden',this)">
+<button class="category"
+onclick="selectCategory('Befinden',this)">
 ❤️ Befinden
 </button>
 
-<button class="thema"
-onclick="waehleThema('Unterhaltung',this)">
-🗣️ Unterhaltung
+<button class="category"
+onclick="selectCategory('Gespräch',this)">
+🗣️ Gespräch
 </button>
 
-<button class="thema"
-onclick="waehleThema('Hilfe',this)">
+<button class="category"
+onclick="selectCategory('Hilfe',this)">
 🆘 Hilfe
 </button>
 
-<button class="thema"
-onclick="waehleThema('Pflege',this)">
+<button class="category"
+onclick="selectCategory('Pflege',this)">
 🛏️ Pflege
 </button>
 
-<button class="thema"
-onclick="waehleThema('Fragen',this)">
-❓ Fragen
+<button class="category"
+onclick="selectCategory('Telefon',this)">
+📞 Telefon
 </button>
 
 </div>
 
+<h2 id="categoryTitle">💡 Allgemein</h2>
 
-<!-- LOKALE VORSCHLÄGE -->
-
-<h2 id="themaTitel">💡 Allgemeine Vorschläge</h2>
-
-<div id="themenPhrasen" class="phrasen"></div>
+<div id="categoryPhrases" class="phrases"></div>
 
 
-<!-- KI -->
-
-<h2>🤖 KI-Phrasenvorschläge</h2>
-
-<div class="ki-box">
-
-<p>
-Die KI berücksichtigt automatisch
-<strong>Tageszeit, Wochentag und ausgewähltes Thema</strong>.
-</p>
-
-<textarea
-id="kiKontext"
-placeholder="Optional: Was möchtest du ungefähr sagen?">
-</textarea>
-
-<button
-id="kiButton"
-class="action"
-onclick="holeKIPhrasen()">
-🤖 KI-Vorschläge erstellen
-</button>
-
-<p id="kiStatus"></p>
-
-</div>
-
-<br>
-
-<div id="kiPhrasen" class="phrasen"></div>
-
-
-<!-- EIGENER TEXT -->
-
-<h2>✍️ Eigener Text</h2>
-
-<textarea
-id="eigenerText"
-placeholder="Schreibe hier deinen Satz ...">
-</textarea>
-
-<button class="action"
-onclick="sprecheEigenenText()">
-🔊 Vorlesen
-</button>
-
-<button class="action"
-onclick="speichereSatz()">
-⭐ Speichern
-</button>
-
-
-<!-- GESPEICHERTE SÄTZE -->
+<!-- FAVORITEN -->
 
 <h2>⭐ Meine Sätze</h2>
 
-<div id="meineSaetze" class="phrasen"></div>
+<div id="favorites" class="phrases"></div>
+
+
+<!-- VERLAUF -->
+
+<h2>🕘 Verlauf</h2>
+
+<div id="history" class="phrases"></div>
 
 
 <!-- STIMME -->
 
-<h2>🗣️ Stimme auswählen</h2>
+<h2>🗣️ Sprachausgabe</h2>
 
-<select id="stimmen"></select>
+<div class="panel">
+
+<select id="voices"></select>
+
+<div class="range-row">
+<label>
+Lautstärke
+<input
+id="volume"
+type="range"
+min="0"
+max="1"
+step="0.1"
+value="1">
+</label>
+</div>
+
+<div class="range-row">
+<label>
+Sprechgeschwindigkeit
+<input
+id="rate"
+type="range"
+min="0.6"
+max="1.5"
+step="0.1"
+value="1">
+</label>
+</div>
+
+</div>
 
 </main>
 
 
 <script>
 
-/* ======================================================
-   E-TONGUE KONFIGURATION
-====================================================== */
+/* ===============================================
+   KONFIGURATION
+=============================================== */
 
 /*
-WICHTIG:
+Hier später die sichere Backend-Adresse eintragen.
 
-Hier später deine Backend-Adresse eintragen.
-
-NICHT den OpenAI API-Key eintragen!
-
-Beispiel:
-
-https://api.e-tongue.com/api/phrasen
+NIEMALS den OpenAI API-Key direkt hier eintragen.
 */
 
-const KI_API_URL =
-    "DEINE_BACKEND_URL/api/phrasen";
+const AI_URL =
+"DEINE_BACKEND_URL/api/phrasen";
 
 
-let aktuellesThema = "Allgemein";
-let stimmen = [];
+let currentCategory = "Allgemein";
+let voices = [];
 
 
-/* ======================================================
-   TAGESZEIT
-====================================================== */
+/* ===============================================
+   ZEIT
+=============================================== */
 
-function getTageszeit() {
+function getDaypart(){
 
-    const h = new Date().getHours();
+ const h = new Date().getHours();
 
-    if(h >= 5 && h < 9)
-        return "Morgen";
+ if(h >= 5 && h < 9) return "Morgen";
+ if(h >= 9 && h < 12) return "Vormittag";
+ if(h >= 12 && h < 14) return "Mittag";
+ if(h >= 14 && h < 18) return "Nachmittag";
+ if(h >= 18 && h < 22) return "Abend";
 
-    if(h >= 9 && h < 12)
-        return "Vormittag";
-
-    if(h >= 12 && h < 14)
-        return "Mittag";
-
-    if(h >= 14 && h < 18)
-        return "Nachmittag";
-
-    if(h >= 18 && h < 22)
-        return "Abend";
-
-    return "Nacht";
+ return "Nacht";
 }
 
 
-function aktualisiereZeit() {
+function updateClock(){
 
-    const jetzt = new Date();
+ const now = new Date();
 
-    document.getElementById("datum").textContent =
-        jetzt.toLocaleDateString(
-            "de-AT",
-            {
-                weekday:"long",
-                day:"2-digit",
-                month:"long",
-                year:"numeric"
-            }
-        );
+ document.getElementById("date").textContent =
+ now.toLocaleDateString(
+ "de-AT",
+ {
+ weekday:"long",
+ day:"2-digit",
+ month:"long",
+ year:"numeric"
+ });
 
-    document.getElementById("uhrzeit").textContent =
-        jetzt.toLocaleTimeString(
-            "de-AT",
-            {
-                hour:"2-digit",
-                minute:"2-digit"
-            }
-        );
+ document.getElementById("time").textContent =
+ now.toLocaleTimeString(
+ "de-AT",
+ {
+ hour:"2-digit",
+ minute:"2-digit"
+ });
 
-    document.getElementById("tageszeit").textContent =
-        getTageszeit();
+ document.getElementById("daypart").textContent =
+ getDaypart();
+
 }
 
 
-/* ======================================================
-   TAGESZEITABHÄNGIGE PHRASEN
-====================================================== */
+/* ===============================================
+   TAGESPHRASEN
+=============================================== */
 
-const zeitPhrasen = {
+const timeSentences = {
 
 Morgen:[
 "Guten Morgen!",
@@ -455,7 +625,7 @@ Morgen:[
 "Ich möchte frühstücken.",
 "Ich hätte gerne einen Kaffee.",
 "Was machen wir heute?",
-"Ich freue mich auf den Tag."
+"Wie geht es dir heute?"
 ],
 
 Vormittag:[
@@ -470,7 +640,7 @@ Vormittag:[
 Mittag:[
 "Ich habe Hunger.",
 "Was gibt es zum Mittagessen?",
-"Ich hätte gerne etwas zu trinken.",
+"Ich möchte etwas trinken.",
 "Wie war dein Vormittag?",
 "Das schmeckt gut.",
 "Was machen wir nach dem Essen?"
@@ -506,11 +676,11 @@ Nacht:[
 };
 
 
-/* ======================================================
-   THEMENPHRASEN
-====================================================== */
+/* ===============================================
+   THEMEN
+=============================================== */
 
-const themenPhrasen = {
+const categories = {
 
 Allgemein:[
 "Ja.",
@@ -559,14 +729,14 @@ Schmerzen:[
 
 Befinden:[
 "Mir geht es gut.",
-"Mir geht es nicht so gut.",
+"Mir geht es heute nicht so gut.",
 "Ich bin müde.",
 "Ich fühle mich wohl.",
 "Ich brauche eine Pause.",
 "Ich möchte etwas erzählen."
 ],
 
-Unterhaltung:[
+Gespräch:[
 "Wie geht es dir?",
 "Was gibt es Neues?",
 "Erzähl mir mehr.",
@@ -593,468 +763,542 @@ Pflege:[
 "Danke."
 ],
 
-Fragen:[
-"Wie geht es dir?",
-"Was machen wir jetzt?",
-"Wann geht es weiter?",
-"Kannst du mir das erklären?",
-"Was meinst du damit?",
-"Kannst du das wiederholen?"
+Telefon:[
+"Hallo. Ich kommuniziere über eine Sprachausgabe.",
+"Einen Moment bitte. Ich schreibe meine Antwort.",
+"Könnten Sie das bitte wiederholen?",
+"Könnten Sie bitte langsamer sprechen?",
+"Ja, das passt für mich.",
+"Vielen Dank. Auf Wiederhören."
 ]
 
 };
 
 
-/* ======================================================
-   PHRASEN RENDERN
-====================================================== */
+/* ===============================================
+   ANZEIGE
+=============================================== */
 
-function renderPhrasen(id,liste) {
+function render(id,list){
 
-    const box =
-        document.getElementById(id);
+ const container =
+ document.getElementById(id);
 
-    box.innerHTML = "";
+ container.innerHTML="";
 
-    liste.forEach(text => {
+ list.forEach(text=>{
 
-        const button =
-            document.createElement("button");
+   const button =
+   document.createElement("button");
 
-        button.className = "phrase";
+   button.className="phrase";
+   button.textContent=text;
 
-        button.textContent = text;
+   button.onclick=()=>speak(text);
 
-        button.onclick = () =>
-            sprechen(text);
+   container.appendChild(button);
 
-        box.appendChild(button);
+ });
 
-    });
 }
 
 
-/* ======================================================
-   THEMA
-====================================================== */
+function selectCategory(category,button){
 
-function waehleThema(thema,button) {
+ currentCategory=category;
 
-    aktuellesThema = thema;
+ document
+ .querySelectorAll(".category")
+ .forEach(b=>b.classList.remove("active"));
 
-    document
-    .querySelectorAll(".thema")
-    .forEach(b =>
-        b.classList.remove("active")
-    );
+ if(button)
+ button.classList.add("active");
 
-    if(button)
-        button.classList.add("active");
+ document.getElementById("categoryTitle").textContent =
+ "💡 " + category;
 
+ render(
+ "categoryPhrases",
+ categories[category]
+ );
 
-    document.getElementById(
-        "themaTitel"
-    ).textContent =
-        "💡 " + thema;
-
-
-    renderPhrasen(
-        "themenPhrasen",
-        themenPhrasen[thema]
-    );
 }
 
 
-/* ======================================================
-   TEXT TO SPEECH
-====================================================== */
+/* ===============================================
+   SPRACHAUSGABE
+=============================================== */
 
-function ladeStimmen() {
+function loadVoices(){
 
-    stimmen =
-        speechSynthesis.getVoices();
+ voices =
+ speechSynthesis.getVoices();
 
-    const select =
-        document.getElementById("stimmen");
+ const select =
+ document.getElementById("voices");
 
-    select.innerHTML = "";
+ select.innerHTML="";
 
+ voices.forEach((voice,index)=>{
 
-    stimmen.forEach((voice,index) => {
+   const option =
+   document.createElement("option");
 
-        const option =
-            document.createElement("option");
+   option.value=index;
 
-        option.value = index;
+   option.textContent =
+   voice.name+" – "+voice.lang;
 
-        option.textContent =
-            voice.name +
-            " – " +
-            voice.lang;
+   select.appendChild(option);
 
+ });
 
-        if(
-            voice.lang.startsWith("de")
-        ) {
-            option.selected = true;
-        }
+ const saved =
+ localStorage.getItem("etongue_voice");
 
+ if(saved)
+ select.value=saved;
 
-        select.appendChild(option);
+ else {
 
-    });
+   const german =
+   voices.findIndex(v=>
+   v.lang.toLowerCase().startsWith("de"));
+
+   if(german>=0)
+   select.value=german;
+
+ }
+
 }
 
 
-function sprechen(text) {
+function speak(text){
 
-    if(!text)
-        return;
+ if(!text) return;
 
-    speechSynthesis.cancel();
+ speechSynthesis.cancel();
 
-    const u =
-        new SpeechSynthesisUtterance(text);
+ const utterance =
+ new SpeechSynthesisUtterance(text);
 
+ const voiceIndex =
+ document.getElementById("voices").value;
 
-    const index =
-        document.getElementById(
-            "stimmen"
-        ).value;
+ if(voices[voiceIndex])
+ utterance.voice=voices[voiceIndex];
 
+ utterance.lang="de-DE";
 
-    if(stimmen[index])
-        u.voice = stimmen[index];
+ utterance.volume =
+ Number(document.getElementById("volume").value);
 
+ utterance.rate =
+ Number(document.getElementById("rate").value);
 
-    u.lang = "de-DE";
-    u.rate = 1;
+ speechSynthesis.speak(utterance);
 
-    speechSynthesis.speak(u);
+ addHistory(text);
+
 }
 
 
-function sprecheEigenenText() {
+function speakText(){
 
-    sprechen(
-        document.getElementById(
-            "eigenerText"
-        ).value.trim()
-    );
+ const text =
+ document.getElementById("text").value.trim();
+
+ speak(text);
+
 }
 
 
-/* ======================================================
+/* ===============================================
    KI
-====================================================== */
+=============================================== */
 
-async function holeKIPhrasen() {
+async function requestAI(context,type="normal"){
 
-    const status =
-        document.getElementById(
-            "kiStatus"
-        );
+ if(AI_URL.includes("DEINE_BACKEND_URL"))
+ throw new Error("KI-Backend ist noch nicht eingerichtet.");
 
-    const button =
-        document.getElementById(
-            "kiButton"
-        );
+ const now=new Date();
 
-    const jetzt =
-        new Date();
+ const payload={
 
+   thema:
+   type==="phone"
+   ? "Telefonat"
+   : currentCategory,
 
-    const daten = {
+   kontext:context,
 
-        thema:
-            aktuellesThema,
+   modus:type,
 
-        kontext:
-            document.getElementById(
-                "kiKontext"
-            ).value.trim(),
+   tageszeit:getDaypart(),
 
-        tageszeit:
-            getTageszeit(),
+   wochentag:
+   now.toLocaleDateString(
+   "de-AT",
+   {weekday:"long"}),
 
-        wochentag:
-            jetzt.toLocaleDateString(
-                "de-AT",
-                {
-                    weekday:"long"
-                }
-            ),
+   datum:
+   now.toLocaleDateString("de-AT"),
 
-        datum:
-            jetzt.toLocaleDateString(
-                "de-AT"
-            ),
+   uhrzeit:
+   now.toLocaleTimeString(
+   "de-AT",
+   {
+   hour:"2-digit",
+   minute:"2-digit"
+   })
 
-        uhrzeit:
-            jetzt.toLocaleTimeString(
-                "de-AT",
-                {
-                    hour:"2-digit",
-                    minute:"2-digit"
-                }
-            )
+ };
 
-    };
+ const response =
+ await fetch(
+ AI_URL,
+ {
+ method:"POST",
+ headers:{
+ "Content-Type":"application/json"
+ },
+ body:JSON.stringify(payload)
+ });
 
+ if(!response.ok)
+ throw new Error("KI-Serverfehler");
 
-    button.disabled = true;
+ const data =
+ await response.json();
 
-    button.textContent =
-        "⏳ KI denkt ...";
+ if(!Array.isArray(data.phrasen))
+ throw new Error("Ungültige KI-Antwort");
 
-    status.textContent =
-        "Passende Kommunikationssätze werden erstellt ...";
+ return data.phrasen;
 
-
-    try {
-
-        if(
-            KI_API_URL.includes(
-                "DEINE_BACKEND_URL"
-            )
-        ) {
-
-            throw new Error(
-                "Backend noch nicht eingerichtet."
-            );
-
-        }
-
-
-        const response =
-            await fetch(
-                KI_API_URL,
-                {
-                    method:"POST",
-
-                    headers:{
-                        "Content-Type":
-                        "application/json"
-                    },
-
-                    body:
-                        JSON.stringify(daten)
-                }
-            );
-
-
-        if(!response.ok) {
-
-            throw new Error(
-                "Serverfehler " +
-                response.status
-            );
-        }
-
-
-        const ergebnis =
-            await response.json();
-
-
-        if(
-            !Array.isArray(
-                ergebnis.phrasen
-            )
-        ) {
-
-            throw new Error(
-                "Ungültige Antwort"
-            );
-        }
-
-
-        renderPhrasen(
-            "kiPhrasen",
-            ergebnis.phrasen
-        );
-
-
-        status.textContent =
-            "✓ KI-Vorschläge sind bereit.";
-
-    }
-
-    catch(error) {
-
-        console.error(error);
-
-        /*
-        FALLBACK:
-
-        Wenn KI oder Internet nicht verfügbar
-        ist, bleiben lokale Vorschläge nutzbar.
-        */
-
-        const fallback =
-            themenPhrasen[
-                aktuellesThema
-            ] ||
-            zeitPhrasen[
-                getTageszeit()
-            ];
-
-
-        renderPhrasen(
-            "kiPhrasen",
-            fallback
-        );
-
-
-        status.textContent =
-            "⚠️ KI momentan nicht erreichbar – lokale Vorschläge werden angezeigt.";
-
-    }
-
-    finally {
-
-        button.disabled = false;
-
-        button.textContent =
-            "🤖 Neue KI-Vorschläge";
-
-    }
 }
 
 
-/* ======================================================
-   SÄTZE SPEICHERN
-====================================================== */
+async function generateAI(){
 
-function speichereSatz() {
+ const status =
+ document.getElementById("aiStatus");
 
-    const feld =
-        document.getElementById(
-            "eigenerText"
-        );
+ const context =
+ document.getElementById("text").value.trim();
 
-    const text =
-        feld.value.trim();
+ status.textContent =
+ "🤖 KI erstellt passende Antworten ...";
 
-    if(!text)
-        return;
+ try{
 
+   const phrases =
+   await requestAI(context);
 
-    let liste =
-        JSON.parse(
-            localStorage.getItem(
-                "etongue_saetze"
-            ) || "[]"
-        );
+   render(
+   "aiPhrases",
+   phrases
+   );
 
+   status.textContent =
+   "✓ Vorschläge bereit.";
 
-    if(!liste.includes(text))
-        liste.push(text);
+ }catch(error){
 
+   render(
+   "aiPhrases",
+   categories[currentCategory]
+   );
 
-    localStorage.setItem(
-        "etongue_saetze",
-        JSON.stringify(liste)
-    );
+   status.textContent =
+   "KI momentan nicht erreichbar – lokale Vorschläge werden verwendet.";
 
+ }
 
-    feld.value = "";
-
-    ladeSaetze();
 }
 
 
-function ladeSaetze() {
+/* ===============================================
+   TELEFON
+=============================================== */
 
-    const liste =
-        JSON.parse(
-            localStorage.getItem(
-                "etongue_saetze"
-            ) || "[]"
-        );
+function startCall(){
 
+ const number =
+ document
+ .getElementById("phoneNumber")
+ .value
+ .trim();
 
-    const box =
-        document.getElementById(
-            "meineSaetze"
-        );
+ if(!number){
 
-    box.innerHTML = "";
+   alert(
+   "Bitte Telefonnummer eingeben."
+   );
 
+   return false;
 
-    if(liste.length === 0) {
+ }
 
-        box.innerHTML =
-            "<p>Noch keine eigenen Sätze gespeichert.</p>";
+ const clean =
+ number.replace(
+ /[^0-9+*#]/g,
+ ""
+ );
 
-        return;
-    }
+ window.location.href =
+ "tel:" + clean;
 
+ return false;
 
-    liste.forEach(text => {
-
-        const button =
-            document.createElement("button");
-
-        button.className = "phrase";
-
-        button.textContent = text;
-
-        button.onclick =
-            () => sprechen(text);
-
-        box.appendChild(button);
-
-    });
 }
 
 
-/* ======================================================
+function openPhoneAI(){
+
+ document
+ .getElementById("phoneAI")
+ .classList.remove("hidden");
+
+ document
+ .getElementById("phoneAI")
+ .scrollIntoView({
+ behavior:"smooth"
+ });
+
+}
+
+
+function closePhoneAI(){
+
+ document
+ .getElementById("phoneAI")
+ .classList.add("hidden");
+
+}
+
+
+async function generatePhoneAI(){
+
+ const status =
+ document.getElementById(
+ "phoneStatus"
+ );
+
+ const context =
+ document.getElementById(
+ "phoneContext"
+ ).value.trim();
+
+
+ if(!context){
+
+   status.textContent =
+   "Schreibe kurz, was du antworten möchtest.";
+
+   return;
+
+ }
+
+
+ status.textContent =
+ "🤖 KI formuliert kurze Telefonantworten ...";
+
+
+ try{
+
+   const phrases =
+   await requestAI(
+   context,
+   "phone"
+   );
+
+   render(
+   "phonePhrases",
+   phrases
+   );
+
+   status.textContent =
+   "✓ Antworten bereit – auswählen und sprechen.";
+
+ }catch(error){
+
+   const fallback=[
+
+   "Einen Moment bitte.",
+   "Ja, das passt für mich.",
+   "Nein, das passt für mich leider nicht.",
+   "Könnten Sie das bitte wiederholen?",
+   "Ich möchte dazu noch etwas sagen.",
+   "Vielen Dank."
+
+   ];
+
+   render(
+   "phonePhrases",
+   fallback
+   );
+
+   status.textContent =
+   "KI momentan nicht erreichbar.";
+
+ }
+
+}
+
+
+/* ===============================================
+   FAVORITEN
+=============================================== */
+
+function saveSentence(){
+
+ const text =
+ document.getElementById(
+ "text"
+ ).value.trim();
+
+ if(!text) return;
+
+ let list =
+ JSON.parse(
+ localStorage.getItem(
+ "etongue_favorites"
+ ) || "[]"
+ );
+
+ if(!list.includes(text))
+ list.unshift(text);
+
+ localStorage.setItem(
+ "etongue_favorites",
+ JSON.stringify(list)
+ );
+
+ loadFavorites();
+
+}
+
+
+function loadFavorites(){
+
+ const list =
+ JSON.parse(
+ localStorage.getItem(
+ "etongue_favorites"
+ ) || "[]"
+ );
+
+ render(
+ "favorites",
+ list
+ );
+
+}
+
+
+/* ===============================================
+   VERLAUF
+=============================================== */
+
+function addHistory(text){
+
+ let list =
+ JSON.parse(
+ localStorage.getItem(
+ "etongue_history"
+ ) || "[]"
+ );
+
+ list =
+ list.filter(x=>x!==text);
+
+ list.unshift(text);
+
+ list=list.slice(0,20);
+
+ localStorage.setItem(
+ "etongue_history",
+ JSON.stringify(list)
+ );
+
+ loadHistory();
+
+}
+
+
+function loadHistory(){
+
+ const list =
+ JSON.parse(
+ localStorage.getItem(
+ "etongue_history"
+ ) || "[]"
+ );
+
+ render(
+ "history",
+ list
+ );
+
+}
+
+
+/* ===============================================
+   EINSTELLUNGEN SPEICHERN
+=============================================== */
+
+document
+.getElementById("voices")
+.addEventListener(
+"change",
+function(){
+
+ localStorage.setItem(
+ "etongue_voice",
+ this.value
+ );
+
+});
+
+
+/* ===============================================
    START
-====================================================== */
+=============================================== */
 
-function start() {
+function start(){
 
-    aktualisiereZeit();
+ updateClock();
 
-    renderPhrasen(
-        "autoPhrasen",
-        zeitPhrasen[
-            getTageszeit()
-        ]
-    );
+ render(
+ "timePhrases",
+ timeSentences[getDaypart()]
+ );
 
+ selectCategory(
+ "Allgemein",
+ document.querySelector(".category")
+ );
 
-    const ersterButton =
-        document.querySelector(
-            ".thema"
-        );
+ loadFavorites();
+ loadHistory();
+ loadVoices();
 
+ setInterval(
+ updateClock,
+ 30000
+ );
 
-    waehleThema(
-        "Allgemein",
-        ersterButton
-    );
-
-
-    ladeSaetze();
-
-    ladeStimmen();
-
-
-    setInterval(
-        aktualisiereZeit,
-        30000
-    );
 }
 
 
 speechSynthesis.onvoiceschanged =
-    ladeStimmen;
-
+loadVoices;
 
 window.addEventListener(
-    "load",
-    start
+"load",
+start
 );
 
 </script>
