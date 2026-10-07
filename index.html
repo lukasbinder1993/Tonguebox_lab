@@ -2,38 +2,73 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1,viewport-fit=cover">
+
 <meta name="theme-color" content="#07111f">
 
-<title>E-Tongue V2</title>
+<title>E-Tongue – sprich mit deinen Augen</title>
 
 <style>
+
 :root{
   --bg:#07111f;
-  --panel:#0e2c45;
+  --panel:#0d2940;
   --panel2:#123b5b;
+  --panel3:#17516f;
   --accent:#35d6bd;
   --blue:#22abc8;
+  --green:#16865a;
+  --red:#aa3d49;
+  --orange:#b97813;
+  --purple:#6d55c7;
   --text:#fff;
-  --muted:#cbd9e5;
-  --green:#31d17c;
-  --red:#ff6868;
+  --muted:#c9d8e3;
   --yellow:#ffd166;
 }
 
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
 
 body{
   margin:0;
-  font-family:Arial,Helvetica,sans-serif;
   background:var(--bg);
   color:var(--text);
+  font-family:Arial,Helvetica,sans-serif;
   font-size:19px;
+  line-height:1.45;
+}
+
+button,
+input,
+textarea,
+select{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+  touch-action:manipulation;
+}
+
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible{
+  outline:5px solid #fff;
+  outline-offset:3px;
 }
 
 header{
   text-align:center;
-  padding:20px;
+  padding:22px 15px;
+  background:#091725;
   border-bottom:2px solid var(--blue);
 }
 
@@ -48,87 +83,162 @@ header p{
 }
 
 main{
-  width:min(1400px,96%);
+  width:min(1200px,96%);
   margin:auto;
-  padding-bottom:80px;
+  padding-bottom:100px;
 }
 
-h2{
-  color:var(--accent);
-  margin-top:32px;
-}
 
-button,a{
-  font-family:inherit;
-}
+/* ZEIT */
 
-button{
-  cursor:pointer;
-  border:3px solid transparent;
-}
-
-button:focus,
-button:hover{
-  outline:none;
-  border-color:white;
-}
-
-.panel{
-  background:var(--panel);
+.time-box{
+  margin:20px 0;
   padding:18px;
-  border-radius:18px;
-  margin-top:20px;
-}
-
-.time{
   text-align:center;
+  background:var(--panel);
   border:2px solid var(--blue);
+  border-radius:20px;
 }
 
-.big-grid{
+#clock{
+  color:var(--accent);
+  font-size:29px;
+  font-weight:bold;
+}
+
+
+/* SCHNELLKOMMUNIKATION */
+
+.quick-title{
+  text-align:center;
+  color:var(--accent);
+}
+
+.quick-grid{
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
-  gap:14px;
+  grid-template-columns:repeat(2,1fr);
+  gap:16px;
+  margin-bottom:25px;
 }
 
 .quick{
-  min-height:100px;
-  border-radius:16px;
-  font-size:24px;
-  font-weight:bold;
-  background:var(--panel2);
+  min-height:110px;
+  border:4px solid transparent;
+  border-radius:20px;
   color:white;
+  font-size:27px;
+  font-weight:bold;
 }
 
-.yes{background:#167c55}
-.no{background:#a43c46}
+.quick:hover{
+  border-color:white;
+}
 
-textarea,input,select{
+.yes{
+  background:var(--green);
+}
+
+.no{
+  background:var(--red);
+}
+
+.normal{
+  background:var(--panel2);
+}
+
+
+/* AKKORDEON */
+
+.section{
+  margin:20px 0;
+  overflow:hidden;
+  background:var(--panel);
+  border:2px solid #245c7e;
+  border-radius:20px;
+}
+
+.section-toggle{
   width:100%;
-  padding:16px;
-  font-size:21px;
-  border-radius:14px;
+  min-height:105px;
+  padding:20px;
+
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  border:0;
+  background:var(--panel2);
+  color:white;
+
+  text-align:left;
+  font-size:23px;
+  font-weight:bold;
+}
+
+.section.open .section-toggle{
+  background:var(--panel3);
+}
+
+.section-content{
+  display:none;
+  padding:20px;
+}
+
+.section.open .section-content{
+  display:block;
+}
+
+.arrow{
+  font-size:30px;
+}
+
+
+/* EINGABEN */
+
+textarea,
+input[type="text"],
+input[type="tel"],
+select{
+  width:100%;
+  padding:18px;
   border:3px solid var(--blue);
+  border-radius:17px;
+  background:white;
+  color:#111;
+  font-size:21px;
 }
 
 textarea{
-  min-height:115px;
+  min-height:135px;
   resize:vertical;
 }
+
+label{
+  display:block;
+  margin-bottom:8px;
+  font-weight:bold;
+}
+
+
+/* AKTIONEN */
 
 .actions{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-  gap:14px;
-  margin-top:14px;
+  gap:15px;
+  margin-top:16px;
 }
 
 .action{
-  min-height:85px;
-  padding:14px;
-  border-radius:15px;
+  min-height:100px;
+  padding:15px;
+
+  border:3px solid transparent;
+  border-radius:18px;
+
   background:var(--accent);
   color:#05232b;
+
   font-size:21px;
   font-weight:bold;
 }
@@ -138,168 +248,660 @@ textarea{
   color:white;
 }
 
-.phone{
+.green{
   background:var(--green);
-  color:#032416;
+  color:white;
 }
 
-.danger{
+.red{
   background:var(--red);
   color:white;
 }
 
+.purple{
+  background:var(--purple);
+  color:white;
+}
+
+
+/* PHRASEN */
+
 .phrases{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:16px;
+}
+
+.phrase{
+  min-height:120px;
+  padding:20px;
+
+  border:3px solid transparent;
+  border-radius:18px;
+
+  background:var(--panel2);
+  color:white;
+
+  font-size:21px;
+  text-align:left;
+  line-height:1.35;
+}
+
+.phrase:hover{
+  border-color:white;
+}
+
+
+/* THEMEN */
+
+.categories{
   display:grid;
   grid-template-columns:repeat(2,1fr);
   gap:15px;
 }
 
-.phrase{
-  min-height:115px;
-  padding:20px;
-  border-radius:16px;
-  background:var(--panel2);
-  color:white;
-  font-size:22px;
-  text-align:left;
-  line-height:1.35;
-}
-
-.phrase:before{
-  content:"🔊 ";
-}
-
-.categories{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(175px,1fr));
-  gap:14px;
-}
-
 .category{
-  min-height:100px;
-  border-radius:15px;
+  min-height:105px;
+  padding:15px;
+
+  border:3px solid transparent;
+  border-radius:18px;
+
   background:var(--panel2);
   color:white;
+
   font-size:21px;
   font-weight:bold;
 }
 
 .category.active{
   background:var(--accent);
-  color:#06232a;
+  color:#05232b;
 }
 
-.phone-screen{
-  border:3px solid var(--green);
-}
 
-.phone-title{
-  font-size:26px;
-  font-weight:bold;
-  color:var(--green);
-}
-
-.call-link{
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  text-decoration:none;
-  min-height:90px;
-  border-radius:16px;
-  background:var(--green);
-  color:#052519;
-  font-size:24px;
-  font-weight:bold;
-  margin-top:14px;
-}
+/* STATUS */
 
 .status{
   min-height:30px;
+  margin-top:15px;
   color:var(--yellow);
-  margin-top:12px;
+  font-weight:bold;
 }
 
-.range-row{
-  margin:18px 0;
+
+/* EINSTELLUNGEN */
+
+.setting{
+  margin:25px 0;
 }
 
-small{
-  color:var(--muted);
+input[type="range"]{
+  width:100%;
+  min-height:60px;
 }
 
-.hidden{
+
+/* ==========================================
+   TELEFON SCHNELLMODUS
+========================================== */
+
+.phone-mode{
   display:none;
+
+  position:fixed;
+  inset:0;
+
+  z-index:999999;
+
+  background:#07111f;
+
+  overflow-y:auto;
+
+  padding:
+    max(12px,env(safe-area-inset-top))
+    12px
+    max(20px,env(safe-area-inset-bottom));
 }
 
-@media(max-width:760px){
-  .phrases{grid-template-columns:1fr}
-  header h1{font-size:28px}
-  .quick,.category{min-height:92px}
+.phone-mode.active{
+  display:block;
 }
+
+.phone-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+
+  margin-bottom:14px;
+}
+
+.phone-title{
+  font-size:25px;
+  font-weight:bold;
+}
+
+.phone-subtitle{
+  color:var(--muted);
+  font-size:15px;
+}
+
+.phone-close{
+  min-width:120px;
+  min-height:75px;
+
+  border:3px solid white;
+  border-radius:17px;
+
+  background:#263c4c;
+  color:white;
+
+  font-weight:bold;
+}
+
+
+/* GROSSE SCHNELLTASTEN */
+
+.phone-main-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:13px;
+}
+
+.phone-big{
+  min-height:135px;
+
+  border:4px solid transparent;
+  border-radius:22px;
+
+  color:white;
+
+  font-size:30px;
+  font-weight:bold;
+}
+
+.phone-big span{
+  display:block;
+  margin-top:5px;
+  font-size:17px;
+}
+
+.phone-yes{
+  background:var(--green);
+}
+
+.phone-no{
+  background:var(--red);
+}
+
+.phone-wait{
+  background:var(--orange);
+}
+
+.phone-repeat{
+  background:#176b96;
+}
+
+
+/* ZWEITE REIHE */
+
+.phone-secondary{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:13px;
+  margin-top:13px;
+}
+
+.phone-secondary button{
+  min-height:105px;
+  padding:12px;
+
+  border:3px solid transparent;
+  border-radius:18px;
+
+  background:var(--panel2);
+  color:white;
+
+  font-size:19px;
+  font-weight:bold;
+}
+
+
+/* TELEFON EINGABE */
+
+.phone-input{
+  margin-top:18px;
+}
+
+.phone-input textarea{
+  min-height:105px;
+}
+
+
+/* TELEFON AKTION */
+
+.phone-actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:13px;
+  margin-top:13px;
+}
+
+.phone-actions button{
+  min-height:100px;
+  border:3px solid transparent;
+  border-radius:18px;
+  color:white;
+  font-size:21px;
+  font-weight:bold;
+}
+
+.phone-speak{
+  background:var(--accent);
+  color:#05232b !important;
+}
+
+.phone-ai{
+  background:var(--purple);
+}
+
+
+/* KI TELEFONANTWORTEN */
+
+.phone-ai-results{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:13px;
+  margin-top:14px;
+}
+
+.phone-ai-answer{
+  min-height:125px;
+  padding:16px;
+
+  border:3px solid var(--accent);
+  border-radius:18px;
+
+  background:var(--panel2);
+  color:white;
+
+  font-size:20px;
+  line-height:1.3;
+  text-align:left;
+}
+
+
+/* LETZTE TELEFONANTWORTEN */
+
+.phone-history-title{
+  margin-top:22px;
+}
+
+.phone-history{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:13px;
+}
+
+.phone-history-button{
+  min-height:100px;
+  padding:15px;
+
+  border:3px solid #44677d;
+  border-radius:18px;
+
+  background:#102d43;
+  color:white;
+
+  font-size:18px;
+  text-align:left;
+}
+
+
+/* ENDE */
+
+.phone-end{
+  width:100%;
+  min-height:105px;
+  margin-top:25px;
+
+  border:4px solid white;
+  border-radius:20px;
+
+  background:var(--red);
+  color:white;
+
+  font-size:22px;
+  font-weight:bold;
+}
+
+
+/* MOBILE */
+
+@media(max-width:700px){
+
+  header h1{
+    font-size:28px;
+  }
+
+  .phrases{
+    grid-template-columns:1fr;
+  }
+
+  .section-toggle{
+    min-height:110px;
+    font-size:21px;
+  }
+
+  .category{
+    min-height:100px;
+  }
+
+}
+
+@media(max-width:430px){
+
+  .phone-big{
+    min-height:125px;
+    font-size:27px;
+  }
+
+  .phone-ai-results{
+    grid-template-columns:1fr;
+  }
+
+}
+
 </style>
 </head>
 
 <body>
 
+
 <header>
-  <h1>👁️ E-Tongue V2</h1>
-  <p>Kommunikation · KI · Telefon</p>
+
+<h1>👁️ E-Tongue</h1>
+
+<p>Sprich mit deinen Augen</p>
+
 </header>
+
 
 <main>
 
-<div class="panel time">
-  <div id="date"></div>
-  <strong id="time"></strong>
-  <div id="daypart"></div>
+
+<!-- ZEIT -->
+
+<div class="time-box">
+
+<div id="date"></div>
+
+<div id="clock"></div>
+
+<div id="daypart"></div>
+
 </div>
 
-<h2>⚡ Schnellkommunikation</h2>
 
-<div class="big-grid">
-  <button class="quick yes" onclick="speak('Ja.')">JA</button>
-  <button class="quick no" onclick="speak('Nein.')">NEIN</button>
-  <button class="quick" onclick="speak('Danke.')">DANKE</button>
-  <button class="quick" onclick="speak('Bitte.')">BITTE</button>
-  <button class="quick" onclick="speak('Moment bitte.')">MOMENT</button>
-  <button class="quick" onclick="speak('Ich möchte etwas sagen.')">💬 ICH MÖCHTE SPRECHEN</button>
+<!-- SCHNELLKOMMUNIKATION -->
+
+<h2 class="quick-title">
+⚡ Schnellkommunikation
+</h2>
+
+<div class="quick-grid">
+
+<button
+class="quick yes"
+onclick="speak('Ja.')">
+JA
+</button>
+
+<button
+class="quick no"
+onclick="speak('Nein.')">
+NEIN
+</button>
+
+<button
+class="quick normal"
+onclick="speak('Einen Moment bitte.')">
+⏳ MOMENT
+</button>
+
+<button
+class="quick normal"
+onclick="speak('Danke.')">
+🙏 DANKE
+</button>
+
 </div>
 
-<h2>✍️ Sprechen</h2>
 
-<div class="panel">
+<!-- ======================================
+     SPRECHEN
+====================================== -->
 
-<textarea id="text"
+<section class="section open">
+
+<button
+class="section-toggle"
+onclick="toggleSection(this)">
+
+<span>💬 Sprechen</span>
+<span class="arrow">▲</span>
+
+</button>
+
+
+<div class="section-content">
+
+<textarea
+id="mainText"
 placeholder="Was möchtest du sagen?"></textarea>
 
+
 <div class="actions">
-  <button class="action" onclick="speakText()">🔊 Sprechen</button>
-  <button class="action blue" onclick="generateAI()">🤖 KI-Vorschläge</button>
-  <button class="action blue" onclick="saveSentence()">⭐ Speichern</button>
+
+<button
+class="action"
+onclick="speakMainText()">
+🔊 SPRECHEN
+</button>
+
+<button
+class="action purple"
+onclick="generateAI()">
+🤖 KI-VORSCHLÄGE
+</button>
+
+<button
+class="action blue"
+onclick="saveSentence()">
+⭐ SPEICHERN
+</button>
+
+<button
+class="action red"
+onclick="clearMainText()">
+✕ LÖSCHEN
+</button>
+
 </div>
 
-<div id="aiStatus" class="status"></div>
+
+<div
+id="aiStatus"
+class="status">
+</div>
+
+
+<div
+id="aiPhrases"
+class="phrases">
+</div>
 
 </div>
 
-<div id="aiPhrases" class="phrases"></div>
+</section>
 
 
-<!-- TELEFON -->
+<!-- ======================================
+     VORSCHLÄGE FÜR JETZT
+====================================== -->
 
-<h2>📞 Telefon</h2>
+<section class="section">
 
-<div class="panel phone-screen">
+<button
+class="section-toggle"
+onclick="toggleSection(this)">
 
-<div class="phone-title">
-📱 E-Tongue Telefonassistent
+<span>✨ Vorschläge für jetzt</span>
+<span class="arrow">▼</span>
+
+</button>
+
+
+<div class="section-content">
+
+<div
+id="timePhrases"
+class="phrases">
 </div>
+
+</div>
+
+</section>
+
+
+<!-- ======================================
+     THEMEN
+====================================== -->
+
+<section class="section">
+
+<button
+class="section-toggle"
+onclick="toggleSection(this)">
+
+<span>💡 Themen & Phrasen</span>
+<span class="arrow">▼</span>
+
+</button>
+
+
+<div class="section-content">
+
+<div class="categories">
+
+<button
+class="category"
+onclick="selectCategory('Allgemein',this)">
+💬 Allgemein
+</button>
+
+<button
+class="category"
+onclick="selectCategory('Kaffee',this)">
+☕ Kaffee
+</button>
+
+<button
+class="category"
+onclick="selectCategory('Trinken',this)">
+🥤 Trinken
+</button>
+
+<button
+class="category"
+onclick="selectCategory('Essen',this)">
+🍽️ Essen
+</button>
+
+<button
+class="category"
+onclick="selectCategory('Schmerzen',this)">
+🩺 Schmerzen
+</button>
+
+<button
+class="category"
+onclick="selectCategory('Befinden',this)">
+❤️ Befinden
+</button>
+
+<button
+class="category"
+onclick="selectCategory('Gespräch',this)">
+🗣️ Gespräch
+</button>
+
+<button
+class="category"
+onclick="selectCategory('Hilfe',this)">
+🆘 Hilfe
+</button>
+
+<button
+class="category"
+onclick="selectCategory('Pflege',this)">
+🛏️ Pflege
+</button>
+
+<button
+class="category"
+onclick="selectCategory('Telefon',this)">
+📞 Telefon
+</button>
+
+</div>
+
+
+<h2 id="categoryTitle">
+💡 Allgemein
+</h2>
+
+
+<div
+id="categoryPhrases"
+class="phrases">
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ======================================
+     TELEFON
+====================================== -->
+
+<section class="section">
+
+<button
+class="section-toggle"
+onclick="toggleSection(this)">
+
+<span>📞 Telefonieren</span>
+<span class="arrow">▼</span>
+
+</button>
+
+
+<div class="section-content">
+
+<h2>📱 Telefonassistent</h2>
 
 <p>
-Telefonnummer eingeben und den Anruf starten.
-Während des Telefonats kannst du Antworten auswählen
-oder von der KI formulieren lassen.
+Für ein laufendes Telefonat kannst du den
+vereinfachten Schnellmodus verwenden.
 </p>
+
+
+<label for="phoneNumber">
+Telefonnummer
+</label>
 
 <input
 id="phoneNumber"
@@ -307,218 +909,170 @@ type="tel"
 inputmode="tel"
 placeholder="+43 ...">
 
-<a
-id="callButton"
-class="call-link"
-href="#"
-onclick="return startCall()">
+
+<div class="actions">
+
+<button
+class="action green"
+onclick="startCall()">
 📞 ANRUF STARTEN
-</a>
-
-<div class="actions">
-
-<button
-class="action"
-onclick="speak('Hallo. Ich kommuniziere über eine Sprachausgabe. Einen Moment bitte.')">
-👋 Gespräch beginnen
 </button>
 
 <button
-class="action blue"
-onclick="openPhoneAI()">
-🤖 KI-Antwort
+class="action purple"
+onclick="openPhoneMode()">
+👁️ SCHNELLMODUS
 </button>
 
 </div>
 
-</div>
 
-
-<!-- TELEFON KI -->
-
-<div id="phoneAI" class="panel hidden">
-
-<h2>🤖 Telefon-Antwort</h2>
-
-<p>
-Schreibe kurz, was du antworten möchtest.
-Ein Stichwort reicht.
-</p>
-
-<textarea
-id="phoneContext"
-placeholder="z. B. Termin nächste Woche bestätigen">
-</textarea>
-
-<div class="actions">
-
-<button
-class="action"
-onclick="generatePhoneAI()">
-✨ Antwort formulieren
-</button>
-
-<button
-class="action blue"
-onclick="closePhoneAI()">
-✕ Schließen
-</button>
-
-</div>
-
-<div id="phoneStatus" class="status"></div>
-
-<br>
-
-<div id="phonePhrases" class="phrases"></div>
-
-</div>
-
-
-<!-- TELEFON SCHNELLANTWORTEN -->
-
-<h2>☎️ Schnellantworten beim Telefonieren</h2>
+<h2>
+Telefon-Schnellsätze
+</h2>
 
 <div class="phrases">
 
-<button class="phrase"
+<button
+class="phrase"
 onclick="speak('Hallo. Ich kommuniziere über eine Sprachausgabe.')">
-Hallo. Ich kommuniziere über eine Sprachausgabe.
+🔊 Hallo. Ich kommuniziere über eine Sprachausgabe.
 </button>
 
-<button class="phrase"
+<button
+class="phrase"
 onclick="speak('Einen Moment bitte. Ich schreibe meine Antwort.')">
-Einen Moment bitte. Ich schreibe meine Antwort.
+🔊 Einen Moment bitte. Ich schreibe meine Antwort.
 </button>
 
-<button class="phrase"
-onclick="speak('Ja, das passt für mich.')">
-Ja, das passt für mich.
-</button>
-
-<button class="phrase"
-onclick="speak('Nein, das passt für mich leider nicht.')">
-Nein, das passt für mich leider nicht.
-</button>
-
-<button class="phrase"
+<button
+class="phrase"
 onclick="speak('Könnten Sie das bitte wiederholen?')">
-Könnten Sie das bitte wiederholen?
+🔊 Könnten Sie das bitte wiederholen?
 </button>
 
-<button class="phrase"
-onclick="speak('Könnten Sie bitte etwas langsamer sprechen?')">
-Könnten Sie bitte etwas langsamer sprechen?
-</button>
-
-<button class="phrase"
-onclick="speak('Ich habe Sie verstanden.')">
-Ich habe Sie verstanden.
-</button>
-
-<button class="phrase"
-onclick="speak('Vielen Dank für Ihren Anruf. Auf Wiederhören.')">
-Vielen Dank für Ihren Anruf. Auf Wiederhören.
+<button
+class="phrase"
+onclick="speak('Bitte sprechen Sie etwas langsamer.')">
+🔊 Bitte sprechen Sie etwas langsamer.
 </button>
 
 </div>
 
+</div>
 
-<!-- TAGESPHRASEN -->
-
-<h2>🕐 Vorschläge für jetzt</h2>
-
-<div id="timePhrases" class="phrases"></div>
+</section>
 
 
-<!-- THEMEN -->
+<!-- ======================================
+     EIGENE SÄTZE
+====================================== -->
 
-<h2>💬 Themen</h2>
+<section class="section">
 
-<div class="categories">
+<button
+class="section-toggle"
+onclick="toggleSection(this)">
 
-<button class="category"
-onclick="selectCategory('Allgemein',this)">
-💬 Allgemein
+<span>⭐ Meine Sätze</span>
+<span class="arrow">▼</span>
+
 </button>
 
-<button class="category"
-onclick="selectCategory('Kaffee',this)">
-☕ Kaffee
+<div class="section-content">
+
+<div
+id="favorites"
+class="phrases">
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ======================================
+     VERLAUF
+====================================== -->
+
+<section class="section">
+
+<button
+class="section-toggle"
+onclick="toggleSection(this)">
+
+<span>🕘 Verlauf</span>
+<span class="arrow">▼</span>
+
 </button>
 
-<button class="category"
-onclick="selectCategory('Trinken',this)">
-🥤 Trinken
-</button>
+<div class="section-content">
 
-<button class="category"
-onclick="selectCategory('Essen',this)">
-🍽️ Essen
-</button>
+<div
+id="history"
+class="phrases">
+</div>
 
-<button class="category"
-onclick="selectCategory('Schmerzen',this)">
-🩺 Schmerzen
-</button>
+<div class="actions">
 
-<button class="category"
-onclick="selectCategory('Befinden',this)">
-❤️ Befinden
-</button>
-
-<button class="category"
-onclick="selectCategory('Gespräch',this)">
-🗣️ Gespräch
-</button>
-
-<button class="category"
-onclick="selectCategory('Hilfe',this)">
-🆘 Hilfe
-</button>
-
-<button class="category"
-onclick="selectCategory('Pflege',this)">
-🛏️ Pflege
-</button>
-
-<button class="category"
-onclick="selectCategory('Telefon',this)">
-📞 Telefon
+<button
+class="action red"
+onclick="clearHistory()">
+🗑️ VERLAUF LÖSCHEN
 </button>
 
 </div>
 
-<h2 id="categoryTitle">💡 Allgemein</h2>
+</div>
 
-<div id="categoryPhrases" class="phrases"></div>
-
-
-<!-- FAVORITEN -->
-
-<h2>⭐ Meine Sätze</h2>
-
-<div id="favorites" class="phrases"></div>
+</section>
 
 
-<!-- VERLAUF -->
+<!-- ======================================
+     STIMME
+====================================== -->
 
-<h2>🕘 Verlauf</h2>
+<section class="section">
 
-<div id="history" class="phrases"></div>
+<button
+class="section-toggle"
+onclick="toggleSection(this)">
+
+<span>🗣️ Stimme & Lautstärke</span>
+<span class="arrow">▼</span>
+
+</button>
 
 
-<!-- STIMME -->
+<div class="section-content">
 
-<h2>🗣️ Sprachausgabe</h2>
+<label for="voiceSearch">
+🔎 Stimme suchen
+</label>
 
-<div class="panel">
+<input
+id="voiceSearch"
+type="text"
+placeholder="z. B. Deutsch"
+oninput="filterVoices()">
+
+
+<br><br>
+
+
+<label for="voices">
+Stimme
+</label>
 
 <select id="voices"></select>
 
-<div class="range-row">
-<label>
-Lautstärke
+
+<div class="setting">
+
+<label for="volume">
+🔊 Lautstärke
+</label>
+
 <input
 id="volume"
 type="range"
@@ -526,12 +1080,16 @@ min="0"
 max="1"
 step="0.1"
 value="1">
-</label>
+
 </div>
 
-<div class="range-row">
-<label>
-Sprechgeschwindigkeit
+
+<div class="setting">
+
+<label for="rate">
+⏩ Sprechgeschwindigkeit
+</label>
+
 <input
 id="rate"
 type="range"
@@ -539,85 +1097,340 @@ min="0.6"
 max="1.5"
 step="0.1"
 value="1">
-</label>
-</div>
 
 </div>
+
+
+<button
+class="action"
+onclick="speak('Hallo. So klingt meine Stimme.')">
+🔊 STIMME TESTEN
+</button>
+
+</div>
+
+</section>
+
 
 </main>
 
 
+<!-- =====================================================
+     TELEFON-SCHNELLMODUS
+===================================================== -->
+
+<div
+id="phoneMode"
+class="phone-mode">
+
+
+<div class="phone-header">
+
+<div>
+
+<div class="phone-title">
+📞 Telefon
+</div>
+
+<div class="phone-subtitle">
+Schnelle Kommunikation mit Blickerfassung
+</div>
+
+</div>
+
+
+<button
+class="phone-close"
+onclick="closePhoneMode()">
+✕ ZURÜCK
+</button>
+
+</div>
+
+
+<!-- HAUPTANTWORTEN -->
+
+<div class="phone-main-grid">
+
+<button
+class="phone-big phone-yes"
+onclick="phoneSpeak('Ja.')">
+JA
+</button>
+
+<button
+class="phone-big phone-no"
+onclick="phoneSpeak('Nein.')">
+NEIN
+</button>
+
+<button
+class="phone-big phone-wait"
+onclick="phoneSpeak('Einen Moment bitte. Ich schreibe meine Antwort.')">
+
+⏳
+<span>MOMENT</span>
+
+</button>
+
+<button
+class="phone-big phone-repeat"
+onclick="phoneSpeak('Könnten Sie das bitte wiederholen?')">
+
+🔁
+<span>WIEDERHOLEN</span>
+
+</button>
+
+</div>
+
+
+<!-- WEITERE ANTWORTEN -->
+
+<div class="phone-secondary">
+
+<button
+onclick="phoneSpeak('Bitte sprechen Sie etwas langsamer.')">
+🐢 LANGSAMER
+</button>
+
+<button
+onclick="phoneSpeak('Ich habe Sie verstanden.')">
+👍 VERSTANDEN
+</button>
+
+<button
+onclick="phoneSpeak('Das passt für mich.')">
+✓ PASST
+</button>
+
+<button
+onclick="phoneSpeak('Das passt für mich leider nicht.')">
+✕ PASST NICHT
+</button>
+
+</div>
+
+
+<!-- FREIER TEXT -->
+
+<div class="phone-input">
+
+<textarea
+id="phoneText"
+placeholder="Antwort oder nur Stichwörter eingeben ...
+
+z. B. Termin Freitag geht nicht"></textarea>
+
+</div>
+
+
+<div class="phone-actions">
+
+<button
+class="phone-speak"
+onclick="speakPhoneText()">
+🔊 SPRECHEN
+</button>
+
+<button
+id="phoneAIButton"
+class="phone-ai"
+onclick="generatePhoneAI()">
+🤖 KI-ANTWORTEN
+</button>
+
+</div>
+
+
+<div
+id="phoneAIStatus"
+class="status">
+</div>
+
+
+<!-- KI ANTWORTEN -->
+
+<div
+id="phoneAIResults"
+class="phone-ai-results">
+</div>
+
+
+<!-- TELEFONVERLAUF -->
+
+<h2 class="phone-history-title">
+🕘 Letzte Antworten
+</h2>
+
+<div
+id="phoneHistory"
+class="phone-history">
+</div>
+
+
+<button
+class="phone-end"
+onclick="closePhoneMode()">
+✕ SCHNELLMODUS VERLASSEN
+</button>
+
+</div>
+
+
 <script>
 
-/* ===============================================
+/* ========================================
    KONFIGURATION
-=============================================== */
+======================================== */
 
 /*
-Hier später die sichere Backend-Adresse eintragen.
+Für KI später deine Backend-Adresse:
 
-NIEMALS den OpenAI API-Key direkt hier eintragen.
+const AI_URL =
+"https://dein-backend.at/api/phrasen";
+
+NIEMALS den OpenAI API-Key hier eintragen.
 */
 
 const AI_URL =
 "DEINE_BACKEND_URL/api/phrasen";
 
 
-let currentCategory = "Allgemein";
+let currentCategory =
+"Allgemein";
+
 let voices = [];
 
+let filteredVoices = [];
 
-/* ===============================================
+
+/* ========================================
+   AKKORDEON
+======================================== */
+
+function toggleSection(button){
+
+  const section =
+  button.closest(".section");
+
+  const open =
+  section.classList.contains("open");
+
+
+  document
+  .querySelectorAll(".section")
+  .forEach(item=>{
+
+    item.classList.remove("open");
+
+    const arrow =
+    item.querySelector(".arrow");
+
+    if(arrow){
+      arrow.textContent="▼";
+    }
+
+  });
+
+
+  if(!open){
+
+    section.classList.add("open");
+
+    button
+    .querySelector(".arrow")
+    .textContent="▲";
+
+
+    setTimeout(()=>{
+
+      section.scrollIntoView({
+        behavior:"smooth",
+        block:"center"
+      });
+
+    },150);
+
+  }
+
+}
+
+
+/* ========================================
    ZEIT
-=============================================== */
+======================================== */
 
 function getDaypart(){
 
- const h = new Date().getHours();
+  const hour =
+  new Date().getHours();
 
- if(h >= 5 && h < 9) return "Morgen";
- if(h >= 9 && h < 12) return "Vormittag";
- if(h >= 12 && h < 14) return "Mittag";
- if(h >= 14 && h < 18) return "Nachmittag";
- if(h >= 18 && h < 22) return "Abend";
+  if(hour>=5 && hour<9)
+  return "Morgen";
 
- return "Nacht";
+  if(hour>=9 && hour<12)
+  return "Vormittag";
+
+  if(hour>=12 && hour<14)
+  return "Mittag";
+
+  if(hour>=14 && hour<18)
+  return "Nachmittag";
+
+  if(hour>=18 && hour<22)
+  return "Abend";
+
+  return "Nacht";
+
 }
 
 
 function updateClock(){
 
- const now = new Date();
+  const now =
+  new Date();
 
- document.getElementById("date").textContent =
- now.toLocaleDateString(
- "de-AT",
- {
- weekday:"long",
- day:"2-digit",
- month:"long",
- year:"numeric"
- });
 
- document.getElementById("time").textContent =
- now.toLocaleTimeString(
- "de-AT",
- {
- hour:"2-digit",
- minute:"2-digit"
- });
+  document
+  .getElementById("date")
+  .textContent =
+  now.toLocaleDateString(
+    "de-AT",
+    {
+      weekday:"long",
+      day:"2-digit",
+      month:"long",
+      year:"numeric"
+    }
+  );
 
- document.getElementById("daypart").textContent =
- getDaypart();
+
+  document
+  .getElementById("clock")
+  .textContent =
+  now.toLocaleTimeString(
+    "de-AT",
+    {
+      hour:"2-digit",
+      minute:"2-digit"
+    }
+  );
+
+
+  document
+  .getElementById("daypart")
+  .textContent =
+  getDaypart();
 
 }
 
 
-/* ===============================================
+/* ========================================
    TAGESPHRASEN
-=============================================== */
+======================================== */
 
-const timeSentences = {
+const timeSentences={
 
 Morgen:[
 "Guten Morgen!",
@@ -641,9 +1454,9 @@ Mittag:[
 "Ich habe Hunger.",
 "Was gibt es zum Mittagessen?",
 "Ich möchte etwas trinken.",
-"Wie war dein Vormittag?",
 "Das schmeckt gut.",
-"Was machen wir nach dem Essen?"
+"Was machen wir nach dem Essen?",
+"Wie war dein Vormittag?"
 ],
 
 Nachmittag:[
@@ -676,11 +1489,11 @@ Nacht:[
 };
 
 
-/* ===============================================
+/* ========================================
    THEMEN
-=============================================== */
+======================================== */
 
-const categories = {
+const categories={
 
 Allgemein:[
 "Ja.",
@@ -695,8 +1508,8 @@ Kaffee:[
 "Ich hätte gerne einen Kaffee.",
 "Bitte mach mir einen Kaffee.",
 "Möchtest du auch einen Kaffee?",
-"Der Kaffee schmeckt gut.",
 "Bitte noch einen Kaffee.",
+"Der Kaffee schmeckt gut.",
 "Ich möchte keinen Kaffee mehr."
 ],
 
@@ -767,487 +1580,966 @@ Telefon:[
 "Hallo. Ich kommuniziere über eine Sprachausgabe.",
 "Einen Moment bitte. Ich schreibe meine Antwort.",
 "Könnten Sie das bitte wiederholen?",
-"Könnten Sie bitte langsamer sprechen?",
-"Ja, das passt für mich.",
+"Bitte sprechen Sie etwas langsamer.",
+"Ich habe Sie verstanden.",
 "Vielen Dank. Auf Wiederhören."
 ]
 
 };
 
 
-/* ===============================================
-   ANZEIGE
-=============================================== */
+/* ========================================
+   PHRASEN DARSTELLEN
+======================================== */
 
-function render(id,list){
+function renderPhrases(id,list){
 
- const container =
- document.getElementById(id);
+  const container =
+  document.getElementById(id);
 
- container.innerHTML="";
+  container.innerHTML="";
 
- list.forEach(text=>{
 
-   const button =
-   document.createElement("button");
+  if(!list || !list.length){
 
-   button.className="phrase";
-   button.textContent=text;
+    container.innerHTML =
+    "<p>Keine Sätze vorhanden.</p>";
 
-   button.onclick=()=>speak(text);
+    return;
 
-   container.appendChild(button);
+  }
 
- });
+
+  list.forEach(text=>{
+
+    const button =
+    document.createElement("button");
+
+    button.className="phrase";
+
+    button.textContent =
+    "🔊 " + text;
+
+    button.onclick=()=>
+    speak(text);
+
+    container.appendChild(button);
+
+  });
 
 }
 
+
+/* ========================================
+   THEMA
+======================================== */
 
 function selectCategory(category,button){
 
- currentCategory=category;
+  currentCategory=category;
 
- document
- .querySelectorAll(".category")
- .forEach(b=>b.classList.remove("active"));
 
- if(button)
- button.classList.add("active");
+  document
+  .querySelectorAll(".category")
+  .forEach(item=>
+    item.classList.remove("active")
+  );
 
- document.getElementById("categoryTitle").textContent =
- "💡 " + category;
 
- render(
- "categoryPhrases",
- categories[category]
- );
+  if(button){
+    button.classList.add("active");
+  }
+
+
+  document
+  .getElementById("categoryTitle")
+  .textContent =
+  "💡 " + category;
+
+
+  renderPhrases(
+    "categoryPhrases",
+    categories[category]
+  );
 
 }
 
 
-/* ===============================================
-   SPRACHAUSGABE
-=============================================== */
+/* ========================================
+   STIMMEN
+======================================== */
 
 function loadVoices(){
 
- voices =
- speechSynthesis.getVoices();
+  voices =
+  speechSynthesis.getVoices();
 
- const select =
- document.getElementById("voices");
-
- select.innerHTML="";
-
- voices.forEach((voice,index)=>{
-
-   const option =
-   document.createElement("option");
-
-   option.value=index;
-
-   option.textContent =
-   voice.name+" – "+voice.lang;
-
-   select.appendChild(option);
-
- });
-
- const saved =
- localStorage.getItem("etongue_voice");
-
- if(saved)
- select.value=saved;
-
- else {
-
-   const german =
-   voices.findIndex(v=>
-   v.lang.toLowerCase().startsWith("de"));
-
-   if(german>=0)
-   select.value=german;
-
- }
+  filterVoices();
 
 }
 
+
+function filterVoices(){
+
+  const search =
+  document
+  .getElementById("voiceSearch")
+  .value
+  .toLowerCase()
+  .trim();
+
+
+  filteredVoices =
+  voices.filter(voice=>{
+
+    const text =
+    (
+      voice.name +
+      " " +
+      voice.lang
+    ).toLowerCase();
+
+    return(
+      !search ||
+      text.includes(search)
+    );
+
+  });
+
+
+  filteredVoices.sort((a,b)=>{
+
+    const aa =
+    a.lang.toLowerCase()
+    .startsWith("de") ? 0 : 1;
+
+    const bb =
+    b.lang.toLowerCase()
+    .startsWith("de") ? 0 : 1;
+
+    return aa-bb;
+
+  });
+
+
+  const select =
+  document.getElementById("voices");
+
+  select.innerHTML="";
+
+
+  filteredVoices.forEach(
+    (voice,index)=>{
+
+      const option =
+      document.createElement("option");
+
+      option.value=index;
+
+      option.textContent =
+      voice.name +
+      " – " +
+      voice.lang;
+
+      select.appendChild(option);
+
+    }
+  );
+
+
+  restoreVoice();
+
+}
+
+
+function restoreVoice(){
+
+  const saved =
+  localStorage.getItem(
+    "etongue_voice"
+  );
+
+
+  const select =
+  document.getElementById("voices");
+
+
+  if(saved){
+
+    const index =
+    filteredVoices.findIndex(
+      voice=>voice.name===saved
+    );
+
+    if(index>=0){
+
+      select.value=index;
+
+      return;
+
+    }
+
+  }
+
+
+  const german =
+  filteredVoices.findIndex(
+    voice=>
+    voice.lang
+    .toLowerCase()
+    .startsWith("de")
+  );
+
+
+  if(german>=0){
+    select.value=german;
+  }
+
+}
+
+
+function getSelectedVoice(){
+
+  const index =
+  Number(
+    document
+    .getElementById("voices")
+    .value
+  );
+
+  return(
+    filteredVoices[index] ||
+    null
+  );
+
+}
+
+
+/* ========================================
+   SPRECHEN
+======================================== */
 
 function speak(text){
 
- if(!text) return;
+  if(!text || !text.trim())
+  return;
 
- speechSynthesis.cancel();
 
- const utterance =
- new SpeechSynthesisUtterance(text);
+  speechSynthesis.cancel();
 
- const voiceIndex =
- document.getElementById("voices").value;
 
- if(voices[voiceIndex])
- utterance.voice=voices[voiceIndex];
+  const utterance =
+  new SpeechSynthesisUtterance(text);
 
- utterance.lang="de-DE";
 
- utterance.volume =
- Number(document.getElementById("volume").value);
+  const voice =
+  getSelectedVoice();
 
- utterance.rate =
- Number(document.getElementById("rate").value);
 
- speechSynthesis.speak(utterance);
+  if(voice){
 
- addHistory(text);
+    utterance.voice=voice;
+    utterance.lang=voice.lang;
+
+  }else{
+
+    utterance.lang="de-AT";
+
+  }
+
+
+  utterance.volume =
+  Number(
+    document
+    .getElementById("volume")
+    .value
+  );
+
+
+  utterance.rate =
+  Number(
+    document
+    .getElementById("rate")
+    .value
+  );
+
+
+  speechSynthesis.speak(
+    utterance
+  );
+
+
+  addHistory(text);
 
 }
 
 
-function speakText(){
+/* ========================================
+   HAUPTTEXT
+======================================== */
 
- const text =
- document.getElementById("text").value.trim();
+function speakMainText(){
 
- speak(text);
+  speak(
+    document
+    .getElementById("mainText")
+    .value
+    .trim()
+  );
 
 }
 
 
-/* ===============================================
+function clearMainText(){
+
+  document
+  .getElementById("mainText")
+  .value="";
+
+}
+
+
+/* ========================================
    KI
-=============================================== */
+======================================== */
 
-async function requestAI(context,type="normal"){
+async function requestAI(
+context="",
+mode="normal"
+){
 
- if(AI_URL.includes("DEINE_BACKEND_URL"))
- throw new Error("KI-Backend ist noch nicht eingerichtet.");
+  if(
+    AI_URL.includes(
+      "DEINE_BACKEND_URL"
+    )
+  ){
 
- const now=new Date();
+    throw new Error(
+      "Backend nicht eingerichtet"
+    );
 
- const payload={
+  }
 
-   thema:
-   type==="phone"
-   ? "Telefonat"
-   : currentCategory,
 
-   kontext:context,
+  const now=new Date();
 
-   modus:type,
 
-   tageszeit:getDaypart(),
+  const response =
+  await fetch(
+    AI_URL,
+    {
+      method:"POST",
 
-   wochentag:
-   now.toLocaleDateString(
-   "de-AT",
-   {weekday:"long"}),
+      headers:{
+        "Content-Type":
+        "application/json"
+      },
 
-   datum:
-   now.toLocaleDateString("de-AT"),
+      body:JSON.stringify({
 
-   uhrzeit:
-   now.toLocaleTimeString(
-   "de-AT",
-   {
-   hour:"2-digit",
-   minute:"2-digit"
-   })
+        thema:
+        mode==="phone"
+        ? "Telefon"
+        : currentCategory,
 
- };
+        kontext:context,
 
- const response =
- await fetch(
- AI_URL,
- {
- method:"POST",
- headers:{
- "Content-Type":"application/json"
- },
- body:JSON.stringify(payload)
- });
+        modus:mode,
 
- if(!response.ok)
- throw new Error("KI-Serverfehler");
+        tageszeit:
+        getDaypart(),
 
- const data =
- await response.json();
+        wochentag:
+        now.toLocaleDateString(
+          "de-AT",
+          {weekday:"long"}
+        ),
 
- if(!Array.isArray(data.phrasen))
- throw new Error("Ungültige KI-Antwort");
+        datum:
+        now.toLocaleDateString(
+          "de-AT"
+        ),
 
- return data.phrasen;
+        uhrzeit:
+        now.toLocaleTimeString(
+          "de-AT",
+          {
+            hour:"2-digit",
+            minute:"2-digit"
+          }
+        )
+
+      })
+    }
+  );
+
+
+  if(!response.ok){
+
+    throw new Error(
+      "KI Serverfehler"
+    );
+
+  }
+
+
+  const data =
+  await response.json();
+
+
+  if(
+    !Array.isArray(data.phrasen)
+  ){
+
+    throw new Error(
+      "Ungültige Antwort"
+    );
+
+  }
+
+
+  return data.phrasen;
 
 }
 
+
+/* ========================================
+   NORMALE KI
+======================================== */
 
 async function generateAI(){
 
- const status =
- document.getElementById("aiStatus");
-
- const context =
- document.getElementById("text").value.trim();
-
- status.textContent =
- "🤖 KI erstellt passende Antworten ...";
-
- try{
-
-   const phrases =
-   await requestAI(context);
-
-   render(
-   "aiPhrases",
-   phrases
-   );
-
-   status.textContent =
-   "✓ Vorschläge bereit.";
-
- }catch(error){
-
-   render(
-   "aiPhrases",
-   categories[currentCategory]
-   );
-
-   status.textContent =
-   "KI momentan nicht erreichbar – lokale Vorschläge werden verwendet.";
-
- }
-
-}
+  const status =
+  document.getElementById("aiStatus");
 
 
-/* ===============================================
-   TELEFON
-=============================================== */
+  const context =
+  document
+  .getElementById("mainText")
+  .value
+  .trim();
 
-function startCall(){
 
- const number =
- document
- .getElementById("phoneNumber")
- .value
- .trim();
+  status.textContent =
+  "🤖 KI erstellt Vorschläge ...";
 
- if(!number){
 
-   alert(
-   "Bitte Telefonnummer eingeben."
-   );
+  try{
 
-   return false;
+    const result =
+    await requestAI(
+      context,
+      "normal"
+    );
 
- }
 
- const clean =
- number.replace(
- /[^0-9+*#]/g,
- ""
- );
+    renderPhrases(
+      "aiPhrases",
+      result
+    );
 
- window.location.href =
- "tel:" + clean;
 
- return false;
+    status.textContent =
+    "✓ Vorschläge bereit.";
+
+  }
+
+  catch(error){
+
+    renderPhrases(
+      "aiPhrases",
+      categories[currentCategory]
+    );
+
+
+    status.textContent =
+    "KI nicht erreichbar – lokale Vorschläge werden angezeigt.";
+
+  }
 
 }
 
 
-function openPhoneAI(){
-
- document
- .getElementById("phoneAI")
- .classList.remove("hidden");
-
- document
- .getElementById("phoneAI")
- .scrollIntoView({
- behavior:"smooth"
- });
-
-}
-
-
-function closePhoneAI(){
-
- document
- .getElementById("phoneAI")
- .classList.add("hidden");
-
-}
-
-
-async function generatePhoneAI(){
-
- const status =
- document.getElementById(
- "phoneStatus"
- );
-
- const context =
- document.getElementById(
- "phoneContext"
- ).value.trim();
-
-
- if(!context){
-
-   status.textContent =
-   "Schreibe kurz, was du antworten möchtest.";
-
-   return;
-
- }
-
-
- status.textContent =
- "🤖 KI formuliert kurze Telefonantworten ...";
-
-
- try{
-
-   const phrases =
-   await requestAI(
-   context,
-   "phone"
-   );
-
-   render(
-   "phonePhrases",
-   phrases
-   );
-
-   status.textContent =
-   "✓ Antworten bereit – auswählen und sprechen.";
-
- }catch(error){
-
-   const fallback=[
-
-   "Einen Moment bitte.",
-   "Ja, das passt für mich.",
-   "Nein, das passt für mich leider nicht.",
-   "Könnten Sie das bitte wiederholen?",
-   "Ich möchte dazu noch etwas sagen.",
-   "Vielen Dank."
-
-   ];
-
-   render(
-   "phonePhrases",
-   fallback
-   );
-
-   status.textContent =
-   "KI momentan nicht erreichbar.";
-
- }
-
-}
-
-
-/* ===============================================
+/* ========================================
    FAVORITEN
-=============================================== */
+======================================== */
 
 function saveSentence(){
 
- const text =
- document.getElementById(
- "text"
- ).value.trim();
+  const text =
+  document
+  .getElementById("mainText")
+  .value
+  .trim();
 
- if(!text) return;
 
- let list =
- JSON.parse(
- localStorage.getItem(
- "etongue_favorites"
- ) || "[]"
- );
+  if(!text)
+  return;
 
- if(!list.includes(text))
- list.unshift(text);
 
- localStorage.setItem(
- "etongue_favorites",
- JSON.stringify(list)
- );
+  let list =
+  JSON.parse(
+    localStorage.getItem(
+      "etongue_favorites"
+    ) || "[]"
+  );
 
- loadFavorites();
+
+  list =
+  list.filter(
+    item=>item!==text
+  );
+
+
+  list.unshift(text);
+
+
+  localStorage.setItem(
+    "etongue_favorites",
+    JSON.stringify(list)
+  );
+
+
+  loadFavorites();
 
 }
 
 
 function loadFavorites(){
 
- const list =
- JSON.parse(
- localStorage.getItem(
- "etongue_favorites"
- ) || "[]"
- );
+  const list =
+  JSON.parse(
+    localStorage.getItem(
+      "etongue_favorites"
+    ) || "[]"
+  );
 
- render(
- "favorites",
- list
- );
+
+  renderPhrases(
+    "favorites",
+    list
+  );
 
 }
 
 
-/* ===============================================
-   VERLAUF
-=============================================== */
+/* ========================================
+   NORMALER VERLAUF
+======================================== */
 
 function addHistory(text){
 
- let list =
- JSON.parse(
- localStorage.getItem(
- "etongue_history"
- ) || "[]"
- );
+  let list =
+  JSON.parse(
+    localStorage.getItem(
+      "etongue_history"
+    ) || "[]"
+  );
 
- list =
- list.filter(x=>x!==text);
 
- list.unshift(text);
+  list =
+  list.filter(
+    item=>item!==text
+  );
 
- list=list.slice(0,20);
 
- localStorage.setItem(
- "etongue_history",
- JSON.stringify(list)
- );
+  list.unshift(text);
 
- loadHistory();
+  list=list.slice(0,20);
+
+
+  localStorage.setItem(
+    "etongue_history",
+    JSON.stringify(list)
+  );
+
+
+  loadHistory();
 
 }
 
 
 function loadHistory(){
 
- const list =
- JSON.parse(
- localStorage.getItem(
- "etongue_history"
- ) || "[]"
- );
+  const list =
+  JSON.parse(
+    localStorage.getItem(
+      "etongue_history"
+    ) || "[]"
+  );
 
- render(
- "history",
- list
- );
+
+  renderPhrases(
+    "history",
+    list
+  );
 
 }
 
 
-/* ===============================================
+function clearHistory(){
+
+  localStorage.removeItem(
+    "etongue_history"
+  );
+
+  loadHistory();
+
+}
+
+
+/* ========================================
+   TELEFONANRUF
+======================================== */
+
+function startCall(){
+
+  const number =
+  document
+  .getElementById("phoneNumber")
+  .value
+  .trim();
+
+
+  if(!number){
+
+    alert(
+      "Bitte Telefonnummer eingeben."
+    );
+
+    return;
+
+  }
+
+
+  const clean =
+  number.replace(
+    /[^0-9+*#]/g,
+    ""
+  );
+
+
+  window.location.href =
+  "tel:" + clean;
+
+}
+
+
+/* ========================================
+   SCHNELLMODUS
+======================================== */
+
+function openPhoneMode(){
+
+  const mode =
+  document.getElementById("phoneMode");
+
+  mode.classList.add("active");
+
+  document.body.style.overflow =
+  "hidden";
+
+  mode.scrollTop=0;
+
+  loadPhoneHistory();
+
+}
+
+
+function closePhoneMode(){
+
+  document
+  .getElementById("phoneMode")
+  .classList.remove("active");
+
+  document.body.style.overflow="";
+
+}
+
+
+/* ========================================
+   TELEFON SPRECHEN
+======================================== */
+
+function phoneSpeak(text){
+
+  speak(text);
+
+  addPhoneHistory(text);
+
+}
+
+
+/* ========================================
+   EIGENER TELEFONTEXT
+======================================== */
+
+function speakPhoneText(){
+
+  const text =
+  document
+  .getElementById("phoneText")
+  .value
+  .trim();
+
+
+  if(!text)
+  return;
+
+
+  phoneSpeak(text);
+
+}
+
+
+/* ========================================
+   TELEFON KI
+======================================== */
+
+async function generatePhoneAI(){
+
+  const input =
+  document
+  .getElementById("phoneText");
+
+
+  const status =
+  document
+  .getElementById("phoneAIStatus");
+
+
+  const button =
+  document
+  .getElementById("phoneAIButton");
+
+
+  const text =
+  input.value.trim();
+
+
+  if(!text){
+
+    status.textContent =
+    "Bitte ein paar Stichwörter eingeben.";
+
+    return;
+
+  }
+
+
+  button.disabled=true;
+
+  button.textContent =
+  "⏳ KI DENKT ...";
+
+
+  status.textContent =
+  "Kurze Antworten werden erstellt ...";
+
+
+  try{
+
+    const answers =
+    await requestAI(
+      text,
+      "phone"
+    );
+
+
+    renderPhoneAI(
+      answers.slice(0,4)
+    );
+
+
+    status.textContent =
+    "✓ Antwort ansehen und auswählen.";
+
+  }
+
+  catch(error){
+
+    const fallback=[
+
+      "Ja, das passt für mich.",
+
+      "Nein, das passt für mich leider nicht.",
+
+      "Können wir einen anderen Termin vereinbaren?",
+
+      "Einen Moment bitte."
+
+    ];
+
+
+    renderPhoneAI(
+      fallback
+    );
+
+
+    status.textContent =
+    "KI momentan nicht erreichbar – Schnellantworten werden angezeigt.";
+
+  }
+
+  finally{
+
+    button.disabled=false;
+
+    button.textContent =
+    "🤖 KI-ANTWORTEN";
+
+  }
+
+}
+
+
+/* ========================================
+   KI ANTWORTEN DARSTELLEN
+======================================== */
+
+function renderPhoneAI(list){
+
+  const container =
+  document.getElementById(
+    "phoneAIResults"
+  );
+
+
+  container.innerHTML="";
+
+
+  list
+  .slice(0,4)
+  .forEach(text=>{
+
+    const button =
+    document.createElement("button");
+
+
+    button.className =
+    "phone-ai-answer";
+
+
+    button.textContent =
+    "🔊 " + text;
+
+
+    button.onclick=()=>{
+
+      phoneSpeak(text);
+
+    };
+
+
+    container.appendChild(button);
+
+  });
+
+}
+
+
+/* ========================================
+   TELEFONVERLAUF
+======================================== */
+
+function addPhoneHistory(text){
+
+  let list =
+  JSON.parse(
+    localStorage.getItem(
+      "etongue_phone_history"
+    ) || "[]"
+  );
+
+
+  list =
+  list.filter(
+    item=>item!==text
+  );
+
+
+  list.unshift(text);
+
+
+  /*
+  Im Schnellmodus nur
+  die letzten 6 Antworten.
+  */
+
+  list=list.slice(0,6);
+
+
+  localStorage.setItem(
+    "etongue_phone_history",
+    JSON.stringify(list)
+  );
+
+
+  loadPhoneHistory();
+
+}
+
+
+function loadPhoneHistory(){
+
+  const list =
+  JSON.parse(
+    localStorage.getItem(
+      "etongue_phone_history"
+    ) || "[]"
+  );
+
+
+  const container =
+  document.getElementById(
+    "phoneHistory"
+  );
+
+
+  container.innerHTML="";
+
+
+  if(list.length===0){
+
+    container.innerHTML =
+    "<p>Noch keine Telefonantworten.</p>";
+
+    return;
+
+  }
+
+
+  list.forEach(text=>{
+
+    const button =
+    document.createElement("button");
+
+
+    button.className =
+    "phone-history-button";
+
+
+    button.textContent =
+    "🔊 " + text;
+
+
+    button.onclick=()=>{
+
+      phoneSpeak(text);
+
+    };
+
+
+    container.appendChild(button);
+
+  });
+
+}
+
+
+/* ========================================
    EINSTELLUNGEN SPEICHERN
-=============================================== */
+======================================== */
 
 document
 .getElementById("voices")
@@ -1255,46 +2547,145 @@ document
 "change",
 function(){
 
- localStorage.setItem(
- "etongue_voice",
- this.value
- );
+  const voice =
+  getSelectedVoice();
+
+
+  if(voice){
+
+    localStorage.setItem(
+      "etongue_voice",
+      voice.name
+    );
+
+  }
 
 });
 
 
-/* ===============================================
+document
+.getElementById("volume")
+.addEventListener(
+"change",
+function(){
+
+  localStorage.setItem(
+    "etongue_volume",
+    this.value
+  );
+
+});
+
+
+document
+.getElementById("rate")
+.addEventListener(
+"change",
+function(){
+
+  localStorage.setItem(
+    "etongue_rate",
+    this.value
+  );
+
+});
+
+
+function loadSettings(){
+
+  const volume =
+  localStorage.getItem(
+    "etongue_volume"
+  );
+
+
+  const rate =
+  localStorage.getItem(
+    "etongue_rate"
+  );
+
+
+  if(volume!==null){
+
+    document
+    .getElementById("volume")
+    .value=volume;
+
+  }
+
+
+  if(rate!==null){
+
+    document
+    .getElementById("rate")
+    .value=rate;
+
+  }
+
+}
+
+
+/* ========================================
    START
-=============================================== */
+======================================== */
 
 function start(){
 
- updateClock();
+  updateClock();
 
- render(
- "timePhrases",
- timeSentences[getDaypart()]
- );
+  loadSettings();
 
- selectCategory(
- "Allgemein",
- document.querySelector(".category")
- );
+  loadVoices();
 
- loadFavorites();
- loadHistory();
- loadVoices();
+  loadFavorites();
 
- setInterval(
- updateClock,
- 30000
- );
+  loadHistory();
+
+  loadPhoneHistory();
+
+
+  renderPhrases(
+    "timePhrases",
+    timeSentences[
+      getDaypart()
+    ]
+  );
+
+
+  selectCategory(
+    "Allgemein",
+    document.querySelector(
+      ".category"
+    )
+  );
+
+
+  setInterval(
+    updateClock,
+    30000
+  );
+
+
+  setInterval(
+    ()=>{
+
+      renderPhrases(
+        "timePhrases",
+        timeSentences[
+          getDaypart()
+        ]
+      );
+
+    },
+    300000
+  );
 
 }
 
 
 speechSynthesis.onvoiceschanged =
 loadVoices;
+
 
 window.addEventListener(
 "load",
