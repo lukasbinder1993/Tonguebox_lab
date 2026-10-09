@@ -672,6 +672,15 @@ input[type="range"]{
 .account-banner__status{font-weight:800;font-size:clamp(20px,3vw,27px)}
 .account-banner__link{min-height:62px;display:inline-flex;align-items:center;justify-content:center;padding:12px 22px;background:#35d6bd;color:#06232b;border-radius:15px;text-decoration:none;font-weight:800;font-size:21px}
 .account-banner__link:focus-visible{outline:5px solid white;outline-offset:3px}
+
+/* Zuhören – große Blicksteuerungs-Ziele */
+.listen-panel{padding:16px 0}
+.listen-panel textarea{width:100%;min-height:105px;box-sizing:border-box;font-size:22px;padding:15px;border-radius:14px}
+.listen-controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin:16px 0}
+.listen-controls button{min-height:75px;font-size:21px;font-weight:750;border-radius:16px;padding:12px}
+.listen-note{font-size:16px;line-height:1.5;opacity:.9}
+.listen-status{font-size:20px;font-weight:700;margin:12px 0;min-height:32px}
+.listen-panel .phrases button{min-height:76px;font-size:21px}
 </style>
 </head>
 
@@ -755,6 +764,30 @@ onclick="speak('Danke.')">
 
 </div>
 
+
+
+<!-- Gespräch zuhören und schnell antworten -->
+<section class="section" id="listenSection">
+<button class="section-toggle" type="button" onclick="toggleSection(this)" aria-label="Zuhören und schnell antworten öffnen">
+<span>🎤 Zuhören & schnell antworten</span><span class="arrow">▼</span>
+</button>
+<div class="section-content listen-panel">
+<p>Höre eine Frage an und wähle anschließend eine große Antwortschaltfläche. Das Mikrofon startet nur auf deinen Wunsch.</p>
+<div class="listen-controls">
+<button type="button" class="action blue" id="listenStart" onclick="startListening()">🎤 ZUHÖREN STARTEN</button>
+<button type="button" class="action red" id="listenStop" onclick="stopListening()" disabled>⏹ ZUHÖREN STOPPEN</button>
+</div>
+<label for="heardText"><strong>Was wurde gesagt?</strong></label>
+<textarea id="heardText" placeholder="Erkannter Gesprächsinhalt oder Frage hier eingeben" aria-label="Erkannter Gesprächsinhalt"></textarea>
+<div class="listen-controls">
+<button type="button" class="action purple" onclick="suggestListeningAnswers()">🤖 ANTWORTEN VORSCHLAGEN</button>
+<button type="button" class="action" onclick="document.getElementById('heardText').value='';document.getElementById('listenPhrases').replaceChildren();setListenStatus('Bereit für eine neue Frage.')">✕ NEUE FRAGE</button>
+</div>
+<div id="listenStatus" class="listen-status" role="status" aria-live="polite">Bereit zum Zuhören.</div>
+<div id="listenPhrases" class="phrases" aria-label="Antwortvorschläge"></div>
+<p class="listen-note">Datenschutz: Je nach Browser kann die Spracherkennung einen Onlinedienst verwenden. Bei eingerichteter KI wird der erkannte Text zur Antwortgenerierung an dein KI-Backend gesendet. Bitte nur mit Einverständnis der Gesprächspartner zuhören.</p>
+</div>
+</section>
 
 <!-- =====================================================
      SPRECHEN
@@ -2300,6 +2333,101 @@ function clearMainText(){
 
 }
 
+
+
+/* =====================================================
+   ZUHÖREN UND SCHNELLE ANTWORTEN
+===================================================== */
+let listenRecognition=null;
+let listenActive=false;
+let listenStopRequested=false;
+function setListenStatus(message){document.getElementById('listenStatus').textContent=message;}
+function listenButtons(active){
+  listenActive=active;
+  document.getElementById('listenStart').disabled=active;
+  document.getElementById('listenStop').disabled=!active;
+}
+function startListening(){
+  const Recognition=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!Recognition){
+    setListenStatus('Spracherkennung wird in diesem Browser nicht unterstützt. Bitte die Frage unten eintippen und „Antworten vorschlagen“ wählen.');
+    return;
+  }
+  if(listenActive)return;
+  listenStopRequested=false;
+  document.getElementById('heardText').value='';
+  document.getElementById('listenPhrases').replaceChildren();
+  try{
+    listenRecognition=new Recognition();
+    listenRecognition.lang='de-AT';
+    listenRecognition.continuous=false;
+    listenRecognition.interimResults=true;
+    listenRecognition.maxAlternatives=1;
+    listenRecognition.onresult=(event)=>{
+      let transcript='';
+      let final=false;
+      for(let i=0;i<event.results.length;i++){
+        transcript+=event.results[i][0].transcript+' ';
+        if(event.results[i].isFinal)final=true;
+      }
+      document.getElementById('heardText').value=transcript.trim();
+      setListenStatus(final?'✓ Sprache erkannt. Antworten werden vorbereitet …':'🎤 Zuhören läuft …');
+      if(final){listenStopRequested=true;listenRecognition.stop();}
+    };
+    listenRecognition.onerror=(event)=>{
+      const code=event.error||'unbekannt';
+      const explanations={ 'not-allowed':'Mikrofonzugriff nicht erlaubt. Bitte Berechtigung prüfen.', 'no-speech':'Keine Sprache erkannt. Bitte erneut versuchen.', 'network':'Spracherkennungsdienst nicht erreichbar. Bitte Frage eintippen.', 'audio-capture':'Kein Mikrofon verfügbar.' };
+      setListenStatus(explanations[code]||'Spracherkennung nicht möglich ('+code+'). Bitte Frage eintippen.');
+      listenStopRequested=true;
+    };
+    listenRecognition.onend=()=>{
+      listenButtons(false);
+      listenRecognition=null;
+      const text=document.getElementById('heardText').value.trim();
+      if(text){suggestListeningAnswers();}
+      else if(!listenStopRequested)setListenStatus('Keine Sprache erkannt. Bitte erneut starten oder Text eingeben.');
+    };
+    listenRecognition.start();
+    listenButtons(true);
+    setListenStatus('🎤 Mikrofon aktiv – dein Gegenüber kann jetzt sprechen.');
+  }catch(e){listenButtons(false);setListenStatus('Mikrofon konnte nicht gestartet werden. Bitte Berechtigung prüfen.');}
+}
+function stopListening(){
+  listenStopRequested=true;
+  if(listenRecognition){try{listenRecognition.stop();}catch(e){}}
+  listenButtons(false);
+  setListenStatus('Zuhören beendet. Du kannst jetzt Antworten vorschlagen lassen.');
+}
+function localListeningAnswers(question){
+  const q=question.toLocaleLowerCase('de-AT');
+  let list=['Ja, gerne.','Nein, danke.','Einen Moment bitte.','Kannst du das bitte wiederholen?'];
+  if(/wie geht|alles gut|befinden/.test(q))list=['Danke, mir geht es gut.','Heute geht es mir nicht so gut.','Danke für die Nachfrage.','Und wie geht es dir?'];
+  else if(/möchtest|willst du|hättest du|magst du/.test(q))list=['Ja, gerne.','Nein, danke.','Vielleicht später.','Kannst du mir mehr dazu sagen?'];
+  else if(/hilfe|helfen|brauchst du/.test(q))list=['Ja, bitte hilf mir.','Nein, danke, es geht.','Einen Moment bitte.','Ich erkläre dir, was ich brauche.'];
+  else if(/wann|uhrzeit|zeit/.test(q))list=['Jetzt passt es für mich.','Lieber später.','Kannst du mir einen Zeitpunkt vorschlagen?','Ich muss kurz nachdenken.'];
+  else if(/wo|wohin/.test(q))list=['Hier ist es gut.','Ich möchte woanders hin.','Kannst du mir die Möglichkeiten nennen?','Einen Moment bitte.'];
+  return list;
+}
+let listenRequestCounter=0;
+async function suggestListeningAnswers(){
+  const text=document.getElementById('heardText').value.trim();
+  if(!text){setListenStatus('Bitte zuerst eine Frage aufnehmen oder eingeben.');return;}
+  const request=++listenRequestCounter;
+  const target='listenPhrases';
+  renderPhrases(target,localListeningAnswers(text));
+  if(AI_URL.includes('DEINE_BACKEND_URL')){
+    setListenStatus('✓ Sofortantworten bereit. Für individuelle KI-Antworten muss noch das KI-Backend eingerichtet werden.');
+    return;
+  }
+  setListenStatus('✓ Sofortantworten bereit. KI erstellt weitere Antworten …');
+  try{
+    const answers=await requestAI('Die andere Person sagte: '+text+'\nSchlage vier kurze, natürliche Antworten vor, die ich direkt sprechen kann.','normal');
+    if(request!==listenRequestCounter)return;
+    const cleaned=answers.filter(item=>typeof item==='string'&&item.trim()).slice(0,6);
+    if(cleaned.length){renderPhrases(target,cleaned);setListenStatus('✓ KI-Antworten bereit. Wähle eine Antwort zum Sprechen.');}
+    else setListenStatus('✓ Sofortantworten bereit. Die KI lieferte keine weiteren Antworten.');
+  }catch(e){if(request===listenRequestCounter)setListenStatus('✓ Sofortantworten bereit. KI derzeit nicht erreichbar.');}
+}
 
 /* =====================================================
    KI ANFRAGE
